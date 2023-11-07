@@ -1,0 +1,171 @@
+@font-face {
+  font-family: 'BodyFont';
+  src: url('./fonts/PrimeformProDemo-Light.otf') format('truetype');
+}
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'BodyFont', sans-serif;
+}
+
+body {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
+
+h2{
+  font-size: 30px;
+  font-weight: normal;
+}
+
+.navbar {
+  background-color: #202A44;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px;
+  position: sticky;
+  top: 0; 
+  z-index: 100
+}
+
+.eslogan{
+  color: #f2ebc3;
+  font-size: 20px;
+  font-weight: normal;
+  display: flex;
+  margin: 0px 150px;
+}
+
+
+.logo img {
+  height: 150px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  margin-right: 20px;
+}
+
+.nav-links li:last-child {
+  margin-right: 0;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #017999;
+}
+
+
+.buscador {
+display: flex;
+justify-content: flex-end;
+padding: 10px;
+}
+
+.buscador input {
+border-radius: 50px;
+padding: 10px;
+width: 280px;
+}
+
+.searchIcon{
+  color:#017999;
+  padding: 10px;
+
+
+}
+
+.displayHome{
+  height: 50vh;
+}
+
+.displayHome h2 {
+  color:#202A44;
+  text-align: center;
+  padding: 20px;
+
+}
+
+.displayHome div{
+  display: flex;
+  justify-content: space-around;
+}
+
+.displayHome img{
+height:30vh;
+flex-wrap: wrap;
+}
+
+.cat{
+  display: flex;
+  height: 20vh;
+  flex-direction: column;
+}
+.cat h2{
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.cat div{
+  display: flex;
+  justify-content: space-evenly;
+
+}
+.cat div ul li{
+  list-style: none;
+}
+
+footer{
+  background-color: #202A44;
+  padding: 30px;
+  color: #f2ebc3;
+  height: 18vh;
+  display:flex;
+  justify-content: space-between;
+}
+
+.logoFooter{
+  display: flex;
+  justify-content:flex-start;
+  height: 80px;
+}
+
+
+/**************MEDIA QUERIES************/
+
+@media (max-width:375px) {
+
+    .eslogan{
+      display: none;
+    }
+
+    body{
+      height: 70vh;
+    }
+
+    .displayHome div img:nth-child(1){
+      display: block;
+    }
+
+    .cat {
+      display: none;
+    }
+
+}
