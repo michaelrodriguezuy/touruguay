@@ -1,10 +1,11 @@
-
+import Cards from '../layout/cards/Cards'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Home = () => {
-  return (
-    <>
-            
+    return (
+        <>
+
             <section className="buscador">
                 <input
                     type="search"
@@ -17,11 +18,8 @@ const Home = () => {
             </section>
             <section className="displayHome">
                 <h2> Recomendados de esta semana</h2>
-                <div>
-                    <img src="1.png" alt="Desayuno" />
-                    <img src="2.png" alt="Brunch" />
-                    <img src="3.png" alt="Gourmet" />
-                    <img src="4.png" alt="Relax" />
+                <div className='tarjetas'>
+                    <Cards />
                 </div>
             </section>
             <section className="cat">
@@ -41,10 +39,10 @@ const Home = () => {
                     </ul>
                 </div>
             </section>
-        
 
-    </>
-  );
+
+        </>
+    );
 };
 
 export default Home;
