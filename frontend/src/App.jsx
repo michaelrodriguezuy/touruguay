@@ -16,7 +16,6 @@ function App() {
     <Routes>
       <Route element={<Navbar />}>
         <Route element={<Footer />}>
-         
           {routes.map(({ id, path, Element }) => (
             <Route key={id} path={path} element={<Element />} />
           ))}

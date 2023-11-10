@@ -15,7 +15,7 @@ function Navbar() {
       </div>
       <ul className="nav-links">
         <li>
-          <a href="#">Iniciar sesion</a>
+        <Link to="/iniciarSesion">Iniciar Sesion</Link>
         </li>
         <li>
           <a href="#">Crear Cuenta</a>
