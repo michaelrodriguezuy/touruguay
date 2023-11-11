@@ -1,9 +1,7 @@
 package com.dh.toururuguay.model;
 
 import jakarta.persistence.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -21,23 +19,23 @@ public class Producto {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
-    private Categoria category_id;
+    private Categoria category;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id")
-    private Ciudad city_id;
+    private Ciudad city;
 
 public Producto(){
 
 }
 
-    public Producto(Integer product_id, String product_name, String description, String address, Integer score, Categoria category_id, Ciudad city_id) {
+    public Producto(Integer product_id, String product_name, String description, String address, Integer score, Categoria category, Ciudad city) {
         this.product_id = product_id;
         this.product_name = product_name;
         this.description = description;
         this.address = address;
         this.score = score;
-        this.category_id = category_id;
-        this.city_id = city_id;
+        this.category = category;
+        this.city = city;
     }
 
 
@@ -81,20 +79,20 @@ public Producto(){
         this.score = score;
     }
 
-    public Categoria getCategory_id() {
-        return category_id;
+    public Categoria getCategory() {
+        return category;
     }
 
-    public void setCategory_id(Categoria category_id) {
-        this.category_id = category_id;
+    public void setCategory(Categoria category) {
+        this.category = category;
     }
 
-    public Ciudad getCity_id() {
-        return city_id;
+    public Ciudad getCity() {
+        return city;
     }
 
-    public void setCity_id(Ciudad city_id) {
-        this.city_id = city_id;
+    public void setCity(Ciudad city) {
+        this.city = city;
     }
 
 
@@ -107,8 +105,8 @@ public Producto(){
                 ", description='" + description + '\'' +
                 ", address='" + address + '\'' +
                 ", score=" + score +
-                ", category_id=" + category_id +
-                ", city_id=" + city_id +
+                ", category=" + category +
+                ", city=" + city +
                 '}';
     }
 

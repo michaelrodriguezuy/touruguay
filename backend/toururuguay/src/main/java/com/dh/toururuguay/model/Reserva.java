@@ -5,25 +5,20 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "booking")
 public class Reserva {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer booking_id;
 
     private String title;
-    private String descripcion;
+    private String description;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "user_id")
-    private Usuario user_id;
+    private Usuario user;
 
-    @ManyToOne
-    @JoinColumn(name = "city_id")
-    private Ciudad city_id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private Categoria category_id;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "product_id")
+    private Producto product;
 
     public Integer getBooking_id() {
         return booking_id;
@@ -41,44 +36,35 @@ public class Reserva {
         this.title = title;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public Usuario getUser_id() {
-        return user_id;
+    public Usuario getUser() {
+        return user;
     }
 
-    public void setUser_id(Usuario user_id) {
-        this.user_id = user_id;
+    public void setUser(Usuario user) {
+        this.user = user;
     }
 
-    public Ciudad getCity_id() {
-        return city_id;
+    public Producto getProduct() {
+        return product;
     }
 
-    public void setCity_id(Ciudad city_id) {
-        this.city_id = city_id;
+    public void setProduct(Producto product) {
+        this.product = product;
     }
 
-    public Categoria getCategory_id() {
-        return category_id;
-    }
-
-    public void setCategory_id(Categoria category_id) {
-        this.category_id = category_id;
-    }
-
-    public Reserva(Integer booking_id, String title, String descripcion, Usuario user_id, Ciudad city_id, Categoria category_id) {
+    public Reserva(Integer booking_id, String title, String description, Usuario user, Producto product) {
         this.booking_id = booking_id;
         this.title = title;
-        this.descripcion = descripcion;
-        this.user_id = user_id;
-        this.city_id = city_id;
-        this.category_id = category_id;
+        this.description = description;
+        this.user = user;
+        this.product = product;
     }
 }

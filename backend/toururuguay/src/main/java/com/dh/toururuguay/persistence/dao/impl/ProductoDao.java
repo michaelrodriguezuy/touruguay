@@ -1,5 +1,6 @@
 package com.dh.toururuguay.persistence.dao.impl;
 
+import com.dh.toururuguay.dto.ProductoDTO;
 import com.dh.toururuguay.model.Imagen;
 import com.dh.toururuguay.model.Producto;
 import com.dh.toururuguay.persistence.dao.IDao;
@@ -14,9 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 
-import java.awt.*;
-import java.io.IOException;
-import java.nio.file.Path;
 import java.util.*;
 import java.util.List;
 
@@ -78,51 +76,90 @@ public class ProductoDao implements IDao<Producto> {
     @Override
     public List<Producto> buscarTodos() {
         try{
-//            return entityManager.createQuery("SELECT p FROM Producto p", Producto.class).getResultList();
-
             return entityManager.createQuery(
                             "SELECT p FROM Producto p " +
-                                    "LEFT JOIN FETCH p.category_id " +
-                                    "LEFT JOIN FETCH p.city_id", Producto.class)
+                                    "LEFT JOIN FETCH p.category " +
+                                    "LEFT JOIN FETCH p.city", Producto.class)
                     .getResultList();
-
-
         } catch (Exception e) {
             e.printStackTrace();
             return Collections.emptyList();
         }
     }
 
-    private List<Producto> productosTemporales = new ArrayList<>();
+    @Override
+    public List<Producto> buscarProductosAleatorios(Integer cantidad) {
+        return null;
+    }
+
+    @Transactional
+    public List<ProductoDTO> buscarTodosDTO() {
+        try {
+            List<Object[]> results = entityManager.createQuery(
+                            "SELECT i, p " +
+                                    "FROM Imagen i " +
+                                    "LEFT JOIN FETCH i.producto p", Object[].class)
+                    .getResultList();
+
+            Map<Integer, ProductoDTO> productoMap = new HashMap<>();
+
+            results.forEach(result -> {
+                Imagen imagen = (Imagen) result[0];
+                Producto producto = (Producto) result[1];
+
+                ProductoDTO productoDTO = productoMap.computeIfAbsent(producto.getProduct_id(), k -> {
+                    ProductoDTO newDTO = new ProductoDTO();
+                    newDTO.setProduct_id(producto.getProduct_id());
+                    newDTO.setProduct_name(producto.getProduct_name());
+                    newDTO.setDescription(producto.getDescription());
+                    newDTO.setAddress(producto.getAddress());
+                    newDTO.setCity(producto.getCity());
+                    //falta pais y precio
+                    newDTO.setUrlImagen(new ArrayList<>());
+                    return newDTO;
+                });
+
+                // Agrega la URL de la imagen al listado de URLs en el DTO
+                productoDTO.getUrlImagen().add(imagen.getImageUrl());
+            });
+
+            return new ArrayList<>(productoMap.values());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
+
+    private List<ProductoDTO> productosTemporales = new ArrayList<ProductoDTO>();
     private static final Random RANDOM_GENERATOR = new Random();
 
-    public List<Producto> buscarProductosAleatorios(Integer cantidad) {
-        return buscarProductosAleatorios(cantidad.intValue());
-    }
+public List<ProductoDTO> buscarProductosAleatoriosDTO(int cantidad) {
+    List<ProductoDTO> productosDTO = buscarTodosDTO();
+    List<ProductoDTO> productosAleatoriosDTO = seleccionarProductosAleatoriosDTO(productosDTO, cantidad);
+    return productosAleatoriosDTO;
+}
     //devolver los datos necesarios, no todo el objeto
-    public List<Producto> buscarProductosAleatorios(int cantidad) {
-        List<Producto> productos = buscarTodos();
-        return seleccionarProductosAleatorios(productos, cantidad);
-    }
-    private List<Producto> seleccionarProductosAleatorios(List<Producto> todosLosProductos, int cantidad) {
-        List<Producto> productosNuevos = new ArrayList<>();
 
-        while (productosNuevos.size() < cantidad && !todosLosProductos.isEmpty()) {
-            int indiceAleatorio = RANDOM_GENERATOR.nextInt(todosLosProductos.size());
-            Producto productoAleatorio = todosLosProductos.remove(indiceAleatorio);
+    private List<ProductoDTO> seleccionarProductosAleatoriosDTO(List<ProductoDTO> todosLosProductosDTO, int cantidad) {
+        List<ProductoDTO> productosNuevosDTO = new ArrayList<>();
 
-            if (!productosTemporales.contains(productoAleatorio)) {
-                productosNuevos.add(productoAleatorio);
-                productosTemporales.add(productoAleatorio);
+        while (productosNuevosDTO.size() < cantidad && !todosLosProductosDTO.isEmpty()) {
+            int indiceAleatorio = RANDOM_GENERATOR.nextInt(todosLosProductosDTO.size());
+            ProductoDTO productoDTOAleatorio = todosLosProductosDTO.remove(indiceAleatorio);
+
+            if (!productosTemporales.contains(productoDTOAleatorio)) {
+                productosNuevosDTO.add(productoDTOAleatorio);
+                productosTemporales.add(productoDTOAleatorio);
             }
-       }
-        //si ya mostre todos los productos de mi base, reinicio la comparativa
-        if (todosLosProductos.size() < cantidad) {
-            // Reinicia la lista temporal si no puedo devolver la cantidad de productos nuevos
+        }
+
+        // si ya mostré todos los productos de mi base, reinicio la comparativa
+        if (todosLosProductosDTO.size() < cantidad) {
             reiniciarProductosTemporales();
         }
 
-        return productosNuevos;
+        return productosNuevosDTO;
     }
 
     private void reiniciarProductosTemporales() {

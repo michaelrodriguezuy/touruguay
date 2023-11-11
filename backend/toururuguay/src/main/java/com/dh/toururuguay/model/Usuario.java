@@ -12,16 +12,16 @@ public class Usuario {
     private String user_name;
     private String password;
     private String name;
-    private String lastname;
+    private String last_name;
     private String email;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")
-    private Rol role_id;
+    private Rol role;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id")
-    private Ciudad city_id;
+    private Ciudad city;
 
     public Integer getUser_id() {
         return user_id;
@@ -55,12 +55,12 @@ public class Usuario {
         this.name = name;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLast_name() {
+        return last_name;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 
     public String getEmail() {
@@ -71,30 +71,30 @@ public class Usuario {
         this.email = email;
     }
 
-    public Rol getRole_id() {
-        return role_id;
+    public Rol getRole() {
+        return role;
     }
 
-    public void setRole_id(Rol role_id) {
-        this.role_id = role_id;
+    public void setRole(Rol role) {
+        this.role = role;
     }
 
-    public Ciudad getCity_id() {
-        return city_id;
+    public Ciudad getCity() {
+        return city;
     }
 
-    public void setCity_id(Ciudad city_id) {
-        this.city_id = city_id;
+    public void setCity(Ciudad city) {
+        this.city = city;
     }
 
-    public Usuario(Integer user_id, String user_name, String password, String name, String lastname, String email, Rol role_id, Ciudad city_id) {
+    public Usuario(Integer user_id, String user_name, String password, String name, String last_name, String email, Rol role, Ciudad city) {
         this.user_id = user_id;
         this.user_name = user_name;
         this.password = password;
         this.name = name;
-        this.lastname = lastname;
+        this.last_name = last_name;
         this.email = email;
-        this.role_id = role_id;
-        this.city_id = city_id;
+        this.role = role;
+        this.city = city;
     }
 }
