@@ -27,6 +27,9 @@ public class Rol {
         this.name = name;
     }
 
+    public Rol(){
+
+    }
     public Rol(Integer role_id, String name) {
         this.role_id = role_id;
         this.name = name;

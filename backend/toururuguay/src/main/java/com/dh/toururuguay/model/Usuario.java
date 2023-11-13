@@ -87,6 +87,10 @@ public class Usuario {
         this.city = city;
     }
 
+    public Usuario(){
+
+    }
+
     public Usuario(Integer user_id, String user_name, String password, String name, String last_name, String email, Rol role, Ciudad city) {
         this.user_id = user_id;
         this.user_name = user_name;

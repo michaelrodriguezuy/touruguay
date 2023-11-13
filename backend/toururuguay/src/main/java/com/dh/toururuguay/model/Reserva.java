@@ -60,6 +60,10 @@ public class Reserva {
         this.product = product;
     }
 
+    public Reserva(){
+
+    }
+
     public Reserva(Integer booking_id, String title, String description, Usuario user, Producto product) {
         this.booking_id = booking_id;
         this.title = title;

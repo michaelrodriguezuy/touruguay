@@ -42,6 +42,10 @@ public class Favorito {
         this.product = product;
     }
 
+    public Favorito(){
+
+    }
+
     public Favorito(Integer favourite_id, Usuario user, Producto product) {
         this.favourite_id = favourite_id;
         this.user = user;
