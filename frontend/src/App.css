@@ -21,8 +21,20 @@ body {
 h2{
   font-size: 30px;
   font-weight: normal;
+} */
+
+.cat h2{
+  margin-left: 20px;
+  margin-top: 20px;
 }
 
+/* /* .displayHome h2 {
+  color:#202A44;
+  text-align: center;
+  padding: 20px;
+
+} */
+/* 
 .navbar {
   background-color: #202A44;
   display: flex;
@@ -48,7 +60,7 @@ h2{
   position: absolute;
   top: 0;
   left: 0;
-}
+} */
 
 
 
@@ -73,7 +85,7 @@ h2{
 }
 
 
-.buscador {
+/* .buscador {
 display: flex;
 justify-content: flex-end;
 padding: 10px;
@@ -83,7 +95,7 @@ padding: 10px;
 border-radius: 50px;
 padding: 10px;
 width: 280px;
-}
+} */
 
 .searchIcon{
   color:#017999;
@@ -94,13 +106,6 @@ width: 280px;
 
 .displayHome{
   height: 50vh;
-}
-
-.displayHome h2 {
-  color:#202A44;
-  text-align: center;
-  padding: 20px;
-
 }
 
 .displayHome div{
@@ -118,10 +123,7 @@ flex-wrap: wrap;
   height: 20vh;
   flex-direction: column;
 }
-.cat h2{
-  margin-left: 20px;
-  margin-top: 20px;
-}
+
 
 .cat div{
   display: flex;

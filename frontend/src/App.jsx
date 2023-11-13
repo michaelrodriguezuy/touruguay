@@ -4,6 +4,7 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { routes } from "./Routes/routes";
+import "./index.css"
 
 import Navbar from "./Components/layout/navbar/Navbar";
 
@@ -15,14 +16,15 @@ function App() {
   return (
     <Routes>
       <Route element={<Navbar />}>
+        <Route element={<Home />} />
         <Route element={<Footer />}>
-         
+
           {routes.map(({ id, path, Element }) => (
             <Route key={id} path={path} element={<Element />} />
           ))}
 
         </Route>
-      </Route>      
+      </Route>
     </Routes>
   );
 }
