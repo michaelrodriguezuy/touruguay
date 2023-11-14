@@ -18,7 +18,7 @@ function Navbar() {
         <Link to="/iniciarSesion">Iniciar Sesion</Link>
         </li>
         <li>
-          <a href="#">Crear Cuenta</a>
+          <Link to = '/crearCuenta'>Crear Cuenta</Link>
         </li>
       </ul>
     </nav>

@@ -185,23 +185,6 @@ form {
   border-radius: 5px;
 }
 
-label {
-  display: block;
-  margin-bottom: 10px;
-}
-
-input {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
-  box-sizing: border-box;
-  border-radius: 10px;
-}
-
-input::placeholder {
-  color: #999;
-  font-style: italic;
-}
 
 button {
   display: flex;
@@ -209,23 +192,15 @@ button {
   background-color: #017999;
   color: white;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
   margin: 60px auto;
+  padding: 15px 85px
 }
 
 button:hover {
   background-color: #024f64;
 }
 
-.adminButton{
-  font-size: 13px;
-  padding: 15px 20px;
-}
-
-.iniciarSesionButton{
-  padding: 15px 85px;
-}
 
 .noTienesCuenta{
 text-align: center;
