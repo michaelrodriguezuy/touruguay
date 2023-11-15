@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>toururuguay</artifactId>
+	<artifactId>touruguay</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>toururuguay</name>
+	<name>touruguay</name>
 	<description>Proyecto integrador track 1</description>
 	<properties>
 		<java.version>17</java.version>

@@ -15,11 +15,11 @@ public class Usuario {
     private String last_name;
     private String email;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "role_id")
     private Rol role;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "city_id")
     private Ciudad city;
 

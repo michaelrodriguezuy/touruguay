@@ -17,10 +17,10 @@ public class Producto {
     private String address;
     private Integer score;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "category_id")
     private Categoria category;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "city_id")
     private Ciudad city;
 
