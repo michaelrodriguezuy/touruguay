@@ -50,11 +50,6 @@ public class PaisDao implements IDao<Pais> {
     }
 
     @Override
-    public List<Pais> buscarProductosAleatorios(Integer cantidad) {
-        return null;
-    }
-
-    @Override
     public Pais actualizar(Pais pais) {
         return null;
     }

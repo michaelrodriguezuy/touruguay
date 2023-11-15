@@ -51,10 +51,6 @@ public class FavoritoDao implements IDao<Favorito> {
         }
     }
 
-    @Override
-    public List<Favorito> buscarProductosAleatorios(Integer cantidad) {
-        return null;
-    }
 
     @Override
     public Favorito actualizar(Favorito favorito) {

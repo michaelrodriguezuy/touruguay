@@ -51,10 +51,6 @@ public class CiudadDao implements IDao<Ciudad> {
         }
     }
 
-    @Override
-    public List<Ciudad> buscarProductosAleatorios(Integer cantidad) {
-        return null;
-    }
 
     @Override
     public Ciudad actualizar(Ciudad ciudad) {

@@ -63,8 +63,4 @@ public class CategoriaDao implements IDao<Categoria> {
         return null;
     }
 
-    @Override
-    public List<Categoria> buscarProductosAleatorios(Integer cantidad) {
-        return null;
-    }
 }

@@ -141,9 +141,6 @@ public class ProductoDao implements IDao<Producto> {
     }
 
 
-
-
-
     private static Producto buscarProductoPorNombre(List<Producto> lista, String nombre) {
         for (Producto producto : lista) {
             if (producto.getProduct_name().equals(nombre)) {
@@ -172,10 +169,6 @@ public class ProductoDao implements IDao<Producto> {
         }
     }
 
-    @Override
-    public List<Producto> buscarProductosAleatorios(Integer cantidad) {
-        return null;
-    }
 
     @Transactional
     public List<ProductHomeDTO> buscarTodosDTO() {

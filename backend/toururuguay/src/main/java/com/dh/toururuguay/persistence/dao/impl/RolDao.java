@@ -52,11 +52,6 @@ public class RolDao implements IDao<Rol> {
     }
 
     @Override
-    public List<Rol> buscarProductosAleatorios(Integer cantidad) {
-        return null;
-    }
-
-    @Override
     public Rol actualizar(Rol rol) {
         return null;
     }

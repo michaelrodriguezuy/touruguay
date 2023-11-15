@@ -93,11 +93,6 @@ public class UsuarioDao implements IDao<Usuario> {
 
 
     @Override
-    public List<Usuario> buscarProductosAleatorios(Integer cantidad) {
-        return null;
-    }
-
-    @Override
     public Usuario actualizar(Usuario usuario) {
         return null;
     }

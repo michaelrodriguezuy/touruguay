@@ -52,10 +52,6 @@ public class ReservaDao implements IDao<Reserva> {
         }
     }
 
-    @Override
-    public List<Reserva> buscarProductosAleatorios(Integer cantidad) {
-        return null;
-    }
 
     @Override
     public Reserva actualizar(Reserva reserva) {
