@@ -52,6 +52,7 @@ h2{
   font-weight: normal;
   display: flex;
   margin: 0px 150px;
+  text-decoration: none;
 }
 
 
@@ -170,4 +171,40 @@ footer{
       display: none;
     }
 
+}
+/*--------INICIO DE SESION----------*/
+.inicioSesion{
+  background-color: #202A44;
+  width: 100%;
+  padding: 150px;
+}
+
+form {
+  background: linear-gradient(180deg,#017999, #ffffffd3 50%, #017999);
+  max-width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+
+button {
+  display: flex;
+  justify-content: center;
+  background-color: #017999;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin: 60px auto;
+  padding: 15px 85px
+}
+
+button:hover {
+  background-color: #024f64;
+}
+
+
+.noTienesCuenta{
+text-align: center;
+color: #202A44;
 }

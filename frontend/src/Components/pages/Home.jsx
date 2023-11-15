@@ -1,3 +1,5 @@
+import Cards from '../layout/cards/Cards'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../../App.css';
 import ProductCard from '../layout/ProductCard';
@@ -54,28 +56,10 @@ const Home = () => {
                             <div className="absolute inset-0 bg-[#f2ebc3] opacity-0 hover:opacity-50 transition-opacity duration-300"></div>
                         </div>
                     </div>
-
                 </div>
             </section>
-            <section className="container mx-auto">
-                <h2 className="text-2xl mb-4">Busca por categorías</h2>
-                <div>
-                    <ul>
-                        <li>Gastronomía</li>
-                        <li>Bienestar</li>
-                        <li>Aventura</li>
-                        <li>Cursos y talleres</li>
-                    </ul>
-                    <ul>
-                        <li>Imperdibles</li>
-                        <li>Extremos</li>
-                        <li>Paseos</li>
-                        <li>Místico</li>
-                    </ul>
-                </div>
-            </section>
-        </div >
-    );
+        </div>
+    )
 };
 
 export default Home;
