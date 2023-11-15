@@ -1,4 +1,4 @@
-package com.dh.toururuguay;
+package com.dh.toururuguay.controller;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.ByteArrayResource;
