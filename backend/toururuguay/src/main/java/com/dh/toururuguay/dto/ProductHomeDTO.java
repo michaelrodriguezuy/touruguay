@@ -1,17 +1,16 @@
 package com.dh.toururuguay.dto;
 
-import com.dh.toururuguay.model.Ciudad;
-
 import java.util.List;
 
-public class ProductoDTO {
+public class ProductHomeDTO {
     private Integer product_id;
 
     private String product_name;
     private String description;
     private String address;
-    private Ciudad city;
+    private String city;
 
+    private String pais;
     //pais
     //costo
 
@@ -57,23 +56,32 @@ public class ProductoDTO {
         this.address = address;
     }
 
-    public Ciudad getCity() {
+    public String getCity() {
         return city;
     }
 
-    public void setCity(Ciudad city) {
+    public void setCity(String city) {
         this.city = city;
     }
 
-    public ProductoDTO() {
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
+    }
+
+    public ProductHomeDTO() {
 
     }
-    public ProductoDTO(Integer product_id, String product_name, String description, String address, Ciudad city, List<String> urlImagen) {
+    public ProductHomeDTO(Integer product_id, String product_name, String description, String address, String city, String pais, List<String> urlImagen) {
         this.product_id = product_id;
         this.product_name = product_name;
         this.description = description;
         this.address = address;
         this.city = city;
+        this.pais = pais;
         this.urlImagen = urlImagen;
     }
 }

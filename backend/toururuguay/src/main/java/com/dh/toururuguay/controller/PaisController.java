@@ -1,10 +1,7 @@
 package com.dh.toururuguay.controller;
 
-import com.dh.toururuguay.dto.ProductoDTO;
 import com.dh.toururuguay.model.Pais;
-import com.dh.toururuguay.model.Producto;
 import com.dh.toururuguay.service.PaisService;
-import com.dh.toururuguay.service.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
