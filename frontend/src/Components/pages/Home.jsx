@@ -25,36 +25,32 @@ const Home = () => {
                     />
                 </section>
             </div>
-            <section className="flex-row">
-                <h2 className="text-center text-2xl">Recomendados de esta semana</h2>
-                <div className="flex flex-wrap justify-center content-center">
-                    <div>
-                        <div className="product-list">
-                            {products.map((product) => (
-                                <ProductCard key={product.id} product={product} />
-                            ))}
-                        </div>
+            <section className="flex flex-col">
+                <h2 className="text-center text-2xl p-10">Recomendados de esta semana</h2>
+                <div className="grid grid-cols-1 gap-2 width-full md:grid-cols-2 md:max-w-lg m-auto">
+                    {products.map((product) => (
+                        <ProductCard key={product.id} product={product} />
+                    ))}
+                </div>
+            </section>
+            <section>
+                <h2 className="text-center text-2xl p-10">Buscar por categoría</h2>
+                <div className='grid grid-cols-1 gap-2 width-full md:grid-cols-2 md:max-w-lg m-auto'>
+                    <div className='w-full mx-auto bg-white shadow-lg rounded-lg overflow-hidden relative'>
+                        <img src='https://images.unsplash.com/photo-1496429862132-5ab36b6ae330?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'></img>
+                        <h3 className='absolute bottom-1 right-1 text-2xl text-white font-bold'>Extremo</h3>
                     </div>
-                    <div className="grid grid-rows-2 grid-flow-col gap-4 sm:grid-cols-1 p-8">
-                        <div className="relative group">
-                            <img src="1.png" alt="Desayuno" className="w-full sm:w-12 md:w-64 h-auto m-2 max-w-full" />
-                            <div className="absolute inset-0 bg-[#e66a54] opacity-0 hover:opacity-50 transition-opacity duration-300"></div>
-                        </div>
-
-                        <div className="relative group">
-                            <img src="2.png" alt="Brunch" className="w-full sm:w-12 md:w-64 h-auto m-2 max-w-full" />
-                            <div className="absolute inset-0 bg-yellow-500 opacity-0 hover:opacity-50 transition-opacity duration-300"></div>
-                        </div>
-
-                        <div className="relative group">
-                            <img src="3.png" alt="Gourmet" className="w-full sm:w-12 md:w-64 h-auto m-2 max-w-full" />
-                            <div className="absolute inset-0 bg-[#017999] opacity-0 hover:opacity-50 transition-opacity duration-300"></div>
-                        </div>
-
-                        <div className="relative group">
-                            <img src="4.png" alt="Relax" className="w-full sm:w-12 md:w-64 h-auto m-2 max-w-full" />
-                            <div className="absolute inset-0 bg-[#f2ebc3] opacity-0 hover:opacity-50 transition-opacity duration-300"></div>
-                        </div>
+                    <div className='w-full mx-auto bg-white shadow-lg rounded-lg overflow-hidden relative'>
+                        <img src='https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'></img>
+                        <h3 className='absolute bottom-1 right-1 text-2xl text-white font-bold'>Gastronomía</h3>
+                    </div>
+                    <div className='w-full mx-auto bg-white shadow-lg rounded-lg overflow-hidden relative'>
+                        <img src='https://images.unsplash.com/photo-1501555088652-021faa106b9b?q=80&w=2946&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'></img>
+                        <h3 className='absolute bottom-1 right-1 text-2xl text-white font-bold'>Aventura</h3>
+                    </div>
+                    <div className='w-full mx-auto bg-white shadow-lg rounded-lg overflow-hidden relative'>
+                        <img src='https://images.unsplash.com/photo-1533371452382-d45a9da51ad9?q=80&w=2946&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'></img>
+                        <h3 className='absolute bottom-1 right-1 text-2xl text-white font-bold'>Místico</h3>
                     </div>
                 </div>
             </section>

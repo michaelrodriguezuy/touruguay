@@ -9,7 +9,7 @@ export const DataProvider = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto/aleatorios?cantidad=4',
+        const response = await axios.get('http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto/aleatorios?cantidad=10',
           {
             headers: {
               'Content-Type': 'application/json',
