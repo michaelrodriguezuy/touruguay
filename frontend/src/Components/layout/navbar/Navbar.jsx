@@ -26,22 +26,13 @@ function Navbar() {
             className="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-white hover:border-white"
             onClick={toggleMenu}
           >
-            {/* You can add an icon or text for the mobile menu */}
             Menu
           </button>
         </div>
         <div className={`lg:flex items-center space-x-2 ${isMenuOpen ? "block" : "hidden"}`}>
           <ul className="flex lg:justify-end lg:gap-4 md:gap-4">
-            <li>
-              <a className="text-white hover:text-gray-300" href="#">
-                Iniciar sesión
-              </a>
-            </li>
-            <li>
-              <a className="text-white hover:text-gray-300" href="#">
-                Crear Cuenta
-              </a>
-            </li>
+            <li className="text-white hover:text-gray-300"><Link to="/iniciarSesion" >Iniciar Sesión</Link></li>
+            <li className="text-white hover:text-gray-300"><Link to="/crearCuenta" >Crear Cuenta</Link></li>
           </ul>
         </div>
       </nav>
