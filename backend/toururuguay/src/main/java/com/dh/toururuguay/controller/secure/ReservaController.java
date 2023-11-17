@@ -1,9 +1,7 @@
-package com.dh.toururuguay.controller;
+package com.dh.toururuguay.controller.secure;
 
 import com.dh.toururuguay.model.Reserva;
-import com.dh.toururuguay.model.Rol;
 import com.dh.toururuguay.service.ReservaService;
-import com.dh.toururuguay.service.RolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

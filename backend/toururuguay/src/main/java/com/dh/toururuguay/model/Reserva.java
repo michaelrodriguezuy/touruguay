@@ -8,7 +8,6 @@ public class Reserva {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer booking_id;
-
     private String title;
     private String description;
 
@@ -17,8 +16,20 @@ public class Reserva {
     private Usuario user;
 
     @ManyToOne(optional = false)
+    @JoinColumn(name = "city_id")
+    private Ciudad city;
+
+    @ManyToOne(optional = false)
     @JoinColumn(name = "product_id")
     private Producto product;
+
+    public Ciudad getCity() {
+        return city;
+    }
+
+    public void setCity(Ciudad city) {
+        this.city = city;
+    }
 
     public Integer getBooking_id() {
         return booking_id;
@@ -64,11 +75,12 @@ public class Reserva {
 
     }
 
-    public Reserva(Integer booking_id, String title, String description, Usuario user, Producto product) {
+    public Reserva(Integer booking_id, String title, String description, Usuario user, Producto product, Ciudad city) {
         this.booking_id = booking_id;
         this.title = title;
         this.description = description;
         this.user = user;
         this.product = product;
+        this.city=city;
     }
 }

@@ -7,12 +7,11 @@ public class ProductHomeDTO {
 
     private String product_name;
     private String description;
-    private String address;
+    private Double price;
     private String city;
 
     private String pais;
-    //pais
-    //costo
+
 
     private List<String> urlImagen;
 
@@ -48,12 +47,10 @@ public class ProductHomeDTO {
         this.description = description;
     }
 
-    public String getAddress() {
-        return address;
-    }
+    public Double getPrice() {return price;}
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public String getCity() {
@@ -75,11 +72,11 @@ public class ProductHomeDTO {
     public ProductHomeDTO() {
 
     }
-    public ProductHomeDTO(Integer product_id, String product_name, String description, String address, String city, String pais, List<String> urlImagen) {
+    public ProductHomeDTO(Integer product_id, String product_name, String description, Double price, String city, String pais, List<String> urlImagen) {
         this.product_id = product_id;
         this.product_name = product_name;
         this.description = description;
-        this.address = address;
+        this.price = price;
         this.city = city;
         this.pais = pais;
         this.urlImagen = urlImagen;

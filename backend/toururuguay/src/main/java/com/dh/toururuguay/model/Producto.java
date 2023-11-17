@@ -14,9 +14,9 @@ public class Producto {
 
     private String product_name;
     private String description;
+    //private String address;
+    private Double price;
     private String address;
-    private Integer score;
-
     @ManyToOne()
     @JoinColumn(name = "category_id")
     private Categoria category;
@@ -28,16 +28,23 @@ public Producto(){
 
 }
 
-    public Producto(Integer product_id, String product_name, String description, String address, Integer score, Categoria category, Ciudad city) {
+    public Producto(Integer product_id, String product_name, String description, Double price, Categoria category, Ciudad city, String address) {
         this.product_id = product_id;
         this.product_name = product_name;
         this.description = description;
-        this.address = address;
-        this.score = score;
+        this.price = price;
         this.category = category;
         this.city = city;
+        this.address=address;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public Integer getProduct_id() {
         return product_id;
@@ -63,20 +70,13 @@ public Producto(){
         this.description = description;
     }
 
-    public String getAddress() {
-        return address;
+
+    public Double getPrice() {
+        return price;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public Categoria getCategory() {
@@ -103,10 +103,10 @@ public Producto(){
                 "product_id=" + product_id +
                 ", product_name='" + product_name + '\'' +
                 ", description='" + description + '\'' +
-                ", address='" + address + '\'' +
-                ", score=" + score +
+                ", price=" + price +
                 ", category=" + category +
                 ", city=" + city +
+                ", address=" + address +
                 '}';
     }
 

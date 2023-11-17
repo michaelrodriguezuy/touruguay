@@ -1,9 +1,7 @@
-package com.dh.toururuguay.controller;
+package com.dh.toururuguay.controller.secure;
 
 import com.dh.toururuguay.model.Ciudad;
-import com.dh.toururuguay.model.Pais;
 import com.dh.toururuguay.service.CiudadService;
-import com.dh.toururuguay.service.PaisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

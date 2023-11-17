@@ -1,4 +1,4 @@
-package com.dh.toururuguay.controller;
+package com.dh.toururuguay.controller.secure;
 
 import com.dh.toururuguay.dto.ProductDetailDTO;
 import com.dh.toururuguay.dto.ProductHomeDTO;

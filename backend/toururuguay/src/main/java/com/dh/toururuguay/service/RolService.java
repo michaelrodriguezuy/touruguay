@@ -1,10 +1,7 @@
 package com.dh.toururuguay.service;
 
-import com.dh.toururuguay.dto.UsuarioDTO;
 import com.dh.toururuguay.model.Rol;
-import com.dh.toururuguay.model.Usuario;
 import com.dh.toururuguay.persistence.dao.impl.RolDao;
-import com.dh.toururuguay.persistence.dao.impl.UsuarioDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,10 +1,6 @@
-package com.dh.toururuguay.controller;
+package com.dh.toururuguay.controller.secure;
 
 import com.dh.toururuguay.dto.ImagenDTO;
-import com.dh.toururuguay.model.Categoria;
-import com.dh.toururuguay.model.Imagen;
-import com.dh.toururuguay.model.Producto;
-import com.dh.toururuguay.service.CategoriaService;
 import com.dh.toururuguay.service.ImagenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

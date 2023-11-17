@@ -1,12 +1,12 @@
 package com.dh.toururuguay.service;
 
-import com.dh.toururuguay.dto.UsuarioDTO;
 import com.dh.toururuguay.model.Usuario;
 import com.dh.toururuguay.persistence.dao.impl.UsuarioDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsuarioService {
@@ -17,15 +17,10 @@ public class UsuarioService {
         this.usuarioDao = usuarioDao;
     }
 
-    public Usuario registrarUsuario(Usuario usuario) {
-        return usuarioDao.guardar(usuario);
-    }
-
-    public List<UsuarioDTO> buscarTodosDTO() {
-        return usuarioDao.buscarTodosDTO();
-    }
-
     public List<Usuario> buscarTodos() {
         return usuarioDao.buscarTodos();
     }
+
+    public Optional<Usuario> buscar(Integer id){return this.usuarioDao.buscar(id);}
+
 }

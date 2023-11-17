@@ -190,10 +190,9 @@ public class ProductoDao implements IDao<Producto> {
                     newDTO.setProduct_id(producto.getProduct_id());
                     newDTO.setProduct_name(producto.getProduct_name());
                     newDTO.setDescription(producto.getDescription());
-                    newDTO.setAddress(producto.getAddress());
+                    newDTO.setPrice(producto.getPrice());
                     newDTO.setCity(producto.getCity().getCity_name());
                     newDTO.setPais(producto.getCity().getCountry().getCountry_name());
-                    //falta precio
                     newDTO.setUrlImagen(new ArrayList<>());
                     return newDTO;
                 });
