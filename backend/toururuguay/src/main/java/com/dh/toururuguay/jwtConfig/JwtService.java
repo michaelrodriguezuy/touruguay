@@ -22,9 +22,8 @@ public class JwtService {
 
     //usuarios hardcodeados en mysql con distintos roles para desarrollo (NO ME ANDUVO HARDCODEAR EL JWT)
     private static final Set<String> STATIC_TOKEN_USERS = new HashSet<>(Arrays.asList("usuario@hotmail.com", "admin@hotmail.com"));
-    private static final String DEVELOPMENT_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
-    @Value("${app.environment}")
-    private String environment;
+    long DEVELOPMENT_TOKEN = 3L * 30L * 24L * 60L * 60L * 1000L; //6 meses
+    long PRODUCTION_TOKEN = 1000*60*60*24; //1 dia
 
     public String getToken(UserDetails user) {
             return getToken(new HashMap<>(), user);
@@ -36,7 +35,7 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(user.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+(1000*60*60*24))) //expiran 1 dia despues de creados
+                .setExpiration(new Date(System.currentTimeMillis()+(DEVELOPMENT_TOKEN)))
                 .signWith(getKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
