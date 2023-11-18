@@ -10,12 +10,9 @@
   font-family: "BodyFont", sans-serif;
 }
 
-/* body {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100vh;
-} */
+body {
+  background-color: #f2ebc3;
+}
 
 h2 {
   font-size: 30px;

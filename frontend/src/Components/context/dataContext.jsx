@@ -6,6 +6,8 @@ const DataContext = createContext();
 export const DataProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
 
+  const token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBob3RtYWlsLmNvbSIsImlhdCI6MTcwMDI1Mzk0OCwiZXhwIjoxNzA4MDI5OTQ4fQ.UN5LrttadKVTDf5HG9PDjlI3NwqKc2rTPBY3bNRUDCI';
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -13,6 +15,7 @@ export const DataProvider = ({ children }) => {
           {
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
             }
           }
         );
