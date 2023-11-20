@@ -4,23 +4,29 @@
   gather_facts: false
 
   tasks:
+    - name: Task 0 - Remove 'touruguay' directory if exists
+      ansible.builtin.file:
+        path: "/home/michael/touruguay"
+        state: absent
+      become: yes
+
     - name: Task 1 - Copy directories from Windows to WSL
       ansible.builtin.copy:
         src: "/mnt/d/OneDrive/Escritorio/proyecto/backend/toururuguay/"
-        dest: "/home/michael/toururuguay/"
+        dest: "/home/michael/touruguay/"
       become: no
 
     - name: Task 2 - Build JAR with Maven on WSL
       command: "mvn clean install -U -DskipTests"
       args:
-        chdir: "/home/michael/toururuguay"
+        chdir: "/home/michael/touruguay"
       async: 1800
       poll: 0
       register: build_result
 
     - name: Task 3 - Wait for JAR to be generated locally
       wait_for:
-        path: "/home/michael/toururuguay/target/toururuguay-0.0.1-SNAPSHOT.jar"
+        path: "/home/michael/touruguay/target/touruguay-0.0.1-SNAPSHOT.jar"
         state: present
       register: jar_generated
       timeout: 1800
@@ -37,36 +43,44 @@
       register: stop_result
       when: jar_generated.elapsed | default(0) < 1800
 
-    - name: Task 5 - Copy JAR from WSL to EC2
-      ansible.builtin.copy:
-        src: "/home/michael/toururuguay/target/toururuguay-0.0.1-SNAPSHOT.jar"
-        dest: "/home/ubuntu"
+    - name: Task 5 - Remove existing JAR file on EC2
+      ansible.builtin.file:
+        path: "/home/ubuntu/touruguay-0.0.1-SNAPSHOT.jar"
+        state: absent
       become: yes
-      when: jar_generated.elapsed | default(0) < 1800
+      when: stop_result.changed
 
-    - name: Task 6 - Start backend service on EC2
+    - name: Task 6 - Copy new JAR from WSL to EC2
+      ansible.builtin.copy:
+        src: "/home/michael/touruguay/target/touruguay-0.0.1-SNAPSHOT.jar"
+        dest: "/home/ubuntu/"
+        remote_src: yes
+      become: yes
+      when: jar_generated.elapsed | default(0) < 1800 and stop_result.changed
+
+    - name: Task 7 - Start backend service on EC2
       ansible.builtin.command:
         cmd: "sudo systemctl start backend.service"
       async: 600
       poll: 0
       ignore_errors: true
       register: start_result
-      when: jar_generated.elapsed | default(0) < 1800
+      when: jar_generated.elapsed | default(0) < 1800 and stop_result.changed
 
-    - name: Task 7 - Wait for service start to finish
+    - name: Task 8 - Wait for service start to finish
       async_status:
         jid: "{{ start_result.ansible_job_id }}"
       register: job_result
       until: job_result.finished
       retries: 60
       delay: 10
-      when: jar_generated.elapsed | default(0) < 1800
+      when: jar_generated.elapsed | default(0) < 1800 and stop_result.changed
 
-    - name: Check service status
+    - name: Task 9 - Check service status
       ansible.builtin.command:
         cmd: "sudo systemctl status backend.service"
       register: status_result
       until: status_result.rc == 0
       retries: 10
       delay: 5
-      when: job_result.finished
+      when: jar_generated.elapsed | default(0) < 1800 and stop_result.changed
