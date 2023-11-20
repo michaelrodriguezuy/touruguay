@@ -1,5 +1,8 @@
 package com.dh.toururuguay.persistence.dao.impl;
 
+import com.dh.toururuguay.dto.ProductDetailDTO;
+import com.dh.toururuguay.dto.ProductHomeDTO;
+import com.dh.toururuguay.dto.ProductImgDTO;
 import com.dh.toururuguay.model.Imagen;
 import com.dh.toururuguay.model.Producto;
 import com.dh.toururuguay.persistence.dao.IDao;
@@ -14,11 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 
-import java.awt.*;
-import java.io.IOException;
-import java.nio.file.Path;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class ProductoDao implements IDao<Producto> {
@@ -56,10 +57,89 @@ public class ProductoDao implements IDao<Producto> {
                 return null;
             }*/
     }
+
     @Override
     public Optional<Producto> buscar(Integer id) {
         return Optional.empty();
     }
+
+    @Transactional
+    public Optional<ProductDetailDTO> buscarProducto(Integer id) {
+
+        try {
+            List<Object[]> results = entityManager.createQuery(
+                            "SELECT i, p " +
+                                    "FROM Imagen i " +
+                                    "LEFT JOIN FETCH i.producto p " +
+                                    "WHERE p.product_id = :productId", Object[].class)
+                    .setParameter("productId", id)
+                    .getResultList();
+
+            if (!results.isEmpty()) {
+                Object[] result = results.get(0);
+                Imagen imagen = (Imagen) result[0];
+                Producto producto = (Producto) result[1];
+
+                ProductDetailDTO newDTO = new ProductDetailDTO();
+                newDTO.setProduct_id(producto.getProduct_id());
+                newDTO.setProduct_name(producto.getProduct_name());
+                newDTO.setDescription(producto.getDescription());
+
+                newDTO.setUrlImagen(imagen.getImageUrl());
+
+                return Optional.of(newDTO);
+            } else {
+                return Optional.empty();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Optional.empty();
+        }
+    }
+
+
+    @Transactional
+    public Optional<ProductImgDTO> buscarImgProducto(Integer id) {
+        try {
+            List<Object[]> results = entityManager.createQuery(
+                            "SELECT i, p " +
+                                    "FROM Imagen i " +
+                                    "LEFT JOIN FETCH i.producto p " +
+                                    "WHERE p.product_id = :productId", Object[].class)
+                    .setParameter("productId", id)
+                    .getResultList();
+
+            Map<Integer, ProductImgDTO> productoMap = new HashMap<>();
+
+            results.forEach(result -> {
+                Imagen imagen = (Imagen) result[0];
+                Producto producto = (Producto) result[1];
+
+                ProductImgDTO productImgDTO = productoMap.computeIfAbsent(producto.getProduct_id(), k -> {
+                    ProductImgDTO newDTO = new ProductImgDTO();
+                    newDTO.setProduct_id(producto.getProduct_id());
+                    newDTO.setUrlImagen(new ArrayList<>());
+                    return newDTO;
+                });
+
+                // Agrega la URL de la imagen al listado de URLs en el DTO
+                productImgDTO.getUrlImagen().add(imagen.getImageUrl());
+            });
+
+            if (!productoMap.isEmpty()) {
+                // Devuelve el primer elemento del mapa (ya que estamos buscando por un ID específico)
+                return Optional.of(productoMap.values().iterator().next());
+            } else {
+                return Optional.empty();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Optional.empty();
+        }
+    }
+
 
     private static Producto buscarProductoPorNombre(List<Producto> lista, String nombre) {
         for (Producto producto : lista) {
@@ -78,51 +158,86 @@ public class ProductoDao implements IDao<Producto> {
     @Override
     public List<Producto> buscarTodos() {
         try{
-//            return entityManager.createQuery("SELECT p FROM Producto p", Producto.class).getResultList();
-
             return entityManager.createQuery(
                             "SELECT p FROM Producto p " +
-                                    "LEFT JOIN FETCH p.category_id " +
-                                    "LEFT JOIN FETCH p.city_id", Producto.class)
+                                    "LEFT JOIN FETCH p.category " +
+                                    "LEFT JOIN FETCH p.city", Producto.class)
                     .getResultList();
-
-
         } catch (Exception e) {
             e.printStackTrace();
             return Collections.emptyList();
         }
     }
 
-    private List<Producto> productosTemporales = new ArrayList<>();
+
+    @Transactional
+    public List<ProductHomeDTO> buscarTodosDTO() {
+        try {
+            List<Object[]> results = entityManager.createQuery(
+                            "SELECT i, p " +
+                                    "FROM Imagen i " +
+                                    "LEFT JOIN FETCH i.producto p", Object[].class)
+                    .getResultList();
+
+            Map<Integer, ProductHomeDTO> productoMap = new HashMap<>();
+
+            results.forEach(result -> {
+                Imagen imagen = (Imagen) result[0];
+                Producto producto = (Producto) result[1];
+
+                ProductHomeDTO productHomeDTO = productoMap.computeIfAbsent(producto.getProduct_id(), k -> {
+                    ProductHomeDTO newDTO = new ProductHomeDTO();
+                    newDTO.setProduct_id(producto.getProduct_id());
+                    newDTO.setProduct_name(producto.getProduct_name());
+                    newDTO.setDescription(producto.getDescription());
+                    newDTO.setPrice(producto.getPrice());
+                    newDTO.setCity(producto.getCity().getCity_name());
+                    newDTO.setPais(producto.getCity().getCountry().getCountry_name());
+                    newDTO.setUrlImagen(new ArrayList<>());
+                    return newDTO;
+                });
+
+                // Agrega la URL de la imagen al listado de URLs en el DTO
+                productHomeDTO.getUrlImagen().add(imagen.getImageUrl());
+            });
+
+            return new ArrayList<>(productoMap.values());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
+
+    private List<ProductHomeDTO> productosTemporales = new ArrayList<ProductHomeDTO>();
     private static final Random RANDOM_GENERATOR = new Random();
 
-    public List<Producto> buscarProductosAleatorios(Integer cantidad) {
-        return buscarProductosAleatorios(cantidad.intValue());
-    }
+public List<ProductHomeDTO> buscarProductosAleatoriosDTO(int cantidad) {
+    List<ProductHomeDTO> productosDTO = buscarTodosDTO();
+    List<ProductHomeDTO> productosAleatoriosDTO = seleccionarProductosAleatoriosDTO(productosDTO, cantidad);
+    return productosAleatoriosDTO;
+}
     //devolver los datos necesarios, no todo el objeto
-    public List<Producto> buscarProductosAleatorios(int cantidad) {
-        List<Producto> productos = buscarTodos();
-        return seleccionarProductosAleatorios(productos, cantidad);
-    }
-    private List<Producto> seleccionarProductosAleatorios(List<Producto> todosLosProductos, int cantidad) {
-        List<Producto> productosNuevos = new ArrayList<>();
 
-        while (productosNuevos.size() < cantidad && !todosLosProductos.isEmpty()) {
-            int indiceAleatorio = RANDOM_GENERATOR.nextInt(todosLosProductos.size());
-            Producto productoAleatorio = todosLosProductos.remove(indiceAleatorio);
+    private List<ProductHomeDTO> seleccionarProductosAleatoriosDTO(List<ProductHomeDTO> todosLosProductosDTO, int cantidad) {
+        List<ProductHomeDTO> productosNuevosDTO = new ArrayList<>();
 
-            if (!productosTemporales.contains(productoAleatorio)) {
-                productosNuevos.add(productoAleatorio);
-                productosTemporales.add(productoAleatorio);
+        while (productosNuevosDTO.size() < cantidad && !todosLosProductosDTO.isEmpty()) {
+            int indiceAleatorio = RANDOM_GENERATOR.nextInt(todosLosProductosDTO.size());
+            ProductHomeDTO productHomeDTOAleatorio = todosLosProductosDTO.remove(indiceAleatorio);
+
+            if (!productosTemporales.contains(productHomeDTOAleatorio)) {
+                productosNuevosDTO.add(productHomeDTOAleatorio);
+                productosTemporales.add(productHomeDTOAleatorio);
             }
-       }
-        //si ya mostre todos los productos de mi base, reinicio la comparativa
-        if (todosLosProductos.size() < cantidad) {
-            // Reinicia la lista temporal si no puedo devolver la cantidad de productos nuevos
+        }
+
+        // si ya mostré todos los productos de mi base, reinicio la comparativa
+        if (todosLosProductosDTO.size() < cantidad) {
             reiniciarProductosTemporales();
         }
 
-        return productosNuevos;
+        return productosNuevosDTO;
     }
 
     private void reiniciarProductosTemporales() {
