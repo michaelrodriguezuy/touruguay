@@ -10,7 +10,7 @@ function Footer() {
                     <div className="scroll-p-0 m-0 md:mb-0">
                         <img className="w-20" src="TOURuguaySinFondo.png" alt="Logo" />
                     </div>
-                    <h5 className="text-center px-1 md:text-end md:ml-4 md:absolute md:right-1">
+                    <h5 className="text-left text-[#F2EBC3] px-1 md:text-end md:ml-4 md:absolute md:right-1">
                         © 2020-2023 TOURuguay, Inc. Todos los derechos reservados.
                     </h5>
                 </div>

@@ -42,13 +42,11 @@ const Formulario = () => {
         }
     };
     return (
-        <div className="flex items-center justify-center h-screen md:w-1/2">
+        <div className="relative top-[-100px] flex items-center justify-center md:w-1/2">
             <div className='mx-auto'>
-                <h2 className='text-3xl font-bold text-center my-4'>Crear cuenta</h2>
-                <form onSubmit={handleSubmit} className="bg-[#f2ebc3] p-8 rounded shadow-md">
+                <form onSubmit={handleSubmit} className="bg-gradient-to-t from-cyan-700 via-sky-200 to-cyan-700 p-8 rounded-lg">
                     <div className="mb-4">
-                        <label htmlFor="nombre" className="block text-gray-700 text-sm font-bold mb-2">
-                        </label>
+                    <img src="/public/TOURuguaySinFondo.png" class="h-80 w-auto block mx-auto" alt="Logo"/>
                         <input
                             placeholder='Nombre'
                             type="text"
@@ -77,7 +75,7 @@ const Formulario = () => {
                         <label htmlFor="correo" className="block text-gray-700 text-sm font-bold mb-2">
                         </label>
                         <input
-                            placeholder='Correo electrónico'
+                            placeholder='Correo electronico'
                             type="email"
                             id="correo"
                             className={`w-full px-3 py-2 border rounded-md ${errores.correo ? 'border-red-500' : 'border-gray-300'}`}
@@ -102,7 +100,7 @@ const Formulario = () => {
 
                     <button
                         type="submit"
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        className="block mx-auto bg-[#202A44] hover:bg-[#131928] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline "
                     >
                         Crear cuenta
                     </button>
