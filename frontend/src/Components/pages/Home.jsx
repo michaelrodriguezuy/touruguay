@@ -1,10 +1,8 @@
-import Cards from '../layout/cards/Cards'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../../App.css';
 import ProductCard from '../layout/ProductCard';
-import { useContext } from 'react'
-import { DataProvider, useData } from '../context/dataContext';
+import {  useData } from '../context/dataContext';
 
 const Home = () => {
 
@@ -39,7 +37,7 @@ const Home = () => {
             <section className="flex flex-col p-4">
                 <h2 className="text-center text-2xl p-10">Recomendados de esta semana</h2>
                 <div className="grid grid-cols-1 gap-2 width-full md:grid-cols-2 md:max-w-lg m-auto">
-                    {products.map((product) => (
+                    {products && products.map((product) => (
                         <ProductCard key={product.id} product={product} />
                     ))}
                 </div>

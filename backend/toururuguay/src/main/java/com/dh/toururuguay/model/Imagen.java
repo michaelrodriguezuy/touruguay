@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "image")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Imagen {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

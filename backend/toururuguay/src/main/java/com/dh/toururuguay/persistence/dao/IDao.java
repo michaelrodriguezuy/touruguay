@@ -11,8 +11,9 @@ public interface IDao<T> {
 
     Optional<T> buscar(Integer id);
     void eliminar(Integer id);
+
     List<T> buscarTodos();
-  List<T> buscarProductosAleatorios(Integer cantidad);
+
     T actualizar(T t);
 
 }

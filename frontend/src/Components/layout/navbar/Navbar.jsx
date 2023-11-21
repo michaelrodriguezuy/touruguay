@@ -41,12 +41,8 @@ function Navbar() {
           }`}
         >
           <ul className="flex lg:justify-end lg:gap-4 md:gap-4">
-            <li className="text-white hover:text-gray-300">
-              <Link to="/iniciarSesion">Iniciar Sesión</Link>
-            </li>
-            <li className="text-white hover:text-gray-300">
-              <Link to="/crearCuenta">Crear Cuenta</Link>
-            </li>
+            <li className="text-[#017999] hover:text-gray-300"><Link to="/iniciarSesion" >Iniciar Sesión</Link></li>
+            <li className="text-[#017999] hover:text-gray-300"><Link to="/crearCuenta" >Crear Cuenta</Link></li>
           </ul>
         </div>
       </nav>
