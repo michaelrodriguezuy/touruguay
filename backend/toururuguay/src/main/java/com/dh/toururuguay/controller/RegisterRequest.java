@@ -15,7 +15,6 @@ public class RegisterRequest {
     String username;
     String password;
     String name;
-    String lastname;
-    Ciudad city;
+    String lastname;    
     Rol rol;
 }
