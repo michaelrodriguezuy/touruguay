@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../../App.css";
-import ProductCard from "../layout/ProductCard";
+import ProductCard from "../layout/cards/ProductCard";
 
 import { useContext } from "react";
 import { DataContext } from "../context/Context.jsx";
