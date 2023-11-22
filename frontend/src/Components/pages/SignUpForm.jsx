@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { DataContext } from "../context/Context.jsx";
 
 const Formulario = () => {
     const [nombre, setNombre] = useState('');
@@ -6,6 +8,9 @@ const Formulario = () => {
     const [correo, setCorreo] = useState('');
     const [password, setPassword] = useState('');
     const [errores, setErrores] = useState({});
+   
+    const {registerUser} = useContext(DataContext);
+    const navigate = useNavigate();
 
     const validarFormulario = () => {
         let erroresLocales = {};
@@ -34,11 +39,30 @@ const Formulario = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        if (validarFormulario()) {
-            console.log('Formulario válido. Enviar datos...');
-        } else {
-            console.log('Formulario inválido. Corrige los errores.');
+        try {
+            if (validarFormulario()) {
+                console.log('Formulario válido. Enviando datos...');
+                registerUser({
+                    username: correo,
+                    password: password,
+                    name: nombre,
+                    lastname: apellido,
+                    rol: {"role_id":2} //por defecto se crea como user
+                });
+                                
+                if (registerUser !== null) {
+                    console.log('Usuario registrado con éxito.');
+                    navigate('/IniciarSesion');
+                } else {
+                    console.log('Error al registrar el usuario.');
+                } 
+                
+            } else {
+                console.log('Formulario inválido. Corrige los errores.');
+            }
+        }
+        catch (error) {
+            console.error('Error al registrar el usuario:', error);
         }
     };
     return (

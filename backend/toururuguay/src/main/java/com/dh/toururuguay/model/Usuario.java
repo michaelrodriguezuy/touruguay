@@ -36,11 +36,7 @@ public class Usuario implements UserDetails {
     @JoinColumn(name = "role_id")
     @JsonProperty("rol")
     private Rol rol;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "city_id")
-    private Ciudad city;
-
+    
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority((rol.getName())));
@@ -50,7 +46,6 @@ public class Usuario implements UserDetails {
     public String getUsername() {
         return username;
     }
-
 
     @Override
     public boolean isAccountNonExpired() {
