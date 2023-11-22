@@ -1,13 +1,27 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "../../../App.css";
 
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const { user, isLogged, handleLogout } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const Logout = () => {
+    try {
+      handleLogout();
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -41,8 +55,35 @@ function Navbar() {
           }`}
         >
           <ul className="flex lg:justify-end lg:gap-4 md:gap-4">
-            <li className="text-[#017999] hover:text-gray-300"><Link to="/iniciarSesion" >Iniciar Sesión</Link></li>
-            <li className="text-[#017999] hover:text-gray-300"><Link to="/crearCuenta" >Crear Cuenta</Link></li>
+            {/* Provisorio */}
+            {!isLogged ? (
+              <>                
+                <li className="text-[#017999] hover:text-gray-300">
+                  <Link to="/iniciarSesion">Iniciar Sesión</Link>
+                </li>
+                <li className="text-[#017999] hover:text-gray-300">
+                  <Link to="/crearCuenta">Crear Cuenta</Link>
+                </li>
+              </>
+            ) : (
+              <>
+                {user.name && user.lastname && (
+                  <>                  
+
+                    <li className="text-[#017999] hover:text-gray-300">
+                      {user.nombre} {user.apellido}
+                    </li>
+                    <li className="text-[#017999] hover:text-gray-300">
+                      {user.name[0]}
+                      {user.lastname[0]}
+                    </li>
+                    <li className="text-[#017999] hover:text-gray-300">
+                      <button onClick={Logout}>Cerrar Sesión</button>
+                    </li>
+                  </>
+                )}
+              </>
+            )}
           </ul>
         </div>
       </nav>

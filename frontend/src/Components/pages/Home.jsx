@@ -4,10 +4,10 @@ import "../../App.css";
 import ProductCard from "../layout/cards/ProductCard";
 
 import { useContext } from "react";
-import { DataContext } from "../context/Context.jsx";
+import { DataContext } from "../context/DataContext";
 
 const Home = () => {
-  const { products } = useContext(DataContext);
+  const { productsRandom } = useContext(DataContext);
 
   return (
     <section className="w-full flex flex-col">
@@ -40,8 +40,8 @@ const Home = () => {
           Recomendados de esta semana
         </h2>
         <div className="grid grid-cols-1 gap-2 width-full md:grid-cols-2 md:max-w-lg m-auto">
-          {products &&
-            products.map((product) => (
+          {productsRandom &&
+            productsRandom.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
         </div>
