@@ -2,22 +2,21 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
-import { DataProvider } from './Components/context/dataContext'
+
+import { DataContextComponent } from "../src/Components/context/Context.jsx";
+
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { BrowserRouter } from "react-router-dom";
-import AuthContextComponent from "./Components/context/AuthContext.jsx";
 
 library.add(fas);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-    <AuthContextComponent >
-      <DataProvider>
+      <DataContextComponent>
         <App />
-      </DataProvider>
-    </AuthContextComponent>
+      </DataContextComponent>
     </BrowserRouter>
   </React.StrictMode>
 );

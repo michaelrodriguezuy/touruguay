@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
+import { DataContext } from "../context/Context.jsx";
 
 const Formulario = () => {
     const [nombre, setNombre] = useState('');
@@ -8,8 +8,8 @@ const Formulario = () => {
     const [correo, setCorreo] = useState('');
     const [password, setPassword] = useState('');
     const [errores, setErrores] = useState({});
-
-    const {registerUser} = useContext(AuthContext);
+   
+    const {registerUser} = useContext(DataContext);
     const navigate = useNavigate();
 
     const validarFormulario = () => {
@@ -43,14 +43,20 @@ const Formulario = () => {
             if (validarFormulario()) {
                 console.log('Formulario válido. Enviando datos...');
                 registerUser({
-                    nombre,
-                    apellido,
-                    correo,
-                    password,
+                    username: correo,
+                    password: password,
+                    name: nombre,
+                    lastname: apellido,
                     rol: {"role_id":2} //por defecto se crea como user
                 });
-                console.log('Usuario registrado con éxito.');
-                navigate('/IniciarSesion');
+                                
+                if (registerUser !== null) {
+                    console.log('Usuario registrado con éxito.');
+                    navigate('/IniciarSesion');
+                } else {
+                    console.log('Error al registrar el usuario.');
+                } 
+                
             } else {
                 console.log('Formulario inválido. Corrige los errores.');
             }
