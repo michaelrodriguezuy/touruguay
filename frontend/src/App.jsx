@@ -9,6 +9,7 @@ import Navbar from "./Components/layout/navbar/Navbar";
 import Footer from "./Components/layout/footer/Footer";
 import Home from "./Components/pages/Home";
 import IniciarSesion from "./Components/pages/IniciarSesion";
+import Detalle from "./Components/pages/Detalle";
 
 library.add(fas);
 
@@ -19,7 +20,7 @@ function App() {
         <Route element={<Home />} />
         <Route element={<Footer />}>
           <Route path='IniciarSesion' element={<IniciarSesion />} />
-
+          <Route path= "Detalle" element= {<Detalle />} />
           {routes.map(({ id, path, Element }) => (
             <Route key={id} path={path} element={<Element />} />
           ))}

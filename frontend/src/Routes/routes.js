@@ -4,6 +4,7 @@ import About from "../Components/pages/About";
 import Home from "../Components/pages/Home";
 import IniciarSesion from "../Components/pages/IniciarSesion";
 import CrearCuenta from "../Components/pages/CrearCuenta";
+import Detalle from "../Components/pages/Detalle";
 
 export const routes = [
   {
@@ -23,5 +24,9 @@ export const routes = [
   {id: "crearCuenta",
   path: "/crearCuenta",
   Element: CrearCuenta,},
+
+  {id: "detalle",
+  path: "/detalle",
+  Element: Detalle,},
 
 ];
