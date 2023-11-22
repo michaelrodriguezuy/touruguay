@@ -1,10 +1,8 @@
-import Cards from '../layout/cards/Cards'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../../App.css';
-import ProductCard from '../layout/ProductCard';
-import { useContext } from 'react'
-import { DataProvider, useData } from '../context/dataContext';
+import ProductCard from '../layout/cards/ProductCard';
+import { useData } from '../context/dataContext';
 
 const Home = () => {
 
