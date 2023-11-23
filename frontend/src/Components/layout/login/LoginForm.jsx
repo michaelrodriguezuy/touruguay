@@ -69,7 +69,7 @@ const LoginForm = () => {
         >
           <div className="mb-4">
             <img
-              src="/public/TOURuguaySinFondo.png"
+              src="TOURuguaySinFondo.png"
               class="h-80 w-auto block mx-auto"
               alt="Logo"
             />
