@@ -1,10 +1,8 @@
 package com.dh.toururuguay.controller;
 
 import com.dh.toururuguay.service.AuthService;
-import com.dh.toururuguay.service.UsuarioService;
 
 import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
