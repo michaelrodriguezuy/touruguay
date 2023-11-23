@@ -6,6 +6,7 @@ import com.dh.toururuguay.dto.ProductImgDTO;
 import com.dh.toururuguay.model.Producto;
 import com.dh.toururuguay.service.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,6 +58,31 @@ public class ProductoController {
         }
     }
 
+    @PutMapping()
+    public ResponseEntity<Producto> actualizar(@RequestBody Producto producto) {
+        ResponseEntity<Producto> response = null;
+
+        if (producto.getProduct_id() != null && productoService.buscar(producto.getProduct_id()).isPresent())
+            response = ResponseEntity.ok(productoService.actualizar(producto));
+        else
+            response = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return response;
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminar(@PathVariable Integer id, @RequestParam(name = "eliminarImagenes", defaultValue = "false") boolean eliminarImagenes) {
+        ResponseEntity<String> response = null;
+
+        if (productoService.buscar(id).isPresent()) {
+
+            productoService.eliminar(id, eliminarImagenes);
+            response = ResponseEntity.status(HttpStatus.NO_CONTENT).body("Eliminado");
+        } else {
+            response = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        return response;
+    }
 
 
 

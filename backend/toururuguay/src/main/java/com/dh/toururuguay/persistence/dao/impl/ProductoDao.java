@@ -11,6 +11,8 @@ import com.dh.toururuguay.service.ImagenService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.NoResultException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +62,21 @@ public class ProductoDao implements IDao<Producto> {
 
     @Override
     public Optional<Producto> buscar(Integer id) {
-        return Optional.empty();
+        try {
+            Producto producto = entityManager.createQuery(
+                            "SELECT p FROM Producto p WHERE p.product_id = :prodId\n", Producto.class)
+                    .setParameter("prodId", id)
+                    .getSingleResult();
+
+            return Optional.ofNullable(producto);
+
+        } catch (NoResultException e) {
+            return Optional.empty();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Optional.empty();
+        }
     }
 
     @Transactional
@@ -151,8 +167,34 @@ public class ProductoDao implements IDao<Producto> {
     }
 
     @Override
-    public void eliminar(Integer id) {
+    public void eliminar(Integer id) {     
+    }
 
+    @Transactional    
+    public void eliminarProductoImagenes(Integer id, boolean eliminarImagenes) {
+            
+
+        try {
+            Producto producto = entityManager.find(Producto.class, id);
+
+//si el producto tiene asociaciones en la tabla images, aviso y espero respuesta del front
+if(buscarImgProducto(id).isPresent()){                
+    if (eliminarImagenes){
+                imagenService.eliminarImagenesDelProducto(producto);
+                 
+                 System.out.println("Se eliminaron las imagenes asociadas al producto");
+    }                                     
+} 
+            entityManager.remove(producto);
+
+       } catch (EntityNotFoundException e) {
+        
+        throw new RuntimeException("No se encontró el producto con ID: " + id, e);
+    } catch (Exception e) {
+        
+        throw new RuntimeException("Error al intentar eliminar el producto", e);
+    }
+            
     }
 
     @Override
@@ -244,9 +286,29 @@ public List<ProductHomeDTO> buscarProductosAleatoriosDTO(int cantidad) {
         productosTemporales.clear();
     }
 
+@Transactional
     @Override
     public Producto actualizar(Producto producto) {
-        return null;
+        try {
+            Producto productoEncontrado = entityManager.find(Producto.class, producto.getProduct_id());            
+
+            if (buscarProductoPorNombre(buscarTodos(), producto.getProduct_name()) != null) {
+                System.out.println("El nombre del producto ya existe");
+                return null;
+            } else {
+                productoEncontrado.setProduct_name(producto.getProduct_name());
+            }
+            
+            productoEncontrado.setDescription(producto.getDescription());
+            productoEncontrado.setPrice(producto.getPrice());
+            productoEncontrado.setCategory(producto.getCategory());
+            productoEncontrado.setCity(producto.getCity());
+            entityManager.merge(productoEncontrado);
+            return productoEncontrado;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

@@ -14,6 +14,7 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.GetUrlRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -83,5 +84,50 @@ return true;
             return Collections.emptyList();
         }
     }
+
+    public void eliminarImagenesDelProducto(Producto producto) {
+        try {
+
+        List<Imagen> imagenes = entityManager.createQuery(
+                "SELECT i FROM Imagen i WHERE i.producto.product_id = :productoId", Imagen.class)
+                .setParameter("productoId", producto.getProduct_id())
+                .getResultList();
+
+        for (Imagen imagen : imagenes) {
+            eliminarImagenS3(imagen.getImageUrl());
+        }
+
+            entityManager.createQuery("DELETE FROM Imagen i WHERE i.producto.product_id = :productoId")
+                    .setParameter("productoId", producto.getProduct_id())
+                    .executeUpdate();
+
+        } catch (Exception e) {
+            log.error("Error al eliminar las imágenes del producto", e);
+        }
+    }
+
+    //tambien quiero eliminar las imagenes de mi bucket S3
+    private void eliminarImagenS3(String imageUrl) {
+        try {
+            S3Client s3Client = S3Client.builder().region(Region.US_EAST_1).build();
+            String key = obtenerNombreKeyDesdeUrl(imageUrl);
+
+            DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
+                    .bucket(BUCKET_NAME)
+                    .key(key)
+                    .build();
+
+            s3Client.deleteObject(deleteObjectRequest);
+        } catch (Exception e) {
+            log.error("Error al eliminar la imagen del bucket S3", e);
+        }
+    }
+
+    private String obtenerNombreKeyDesdeUrl(String imageUrl) {
+    
+    String[] partesUrl = imageUrl.split("/");
+    return partesUrl[partesUrl.length - 1];
+}
+
 
 }

@@ -41,4 +41,15 @@ public class ProductoService {
     public List<ProductHomeDTO> buscarProductosAleatorios(Integer cantidad) {
             return productoDao.buscarProductosAleatoriosDTO(cantidad);
         }
+
+public Optional<Producto> buscar(Integer id) {
+        return productoDao.buscar(id);
+    }
+
+    public void eliminar(Integer id, boolean eliminarImagenes) {
+        productoDao.eliminarProductoImagenes(id, eliminarImagenes);
+    }
+    public Producto actualizar(Producto producto) {
+        return productoDao.actualizar(producto);
+    }
 }
