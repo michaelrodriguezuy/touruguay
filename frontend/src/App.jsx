@@ -1,6 +1,6 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { routes } from "./Routes/routes";
 import { routesLogged } from "./Routes/routesLogged";
 import Navbar from "./Components/layout/navbar/Navbar";

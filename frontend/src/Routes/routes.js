@@ -1,7 +1,7 @@
 //ir agregando segun las paginas que se vayan creando
 import Home from "../Components/pages/Home";
-import IniciarSesion from "../Components/pages/login/IniciarSesion";
-import CrearCuenta from "../Components/pages/registro/CrearCuenta";
+import Detalle from "../Components/pages/products/Detalle";
+import Galeria from "../Components/pages/products/Galeria";
 
 export const routes = [
   {
@@ -10,7 +10,16 @@ export const routes = [
     Element: Home,
   },
 
-  // { id: "iniciarSesion", path: "/iniciarSesion", Element: IniciarSesion },
-  // { id: "crearCuenta", path: "/crearCuenta", Element: CrearCuenta },
+  {
+    id: "detalle",
+    path: "/detalle",
+    Element: Detalle,
+  },
+
+  {
+    id: "galeria",
+    path: "/galeria",
+    Element: Galeria,
+  },
 
 ];
