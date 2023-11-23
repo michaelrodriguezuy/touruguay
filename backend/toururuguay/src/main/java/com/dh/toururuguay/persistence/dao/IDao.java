@@ -1,7 +1,5 @@
 package com.dh.toururuguay.persistence.dao;
 
-import com.dh.toururuguay.model.Imagen;
-
 import java.util.List;
 import java.util.Optional;
 

@@ -23,9 +23,6 @@ import java.io.InputStream;
 
 public class AuthController {
 
-    @Autowired
-    private UsuarioService usuarioService;
-
     private final AuthService authService;
 
     @PostMapping(value = "login")

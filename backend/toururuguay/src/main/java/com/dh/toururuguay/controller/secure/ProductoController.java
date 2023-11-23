@@ -10,12 +10,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/producto")
 public class ProductoController {
+
+    private static final Logger log = LoggerFactory.getLogger(ProductoController.class);
 
     @Autowired
     private ProductoService productoService;
@@ -26,13 +31,17 @@ public class ProductoController {
     }
 
     @GetMapping("/todosSinDTO")
-    public ResponseEntity<List<Producto>> buscarTodos(){
+    public ResponseEntity<List<Producto>> buscarTodos() {
         return ResponseEntity.ok(productoService.buscarTodos());
     }
 
     @GetMapping("/todos")
-    public ResponseEntity<List<ProductHomeDTO>> buscarTodosDTO(){
-        return ResponseEntity.ok(productoService.buscarTodosDTO());
+    public ResponseEntity<List<ProductHomeDTO>> buscarTodosDTO() {
+
+        List<ProductHomeDTO> productos = productoService.buscarTodosDTO();
+        log.info("Número de productos encontrados: {}", productos.size());
+        return ResponseEntity.ok(productos);
+
     }
 
     @GetMapping("/aleatorios")
@@ -70,7 +79,8 @@ public class ProductoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminar(@PathVariable Integer id, @RequestParam(name = "eliminarImagenes", defaultValue = "false") boolean eliminarImagenes) {
+    public ResponseEntity<String> eliminar(@PathVariable Integer id,
+            @RequestParam(name = "eliminarImagenes", defaultValue = "false") boolean eliminarImagenes) {
         ResponseEntity<String> response = null;
 
         if (productoService.buscar(id).isPresent()) {
@@ -83,7 +93,5 @@ public class ProductoController {
 
         return response;
     }
-
-
 
 }

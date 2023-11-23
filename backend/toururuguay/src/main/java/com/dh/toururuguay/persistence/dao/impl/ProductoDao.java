@@ -18,10 +18,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-
 import java.util.*;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 public class ProductoDao implements IDao<Producto> {
@@ -40,31 +38,34 @@ public class ProductoDao implements IDao<Producto> {
     @Transactional
     @Override
     public Producto guardar(Producto producto) {
-       // try {
-//llamo a buscarTodos y pregunto si el nombre ya existe
-            List<Producto> productos = new ArrayList<>();
-            productos = buscarTodos();
-            Producto productoEncontrado = buscarProductoPorNombre(productos, producto.getProduct_name());
-            if (productoEncontrado != null) {
-                System.out.println("El producto ya existe");
-                return null;
-            } else {
+        // try {
+        // llamo a buscarTodos y pregunto si el nombre ya existe
+        List<Producto> productos = new ArrayList<>();
+        productos = buscarTodos();
+        Producto productoEncontrado = buscarProductoPorNombre(productos, producto.getProduct_name());
+        if (productoEncontrado != null) {
+            System.out.println("El producto ya existe");
+            return null;
+        } else {
 
-                entityManager.persist(producto);
-                imagenService.guardarImagenesDelProducto(producto);
-                return producto;
-            }
-            /*}  catch(Exception e){
-                log.error("Error al guardar el producto", e);
-                return null;
-            }*/
+            entityManager.persist(producto);
+            log.info("Producto guardado con éxito");
+            imagenService.guardarImagenesDelProducto(producto);
+            return producto;
+        }
+        /*
+         * } catch(Exception e){
+         * log.error("Error al guardar el producto", e);
+         * return null;
+         * }
+         */
     }
 
     @Override
     public Optional<Producto> buscar(Integer id) {
         try {
             Producto producto = entityManager.createQuery(
-                            "SELECT p FROM Producto p WHERE p.product_id = :prodId\n", Producto.class)
+                    "SELECT p FROM Producto p WHERE p.product_id = :prodId\n", Producto.class)
                     .setParameter("prodId", id)
                     .getSingleResult();
 
@@ -84,10 +85,11 @@ public class ProductoDao implements IDao<Producto> {
 
         try {
             List<Object[]> results = entityManager.createQuery(
-                            "SELECT i, p " +
-                                    "FROM Imagen i " +
-                                    "LEFT JOIN FETCH i.producto p " +
-                                    "WHERE p.product_id = :productId", Object[].class)
+                    "SELECT i, p " +
+                            "FROM Imagen i " +
+                            "LEFT JOIN FETCH i.producto p " +
+                            "WHERE p.product_id = :productId",
+                    Object[].class)
                     .setParameter("productId", id)
                     .getResultList();
 
@@ -114,15 +116,15 @@ public class ProductoDao implements IDao<Producto> {
         }
     }
 
-
     @Transactional
     public Optional<ProductImgDTO> buscarImgProducto(Integer id) {
         try {
             List<Object[]> results = entityManager.createQuery(
-                            "SELECT i, p " +
-                                    "FROM Imagen i " +
-                                    "LEFT JOIN FETCH i.producto p " +
-                                    "WHERE p.product_id = :productId", Object[].class)
+                    "SELECT i, p " +
+                            "FROM Imagen i " +
+                            "LEFT JOIN FETCH i.producto p " +
+                            "WHERE p.product_id = :productId",
+                    Object[].class)
                     .setParameter("productId", id)
                     .getResultList();
 
@@ -144,7 +146,8 @@ public class ProductoDao implements IDao<Producto> {
             });
 
             if (!productoMap.isEmpty()) {
-                // Devuelve el primer elemento del mapa (ya que estamos buscando por un ID específico)
+                // Devuelve el primer elemento del mapa (ya que estamos buscando por un ID
+                // específico)
                 return Optional.of(productoMap.values().iterator().next());
             } else {
                 return Optional.empty();
@@ -156,10 +159,10 @@ public class ProductoDao implements IDao<Producto> {
         }
     }
 
-
     private static Producto buscarProductoPorNombre(List<Producto> lista, String nombre) {
         for (Producto producto : lista) {
             if (producto.getProduct_name().equals(nombre)) {
+                log.info("El nombre del producto ya existe");
                 return producto;
             }
         }
@@ -167,43 +170,43 @@ public class ProductoDao implements IDao<Producto> {
     }
 
     @Override
-    public void eliminar(Integer id) {     
+    public void eliminar(Integer id) {
     }
 
-    @Transactional    
+    @Transactional
     public void eliminarProductoImagenes(Integer id, boolean eliminarImagenes) {
-            
 
         try {
             Producto producto = entityManager.find(Producto.class, id);
 
-//si el producto tiene asociaciones en la tabla images, aviso y espero respuesta del front
-if(buscarImgProducto(id).isPresent()){                
-    if (eliminarImagenes){
-                imagenService.eliminarImagenesDelProducto(producto);
-                 
-                 System.out.println("Se eliminaron las imagenes asociadas al producto");
-    }                                     
-} 
+            // si el producto tiene asociaciones en la tabla images, aviso y espero
+            // respuesta del front
+            if (buscarImgProducto(id).isPresent()) {
+                if (eliminarImagenes) {
+                    imagenService.eliminarImagenesDelProducto(producto);
+                    log.info("Se eliminaron las imagenes asociadas al producto");
+                }
+            }
             entityManager.remove(producto);
+            log.info("Se eliminó el producto con éxito");
+        } catch (EntityNotFoundException e) {
 
-       } catch (EntityNotFoundException e) {
-        
-        throw new RuntimeException("No se encontró el producto con ID: " + id, e);
-    } catch (Exception e) {
-        
-        throw new RuntimeException("Error al intentar eliminar el producto", e);
-    }
-            
+            throw new RuntimeException("No se encontró el producto con ID: " + id, e);
+        } catch (Exception e) {
+
+            throw new RuntimeException("Error al intentar eliminar el producto", e);
+        }
+
     }
 
     @Override
     public List<Producto> buscarTodos() {
-        try{
+        try {
             return entityManager.createQuery(
-                            "SELECT p FROM Producto p " +
-                                    "LEFT JOIN FETCH p.category " +
-                                    "LEFT JOIN FETCH p.city", Producto.class)
+                    "SELECT p FROM Producto p " +
+                            "LEFT JOIN FETCH p.category " +
+                            "LEFT JOIN FETCH p.city",
+                    Producto.class)
                     .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
@@ -211,14 +214,14 @@ if(buscarImgProducto(id).isPresent()){
         }
     }
 
-
     @Transactional
     public List<ProductHomeDTO> buscarTodosDTO() {
         try {
             List<Object[]> results = entityManager.createQuery(
-                            "SELECT i, p " +
-                                    "FROM Imagen i " +
-                                    "LEFT JOIN FETCH i.producto p", Object[].class)
+                    "SELECT i, p " +
+                            "FROM Imagen i " +
+                            "LEFT JOIN FETCH i.producto p",
+                    Object[].class)
                     .getResultList();
 
             Map<Integer, ProductHomeDTO> productoMap = new HashMap<>();
@@ -246,22 +249,23 @@ if(buscarImgProducto(id).isPresent()){
             return new ArrayList<>(productoMap.values());
         } catch (Exception e) {
             e.printStackTrace();
+            log.error("Error al buscar todos los DTO", e);
             return Collections.emptyList();
         }
     }
 
-
     private List<ProductHomeDTO> productosTemporales = new ArrayList<ProductHomeDTO>();
     private static final Random RANDOM_GENERATOR = new Random();
 
-public List<ProductHomeDTO> buscarProductosAleatoriosDTO(int cantidad) {
-    List<ProductHomeDTO> productosDTO = buscarTodosDTO();
-    List<ProductHomeDTO> productosAleatoriosDTO = seleccionarProductosAleatoriosDTO(productosDTO, cantidad);
-    return productosAleatoriosDTO;
-}
-    //devolver los datos necesarios, no todo el objeto
+    public List<ProductHomeDTO> buscarProductosAleatoriosDTO(int cantidad) {
+        List<ProductHomeDTO> productosDTO = buscarTodosDTO();
+        List<ProductHomeDTO> productosAleatoriosDTO = seleccionarProductosAleatoriosDTO(productosDTO, cantidad);
+        return productosAleatoriosDTO;
+    }
+    // devolver los datos necesarios, no todo el objeto
 
-    private List<ProductHomeDTO> seleccionarProductosAleatoriosDTO(List<ProductHomeDTO> todosLosProductosDTO, int cantidad) {
+    private List<ProductHomeDTO> seleccionarProductosAleatoriosDTO(List<ProductHomeDTO> todosLosProductosDTO,
+            int cantidad) {
         List<ProductHomeDTO> productosNuevosDTO = new ArrayList<>();
 
         while (productosNuevosDTO.size() < cantidad && !todosLosProductosDTO.isEmpty()) {
@@ -286,24 +290,29 @@ public List<ProductHomeDTO> buscarProductosAleatoriosDTO(int cantidad) {
         productosTemporales.clear();
     }
 
-@Transactional
+    @Transactional
     @Override
     public Producto actualizar(Producto producto) {
         try {
-            Producto productoEncontrado = entityManager.find(Producto.class, producto.getProduct_id());            
+            Producto productoEncontrado = entityManager.find(Producto.class, producto.getProduct_id());
+            List<Producto> productos = new ArrayList<>();
+            productos = buscarTodos();
+            // quiero quitar del listado de productos el producto que estoy actualizando
+            productos.remove(productoEncontrado);
 
-            if (buscarProductoPorNombre(buscarTodos(), producto.getProduct_name()) != null) {
+            if (buscarProductoPorNombre(productos, producto.getProduct_name()) != null) {
                 System.out.println("El nombre del producto ya existe");
                 return null;
             } else {
                 productoEncontrado.setProduct_name(producto.getProduct_name());
             }
-            
+
             productoEncontrado.setDescription(producto.getDescription());
             productoEncontrado.setPrice(producto.getPrice());
             productoEncontrado.setCategory(producto.getCategory());
             productoEncontrado.setCity(producto.getCity());
             entityManager.merge(productoEncontrado);
+            log.info("Producto actualizado con éxito");
             return productoEncontrado;
         } catch (Exception e) {
             e.printStackTrace();

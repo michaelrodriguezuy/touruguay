@@ -1,7 +1,6 @@
 package com.dh.toururuguay.service;
 
 import com.dh.toururuguay.model.Categoria;
-import com.dh.toururuguay.model.Producto;
 import com.dh.toururuguay.persistence.dao.IDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

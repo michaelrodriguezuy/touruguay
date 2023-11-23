@@ -1,6 +1,5 @@
 package com.dh.toururuguay.persistence.dao.impl;
 
-import com.dh.toururuguay.dto.ProductDetailDTO;
 import com.dh.toururuguay.model.*;
 import com.dh.toururuguay.persistence.dao.IDao;
 import jakarta.persistence.EntityManager;
@@ -24,6 +23,7 @@ public class UsuarioDao implements IDao<Usuario> {
     @Override
     public Usuario guardar(Usuario usuario) {
         entityManager.persist(usuario);
+        log.info("Usuario guardado con éxito");
         return usuario;
     }
 

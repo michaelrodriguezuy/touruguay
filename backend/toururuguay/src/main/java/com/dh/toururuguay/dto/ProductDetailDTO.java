@@ -1,7 +1,5 @@
 package com.dh.toururuguay.dto;
 
-import java.util.List;
-
 public class ProductDetailDTO {
     private Integer product_id;
 
