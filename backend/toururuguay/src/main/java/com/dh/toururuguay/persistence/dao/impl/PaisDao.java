@@ -24,6 +24,7 @@ public class PaisDao implements IDao<Pais> {
     @Override
     public Pais guardar(Pais pais) {
             entityManager.persist(pais);
+            log.info("Pais guardado con éxito");
             return pais;
     }
 

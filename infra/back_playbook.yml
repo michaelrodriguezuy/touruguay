@@ -1,86 +1,62 @@
 ---
-- name: Build and deploy backend service
+- name: Deploy backend service to EC2
   hosts: localhost
   gather_facts: false
 
   tasks:
-    - name: Task 0 - Remove 'touruguay' directory if exists
-      ansible.builtin.file:
-        path: "/home/michael/touruguay"
-        state: absent
-      become: yes
-
-    - name: Task 1 - Copy directories from Windows to WSL
+    - name: Task 1 - Copy JAR from local to WSL
       ansible.builtin.copy:
-        src: "/mnt/d/OneDrive/Escritorio/proyecto/backend/toururuguay/"
-        dest: "/home/michael/touruguay/"
+        src: "/mnt/d/OneDrive/Escritorio/proyecto/backend/toururuguay/target/touruguay-0.0.1-SNAPSHOT.jar"
+        dest: "/home/michael/touruguay-0.0.1-SNAPSHOT.jar"
+        remote_src: yes
       become: no
 
-    - name: Task 2 - Build JAR with Maven on WSL
-      command: "mvn clean install -U -DskipTests"
-      args:
-        chdir: "/home/michael/touruguay"
-      async: 1800
-      poll: 0
-      register: build_result
-
-    - name: Task 3 - Wait for JAR to be generated locally
+    - name: Task 2 - Wait for JAR to be copied to WSL
       wait_for:
-        path: "/home/michael/touruguay/target/touruguay-0.0.1-SNAPSHOT.jar"
+        path: "/home/michael/touruguay-0.0.1-SNAPSHOT.jar"
         state: present
-      register: jar_generated
       timeout: 1800
-      when: build_result.finished
 
-- name: Deploy backend service on EC2
+- name: Deploy and start backend service on EC2
   hosts: EC2
   gather_facts: false
 
   tasks:
-    - name: Task 4 - Stop backend service on EC2
+    - name: Task 3 - Stop backend service on EC2
       ansible.builtin.command:
         cmd: "sudo systemctl stop backend.service"
       register: stop_result
-      when: jar_generated.elapsed | default(0) < 1800
 
-    - name: Task 5 - Remove existing JAR file on EC2
-      ansible.builtin.file:
-        path: "/home/ubuntu/touruguay-0.0.1-SNAPSHOT.jar"
-        state: absent
+    - name: Task 4 - Copy JAR from WSL to EC2
+      ansible.builtin.copy:
+        src: "/home/michael/touruguay-0.0.1-SNAPSHOT.jar"
+        dest: "/home/ubuntu/"
       become: yes
       when: stop_result.changed
 
-    - name: Task 6 - Copy new JAR from WSL to EC2
-      ansible.builtin.copy:
-        src: "/home/michael/touruguay/target/touruguay-0.0.1-SNAPSHOT.jar"
-        dest: "/home/ubuntu/"
-        remote_src: yes
-      become: yes
-      when: jar_generated.elapsed | default(0) < 1800 and stop_result.changed
-
-    - name: Task 7 - Start backend service on EC2
+    - name: Task 5 - Start backend service on EC2
       ansible.builtin.command:
         cmd: "sudo systemctl start backend.service"
       async: 600
       poll: 0
       ignore_errors: true
       register: start_result
-      when: jar_generated.elapsed | default(0) < 1800 and stop_result.changed
+      when: stop_result.changed
 
-    - name: Task 8 - Wait for service start to finish
+    - name: Task 6 - Wait for service start to finish
       async_status:
         jid: "{{ start_result.ansible_job_id }}"
-      register: job_result
-      until: job_result.finished
+      register: async_status_result
+      until: async_status_result.finished
       retries: 60
       delay: 10
-      when: jar_generated.elapsed | default(0) < 1800 and stop_result.changed
+      when: stop_result.changed
 
-    - name: Task 9 - Check service status
+    - name: Task 7 - Check service status
       ansible.builtin.command:
         cmd: "sudo systemctl status backend.service"
       register: status_result
       until: status_result.rc == 0
       retries: 10
       delay: 5
-      when: jar_generated.elapsed | default(0) < 1800 and stop_result.changed
+      when: stop_result.changed

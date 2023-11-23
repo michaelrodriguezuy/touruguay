@@ -25,7 +25,8 @@ public class ProductoService {
         return productoDao.guardar(producto);
     }
 
-    //este lo uso para testear o probar cosas, me trae todos los productos tal cual estan en la base
+    // este lo uso para testear o probar cosas, me trae todos los productos tal cual
+    // estan en la base
     public List<Producto> buscarTodos() {
         return productoDao.buscarTodos();
     }
@@ -34,11 +35,27 @@ public class ProductoService {
         return productoDao.buscarTodosDTO();
     }
 
-    public Optional<ProductDetailDTO> buscarProducto(Integer id) {return productoDao.buscarProducto(id);}
+    public Optional<ProductDetailDTO> buscarProducto(Integer id) {
+        return productoDao.buscarProducto(id);
+    }
 
-    public Optional<ProductImgDTO> buscarImgProducto(Integer id) {return (productoDao.buscarImgProducto(id));}
+    public Optional<ProductImgDTO> buscarImgProducto(Integer id) {
+        return (productoDao.buscarImgProducto(id));
+    }
 
     public List<ProductHomeDTO> buscarProductosAleatorios(Integer cantidad) {
-            return productoDao.buscarProductosAleatoriosDTO(cantidad);
-        }
+        return productoDao.buscarProductosAleatoriosDTO(cantidad);
+    }
+
+    public Optional<Producto> buscar(Integer id) {
+        return productoDao.buscar(id);
+    }
+
+    public void eliminar(Integer id, boolean eliminarImagenes) {
+        productoDao.eliminarProductoImagenes(id, eliminarImagenes);
+    }
+
+    public Producto actualizar(Producto producto) {
+        return productoDao.actualizar(producto);
+    }
 }

@@ -56,4 +56,9 @@ public class ImagenService {
         // Puedes agregar más campos según sea necesario
         return dto;
     }
+
+    public void eliminarImagenesDelProducto(Producto producto){
+        imagenDao.eliminarImagenesDelProducto(producto);
+    }
+
 }

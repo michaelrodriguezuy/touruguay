@@ -1,7 +1,6 @@
 package com.dh.toururuguay.persistence.dao.impl;
 
 import com.dh.toururuguay.model.Favorito;
-import com.dh.toururuguay.model.Rol;
 import com.dh.toururuguay.persistence.dao.IDao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -26,6 +25,7 @@ public class FavoritoDao implements IDao<Favorito> {
     @Override
     public Favorito guardar(Favorito favorito) {
         entityManager.persist(favorito);
+        log.info("Favorito guardado con éxito");
         return favorito;
     }
 

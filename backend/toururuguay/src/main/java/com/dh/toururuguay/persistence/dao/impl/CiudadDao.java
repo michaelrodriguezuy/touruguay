@@ -1,7 +1,6 @@
 package com.dh.toururuguay.persistence.dao.impl;
 
 import com.dh.toururuguay.model.Ciudad;
-import com.dh.toururuguay.model.Pais;
 import com.dh.toururuguay.persistence.dao.IDao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -26,6 +25,7 @@ public class CiudadDao implements IDao<Ciudad> {
     @Override
     public Ciudad guardar(Ciudad ciudad) {
         entityManager.persist(ciudad);
+        log.info("Ciudad guardada con éxito");
         return ciudad;
     }
 
