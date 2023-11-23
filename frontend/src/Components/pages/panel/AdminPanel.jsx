@@ -4,8 +4,6 @@ import { DataContext } from "../../context/dataContext";
 
 export const AdminPanel = ({ product }) => {
   const { products } = useContext(DataContext);
-  
-  console.log(products);
 
   return (
     <>

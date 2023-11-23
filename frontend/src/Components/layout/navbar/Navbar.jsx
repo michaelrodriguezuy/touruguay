@@ -71,7 +71,7 @@ function Navbar() {
                   <>                  
 
                     <li className="text-[#017999] hover:text-gray-300">
-                      {user.nombre} {user.apellido}
+                      {user.name} {user.lastname}
                     </li>
                     <li className="text-[#017999] hover:text-gray-300">
                       {user.name[0]}
