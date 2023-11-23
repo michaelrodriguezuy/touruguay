@@ -2,8 +2,38 @@ import React from 'react'
 import MyCalendar from '../layout/MyCalendar'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link} from "react-router-dom";
+import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
-const Detalle = ({ product }) => {
+const Detalle = () => {
+
+    const [products, setProducts] = useState([]);
+    const { productId } = useParams();
+    const token =
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBob3RtYWlsLmNvbSIsImlhdCI6MTcwMDI1Mzk0OCwiZXhwIjoxNzA4MDI5OTQ4fQ.UN5LrttadKVTDf5HG9PDjlI3NwqKc2rTPBY3bNRUDCI";
+
+    const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+    };
+    
+    useEffect(() => {
+        const fetchProductById = async () => {
+            try {
+                const response = await axios.get(
+                    `http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto/${productId}`,
+                    { headers }
+                );
+                setProducts(response.data);
+            } catch (error) {
+                console.error("Error fetching product:", error);
+            }
+        };
+    
+        fetchProductById();
+    }, [productId])
+    
   return (
 <section className='w-screen'>
     <div className='flex justify-end pr-8 pt-4 '>
@@ -13,11 +43,13 @@ const Detalle = ({ product }) => {
     </div>
     <section className="flex flex-wrap w-screen justify-center ">
         <section>
-            <h1 className='text-3xl pl-8'> {product.product_name} </h1>
-            <img className='p-8' src={product.urlImagen} />
-            <h2 className='pl-8 pb-4 text-xl'>Experiencia en Punta del Este, Uruguay</h2>
-            <p className='pl-8 pb-4'> {product.description}</p>
-            <h2 className='pl-8 pb-4 text-xl'> Desde $950 </h2>
+            <h1 className='text-3xl sm:pl-8 text-center sm:text-left'> {products.product_name} </h1>
+            <div className="">
+            <img className='p-8 max-w-2xl' src={products.urlImagen} />
+            </div>
+            <h2 className='sm:pl-8 pb-4 text-xl text-center sm:text-left'>SUBTÍTULO</h2>
+            <p className='sm:pl-8 pb-4 text-center sm:text-left'> {products.description}</p>
+            <h2 className='sm:pl-8 pb-4 text-xl text-center sm:text-left'> Desde PRECIO </h2>
         </section>
         <section className='pt-16' >
             <div className="grid gap-2 grid-cols-2 grid-rows-2 mx-12">
@@ -26,7 +58,7 @@ const Detalle = ({ product }) => {
                 <img className= "w-72 h-full shadow-md" src="https://s3-alpha-sig.figma.com/img/9733/5626/396dc7e9ef9bfb2e27cfd2b442aac405?Expires=1701043200&Signature=BA0DMQWKMXXW7qh0R6hSFTGpVXdJmyoSpkH0H7WVnsGH6TMRNlxxN7v968e0rcwfB2W-iSaLWfMY57SqbRlKqkuPhp1FLMrM-wGM64Cl1acLOQtiTcqGR~wgbBmfD7OMZf96Vu799yodnrcP~KNjz37uSWpg-cccFkKr1fz4pX7tsnxY6ftUJG0x-psucjTcviTj-aZ0RxzaJ0ylPeVV1mH~eLtSXJY~N6gsq6xfcMQu39EDLhmRScmBw-j40uyngAb73SQfCCBEjJIe1QmV3fMzwZt-FYJgjBWAz7LJbFdG8fM06kM1YvysyedR2~LIrN5FmTk83DvtRV3jBgN5Hg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4" alt="plato" />
                 <img className= "w-72 shadow-md h-full" src="https://s3-alpha-sig.figma.com/img/2f79/810c/fd89500b6c191f3b0ab51a06d00eb8a1?Expires=1701043200&Signature=BdbLw1zrZU8Xd7EEiMgYFt2d3o8TDFiWmyo4CDzBC1DqRFaMxWoPY56fBzp3toYbKxPqD7n8IuBRJdmnRm33vUJqUeYKVjrgFkKP1ZZbQV-PV-Tkv9B8fEGoBMsT4GxWIBLrlrtRgzTj8hfmHBRvfcDlWf-9TQOQh-3e3fAA-2lfuSyk2PTjY9Qw~~mlv1TylX1LZq~fiAImPdCu4Ky9eCnTi7p7SlxXunSV1qHyBZXUW9dZf07MTyoFdGPijNe27CcNnDRk~Q16HrhgjdwTzl7zO~wFTyoU7N6C7YCqrRl1l3rgxNuW16VJfFBf9BN70qvKW2bw~nPsU3CywaP8tw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4" alt="postre" />
             </div>    
-                <p className='flex justify-end hover:text-gray-600 cursor-pointer pt-2 mr-12'> <Link to="/galeria" >Ver más...</Link> </p>
+                <p className='flex justify-end hover:text-gray-600 cursor-pointer pt-2 mr-12'> <Link to= {`/galeria/${productId}`} >Ver más...</Link> </p>
                 <MyCalendar></MyCalendar> 
                 <div className='flex justify-end pb-4'>
                     <button className='rounded-xl bg-[#017999] text-white h-10 w-36 pt-2 mr-12'> Lo quiero! </button>
@@ -37,7 +69,7 @@ const Detalle = ({ product }) => {
     )
 }
 
-export default Detalle
+export default Detalle;
 
 
 //Experiencia gastronómica

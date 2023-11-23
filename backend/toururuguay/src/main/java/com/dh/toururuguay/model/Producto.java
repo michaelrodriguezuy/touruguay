@@ -1,9 +1,7 @@
 package com.dh.toururuguay.model;
 
 import jakarta.persistence.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -16,30 +14,37 @@ public class Producto {
 
     private String product_name;
     private String description;
+    //private String address;
+    private Double price;
     private String address;
-    private Integer score;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "category_id")
-    private Categoria category_id;
-    @ManyToOne(fetch = FetchType.LAZY)
+    private Categoria category;
+    @ManyToOne()
     @JoinColumn(name = "city_id")
-    private Ciudad city_id;
+    private Ciudad city;
 
 public Producto(){
 
 }
 
-    public Producto(Integer product_id, String product_name, String description, String address, Integer score, Categoria category_id, Ciudad city_id) {
+    public Producto(Integer product_id, String product_name, String description, Double price, Categoria category, Ciudad city, String address) {
         this.product_id = product_id;
         this.product_name = product_name;
         this.description = description;
-        this.address = address;
-        this.score = score;
-        this.category_id = category_id;
-        this.city_id = city_id;
+        this.price = price;
+        this.category = category;
+        this.city = city;
+        this.address=address;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public Integer getProduct_id() {
         return product_id;
@@ -65,36 +70,29 @@ public Producto(){
         this.description = description;
     }
 
-    public String getAddress() {
-        return address;
+
+    public Double getPrice() {
+        return price;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
-    public Integer getScore() {
-        return score;
+    public Categoria getCategory() {
+        return category;
     }
 
-    public void setScore(Integer score) {
-        this.score = score;
+    public void setCategory(Categoria category) {
+        this.category = category;
     }
 
-    public Categoria getCategory_id() {
-        return category_id;
+    public Ciudad getCity() {
+        return city;
     }
 
-    public void setCategory_id(Categoria category_id) {
-        this.category_id = category_id;
-    }
-
-    public Ciudad getCity_id() {
-        return city_id;
-    }
-
-    public void setCity_id(Ciudad city_id) {
-        this.city_id = city_id;
+    public void setCity(Ciudad city) {
+        this.city = city;
     }
 
 
@@ -105,10 +103,10 @@ public Producto(){
                 "product_id=" + product_id +
                 ", product_name='" + product_name + '\'' +
                 ", description='" + description + '\'' +
-                ", address='" + address + '\'' +
-                ", score=" + score +
-                ", category_id=" + category_id +
-                ", city_id=" + city_id +
+                ", price=" + price +
+                ", category=" + category +
+                ", city=" + city +
+                ", address=" + address +
                 '}';
     }
 

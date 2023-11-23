@@ -56,6 +56,8 @@ public class ImagenDao {
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                     .bucket(BUCKET_NAME)
                     .key(nombreImagen)
+                    .contentType(imagen.getContentType())
+                    .contentDisposition("inline")
                     .build();
             s3Client.putObject(putObjectRequest, RequestBody.fromInputStream(imagen.getInputStream(), imagen.getSize()));
 
