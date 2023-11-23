@@ -6,8 +6,9 @@
   tasks:
     - name: Task 1 - Copy JAR from local to WSL
       ansible.builtin.copy:
-        src: "/mnt/d/OneDrive/Escritorio/proyecto/backend/touruguay/target/touruguay-0.0.1-SNAPSHOT.jar"
-        dest: "/home/michael/"
+        src: "/mnt/d/OneDrive/Escritorio/proyecto/backend/toururuguay/target/touruguay-0.0.1-SNAPSHOT.jar"
+        dest: "/home/michael/touruguay-0.0.1-SNAPSHOT.jar"
+        remote_src: yes
       become: no
 
     - name: Task 2 - Wait for JAR to be copied to WSL
@@ -31,7 +32,7 @@
         src: "/home/michael/touruguay-0.0.1-SNAPSHOT.jar"
         dest: "/home/ubuntu/"
       become: yes
-      when: jar_generated.elapsed | default(0) < 1800 and stop_result.changed
+      when: stop_result.changed
 
     - name: Task 5 - Start backend service on EC2
       ansible.builtin.command:
@@ -40,15 +41,16 @@
       poll: 0
       ignore_errors: true
       register: start_result
-      when: jar_generated.elapsed | default(0) < 1800 and stop_result.changed
+      when: stop_result.changed
 
     - name: Task 6 - Wait for service start to finish
       async_status:
-        jid: "{{ ansible_job_id }}"
-      until: async_status.finished
+        jid: "{{ start_result.ansible_job_id }}"
+      register: async_status_result
+      until: async_status_result.finished
       retries: 60
       delay: 10
-      when: jar_generated.elapsed | default(0) < 1800 and stop_result.changed
+      when: stop_result.changed
 
     - name: Task 7 - Check service status
       ansible.builtin.command:
@@ -57,4 +59,4 @@
       until: status_result.rc == 0
       retries: 10
       delay: 5
-      when: jar_generated.elapsed | default(0) < 1800 and stop_result.changed
+      when: stop_result.changed
