@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
-import java.util.List;
 
 @Repository
 public class ProductoDao implements IDao<Producto> {
@@ -81,38 +80,40 @@ public class ProductoDao implements IDao<Producto> {
     }
 
     @Transactional
-    public Optional<ProductDetailDTO> buscarProducto(Integer id) {
-
+    public List<ProductHomeDTO> buscarTodosDTO() {
         try {
             List<Object[]> results = entityManager.createQuery(
-                    "SELECT i, p " +
-                            "FROM Imagen i " +
-                            "LEFT JOIN FETCH i.producto p " +
-                            "WHERE p.product_id = :productId",
+                    "SELECT p, i " +
+                            "FROM Producto p " +
+                            "LEFT JOIN Imagen i ON i.id = (SELECT MIN(ii.id) FROM Imagen ii WHERE ii.producto = p) " +
+                            "WHERE i IS NOT NULL",
                     Object[].class)
-                    .setParameter("productId", id)
                     .getResultList();
+            log.info("Cantidad de productos encontrados: {}", results.size());
 
-            if (!results.isEmpty()) {
-                Object[] result = results.get(0);
-                Imagen imagen = (Imagen) result[0];
-                Producto producto = (Producto) result[1];
+            List<ProductHomeDTO> productHomeDTO = new ArrayList<>();
 
-                ProductDetailDTO newDTO = new ProductDetailDTO();
+            results.forEach(result -> {
+
+                Producto producto = (Producto) result[0];
+                Imagen imagen = (Imagen) result[1];
+
+                ProductHomeDTO newDTO = new ProductHomeDTO();
                 newDTO.setProduct_id(producto.getProduct_id());
                 newDTO.setProduct_name(producto.getProduct_name());
                 newDTO.setDescription(producto.getDescription());
-
+                newDTO.setPrice(producto.getPrice());
+                newDTO.setCity(producto.getCity().getCity_name());
+                newDTO.setPais(producto.getCity().getCountry().getCountry_name());
                 newDTO.setUrlImagen(imagen.getImageUrl());
-
-                return Optional.of(newDTO);
-            } else {
-                return Optional.empty();
-            }
+                productHomeDTO.add(newDTO);
+            });
+            return productHomeDTO;
 
         } catch (Exception e) {
             e.printStackTrace();
-            return Optional.empty();
+            log.error("Error al buscar los productos", e);
+            return Collections.emptyList();
         }
     }
 
@@ -215,42 +216,44 @@ public class ProductoDao implements IDao<Producto> {
     }
 
     @Transactional
-    public List<ProductHomeDTO> buscarTodosDTO() {
+    public Optional<ProductDetailDTO> buscarProducto(Integer id) {
+
         try {
             List<Object[]> results = entityManager.createQuery(
                     "SELECT i, p " +
                             "FROM Imagen i " +
-                            "LEFT JOIN FETCH i.producto p",
+                            "LEFT JOIN FETCH i.producto p " +
+                            "WHERE p.product_id = :productId",
                     Object[].class)
+                    .setParameter("productId", id)
                     .getResultList();
 
-            Map<Integer, ProductHomeDTO> productoMap = new HashMap<>();
+            ProductDetailDTO productDetailDTO = new ProductDetailDTO();
+            if (!results.isEmpty()) {
 
-            results.forEach(result -> {
-                Imagen imagen = (Imagen) result[0];
-                Producto producto = (Producto) result[1];
+                results.forEach(result -> {
+                    Imagen imagen = (Imagen) result[0];
+                    Producto producto = (Producto) result[1];
 
-                ProductHomeDTO productHomeDTO = productoMap.computeIfAbsent(producto.getProduct_id(), k -> {
-                    ProductHomeDTO newDTO = new ProductHomeDTO();
-                    newDTO.setProduct_id(producto.getProduct_id());
-                    newDTO.setProduct_name(producto.getProduct_name());
-                    newDTO.setDescription(producto.getDescription());
-                    newDTO.setPrice(producto.getPrice());
-                    newDTO.setCity(producto.getCity().getCity_name());
-                    newDTO.setPais(producto.getCity().getCountry().getCountry_name());
-                    newDTO.setUrlImagen(new ArrayList<>());
-                    return newDTO;
+                    productDetailDTO.setProduct_id(producto.getProduct_id());
+                    productDetailDTO.setProduct_name(producto.getProduct_name());
+                    productDetailDTO.setDescription(producto.getDescription());
+                    productDetailDTO.setPrice(producto.getPrice());
+                    productDetailDTO.setCity(producto.getCity().getCity_name());
+                    // productDetailDTO.setUrlImagen(new ArrayList<>());
+                    productDetailDTO.setPais(producto.getCity().getCountry().getCountry_name());
+                    // Agrega la URL de las imagenes al listado de URLs en el DetailDTO
+                    productDetailDTO.getUrlImagen().add(imagen.getImageUrl());
                 });
+            }
 
-                // Agrega la URL de la imagen al listado de URLs en el DTO
-                productHomeDTO.getUrlImagen().add(imagen.getImageUrl());
-            });
+            return Optional.of(productDetailDTO);
 
-            return new ArrayList<>(productoMap.values());
         } catch (Exception e) {
+
             e.printStackTrace();
-            log.error("Error al buscar todos los DTO", e);
-            return Collections.emptyList();
+            log.error("Error al buscar el detalle del producto", e);
+            return Optional.empty();
         }
     }
 

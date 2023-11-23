@@ -39,7 +39,6 @@ public class ProductoController {
     public ResponseEntity<List<ProductHomeDTO>> buscarTodosDTO() {
 
         List<ProductHomeDTO> productos = productoService.buscarTodosDTO();
-        log.info("Número de productos encontrados: {}", productos.size());
         return ResponseEntity.ok(productos);
 
     }
