@@ -12,13 +12,13 @@ export const routes = [
 
   {
     id: "detalle",
-    path: "/detalle",
+    path: "/detalle/:productId",
     Element: Detalle,
   },
 
   {
     id: "galeria",
-    path: "/galeria",
+    path: "/galeria/:productId",
     Element: Galeria,
   },
 

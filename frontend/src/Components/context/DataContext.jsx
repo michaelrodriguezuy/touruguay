@@ -8,6 +8,8 @@ const DataContextComponent = ({ children }) => {
   const [users, setUsers] = useState([]);
   const [productsRandom, setProductsRandom] = useState([]);
   const [products, setProducts] = useState([]);
+  const [product, setProduct] = useState();
+const [imgProduct, setImgProduct] = useState();
 
   const { user, tokenDevelop } = useContext(AuthContext);
 
@@ -59,6 +61,30 @@ const DataContextComponent = ({ children }) => {
     }
   };
 
+  const fetchProductById = async (productId) => {
+    try {
+      const response = await axios.get(
+        `http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto/${productId}`,
+        { headers }
+      );
+      setProduct(response.data);
+    } catch (error) {
+      console.error("Error fetching product:", error);
+    }
+  };
+
+  const fetchImgProductById = async (productId) => {
+    try {
+      const response = await axios.get(
+        `http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto/img/${productId}`,
+        { headers }
+      );
+      setImgProduct(response.data);
+    } catch (error) {
+      console.error("Error fetching product:", error);
+    }
+  };
+
   useEffect(() => {
     //fetchUsers();
     fetchProductsRandom();
@@ -79,13 +105,12 @@ const DataContextComponent = ({ children }) => {
   };
 
   const loginUser = async (user) => {
-    
     try {
       const response = await axios.post(
         "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/auth/login",
         user
       );
-    
+
       return response.data;
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -99,6 +124,10 @@ const DataContextComponent = ({ children }) => {
     users,
     productsRandom,
     products,
+    fetchProductById,
+    fetchImgProductById,
+    product,
+    imgProduct,
     registerUser,
     loginUser,
   };

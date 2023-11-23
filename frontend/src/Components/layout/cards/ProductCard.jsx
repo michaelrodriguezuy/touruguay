@@ -8,7 +8,7 @@ const ProductCard = ({ product }) => {
     <div className="w-full mx-auto bg-white shadow-lg rounded-lg overflow-hidden relative">
       <img
         className="w-full h-48 object-cover"
-        src={product.urlImagen[0]}
+        src={product.urlImagen}
         alt={product.product_name}
       />
       <div className="p-4">
