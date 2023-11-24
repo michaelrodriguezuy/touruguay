@@ -40,14 +40,18 @@ const LoginForm = () => {
         console.log("Formulario válido. Iniciando sesion...");
         const userLogged = await loginUser({
           username: email,
-          password: password,          
+          password: password,
         });
 
         if (userLogged !== null && userLogged !== undefined) {
           console.log("Usuario logueado con éxito.");
-          
+
           handleLogin(userLogged);
-          navigate("/");
+          if (userLogged && userLogged.rol === "Admin") {
+            navigate("/AdminPanel");
+          } else {
+            navigate("/");
+          }
         } else {
           console.log("Error al intentar loguearse.");
         }
