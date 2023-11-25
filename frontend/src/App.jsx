@@ -13,7 +13,6 @@ import CrearCuenta from "./Components/pages/registro/CrearCuenta";
 import ProtectedAdmin from "./Routes/ProtectedAdmin";
 import ProtectedUsers from "./Routes/ProtectedUsers";
 
-
 library.add(fas);
 
 function App() {
@@ -22,29 +21,20 @@ function App() {
       {/* Todos */}
       <Route element={<Navbar />}>
         <Route element={<Footer />}>
+          <Route path="IniciarSesion" element={<IniciarSesion />} />
+          <Route path="CrearCuenta" element={<CrearCuenta />} />
           {routes.map(({ id, path, Element }) => (
             <Route key={id} path={path} element={<Element />} />
           ))}
-        </Route>
-      </Route>
-      <Route path="IniciarSesion" element={<IniciarSesion />} />
-      <Route path="CrearCuenta" element={<CrearCuenta />} />
-
-      {/* Users logueados*/}
-      <Route element={<ProtectedUsers />}>
-        <Route element={<Navbar />}>
-          <Route element={<Footer />}>
+          {/* Users logueados*/}
+          <Route element={<ProtectedUsers />}>
             {routesLogged.map(({ id, path, Element }) => (
               <Route key={id} path={path} element={<Element />} />
             ))}
           </Route>
-        </Route>
-      </Route>
 
-      {/* Admin logueados*/}
-      <Route element={<ProtectedAdmin />}>
-        <Route element={<Navbar />}>
-          <Route element={<Footer />}>
+          {/* Admin logueados*/}
+          <Route element={<ProtectedAdmin />}>
             <Route path="AdminPanel" element={<AdminPanel />} />
           </Route>
         </Route>
