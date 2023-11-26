@@ -24,21 +24,28 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
 
     public AuthResponse login(LoginRequest request) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-        UserDetails user=userRepository.findByUsername(request.getUsername()).orElseThrow();
-        String token=jwtService.getToken(user);
+        try {
 
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+            UserDetails user=userRepository.findByUsername(request.getUsername()).orElseThrow();
+        String token=jwtService.getToken(user);
+        
         String name ="";
         String lastname = "";
 
         if (user instanceof Usuario) {
             Usuario usuario = (Usuario) user;
-             name = usuario.getName();
-             lastname = usuario.getLastname();
+            name = usuario.getName();
+            lastname = usuario.getLastname();
         }
-
+        
         //lo modifique para que la respuesta de login me devuelva el nombre y apellido del usuario.
         return AuthResponse.forLogin(token, name, lastname);
+    }
+        catch (Exception e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 
     public AuthResponse register(RegisterRequest request) {
@@ -46,8 +53,7 @@ public class AuthService {
                 .username(request.getUsername())
                 .password(passwordEncoder.encode( request.getPassword()))
                 .name(request.getName())
-                .lastname(request.getLastname())
-                .city(request.getCity())
+                .lastname(request.getLastname())                
                 .rol(request.getRol())
                 .build();
 

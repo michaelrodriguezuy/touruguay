@@ -24,6 +24,7 @@ public class UsuarioDao implements IDao<Usuario> {
     @Override
     public Usuario guardar(Usuario usuario) {
         entityManager.persist(usuario);
+        log.info("Usuario guardado con exito");
         return usuario;
     }
 
