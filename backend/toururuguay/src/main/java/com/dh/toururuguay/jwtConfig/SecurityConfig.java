@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
@@ -36,25 +38,19 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityConfigChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain securityConfigChain(HttpSecurity http) throws Exception {
 
         return http
+                .csrf(csrf -> csrf
+                        .disable())
                 .cors(withDefaults())
-                .csrf(csrf ->
-                        csrf
-                       .disable())
-                .authorizeHttpRequests(authRequest ->
-                        authRequest
-                       .requestMatchers("/auth/**").permitAll()
-                                .anyRequest().authenticated()
-                )
-                .sessionManagement(sessionManager->
-                        sessionManager
-                           .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(authRequest -> authRequest
+                        .requestMatchers("/auth/**").permitAll()
+                        .anyRequest().authenticated())
+                .sessionManagement(sessionManager -> sessionManager
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 }
-
-

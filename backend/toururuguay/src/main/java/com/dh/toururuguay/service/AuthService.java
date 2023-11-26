@@ -17,44 +17,49 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-    //private final UsuarioDao userRepository;
+    // private final UsuarioDao userRepository;
     private final UserRepository userRepository;
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
     public AuthResponse login(LoginRequest request) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-        UserDetails user=userRepository.findByUsername(request.getUsername()).orElseThrow();
-        String token=jwtService.getToken(user);
+        try {
 
-        String name ="";
-        String lastname = "";
-        String rol = "";
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+            UserDetails user = userRepository.findByUsername(request.getUsername()).orElseThrow();
+            String token = jwtService.getToken(user);
 
-        if (user instanceof Usuario) {
-            Usuario usuario = (Usuario) user;
-             name = usuario.getName();
-             lastname = usuario.getLastname();
-                rol = usuario.getRol().getName();
+            String name = "";
+            String lastname = "";
+
+            if (user instanceof Usuario) {
+                Usuario usuario = (Usuario) user;
+                name = usuario.getName();
+                lastname = usuario.getLastname();
+            }
+
+            // lo modifique para que la respuesta de login me devuelva el nombre y apellido
+            // del usuario.
+            return AuthResponse.forLogin(token, name, lastname);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-
-        //lo modifique para que la respuesta de login me devuelva el nombre y apellido del usuario.
-        return AuthResponse.forLogin(token, name, lastname, rol);
     }
 
     public AuthResponse register(RegisterRequest request) {
         Usuario user = Usuario.builder()
                 .username(request.getUsername())
-                .password(passwordEncoder.encode( request.getPassword()))
+                .password(passwordEncoder.encode(request.getPassword()))
                 .name(request.getName())
-                .lastname(request.getLastname())                
+                .lastname(request.getLastname())
                 .rol(request.getRol())
                 .build();
 
         userRepository.save(user);
 
-        //el retorno del registro el token generado
+        // el retorno del registro el token generado
         return AuthResponse.builder()
                 .token(jwtService.getToken(user))
                 .build();
