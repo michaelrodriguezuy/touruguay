@@ -27,7 +27,7 @@ function Navbar() {
   return (
     <>
       <nav className="flex flex-wrap items-center justify-between bg-[#202A44] p-4">
-        <div className="flex items-center flex-shrink-0 text-white mr-6">
+        <div className="flex items-center flex-shrink-0 text-white font-sans mr-6">
           <Link to="/">
             <img className="w-32" src="TOURuguaySinFondo.png" alt="Logo" />
           </Link>
@@ -59,7 +59,7 @@ function Navbar() {
             {!isLogged ? (
               <>                
                 <li className="text-[#017999] hover:text-gray-300">
-                  <Link to="/iniciarSesion">Iniciar Sesión</Link>
+                  <Link to="/iniciarSesion">Iniciar Sesion</Link>
                 </li>
                 <li className="text-[#017999] hover:text-gray-300">
                   <Link to="/crearCuenta">Crear Cuenta</Link>
@@ -69,17 +69,19 @@ function Navbar() {
               <>
                 {user.name && user.lastname && (
                   <>                  
-
-                    <li className="text-[#017999] hover:text-gray-300">
+                    <div>
+                    <li className="text-[#017999] text-[#017999]">
                       {user.name} {user.lastname}
                     </li>
                     <li className="text-[#017999] hover:text-gray-300">
+                      <button onClick={Logout}>Cerrar Sesion</button>
+                    </li>
+                    </div>
+                    <li className="w-10 h-10 flex items-center justify-center bg-gray-300 rounded-full">
                       {user.name[0]}
                       {user.lastname[0]}
                     </li>
-                    <li className="text-[#017999] hover:text-gray-300">
-                      <button onClick={Logout}>Cerrar Sesión</button>
-                    </li>
+                    
                   </>
                 )}
               </>

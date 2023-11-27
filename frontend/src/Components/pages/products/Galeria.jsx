@@ -18,7 +18,7 @@ const Galeria = () => {
   }
 
   return (
-    <section className="pb-10">
+    <section className="pb-10 bg-slate-200">
       <div className="flex justify-end pr-8 pt-4 pb-4 ">
         <Link to={`/detalle/${productId}`}>
           <FontAwesomeIcon
