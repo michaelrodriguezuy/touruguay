@@ -51,6 +51,11 @@ public class AuthService {
     }
 
     public AuthResponse register(RegisterRequest request) {
+
+        if (userRepository.existsByUsername(request.getUsername())) {
+            return new AuthResponse("La Cuenta de usuario ya existe");
+        }
+
         Usuario user = Usuario.builder()
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
@@ -61,9 +66,12 @@ public class AuthService {
 
         userRepository.save(user);
 
-        // el retorno del registro el token generado
+        String name = user.getName();
+
+        // el retorno del registro es el token generado y el nombre de usuario
         return AuthResponse.builder()
                 .token(jwtService.getToken(user))
+                .name(name)                
                 .build();
 
     }
