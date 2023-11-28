@@ -36,7 +36,11 @@ public class Usuario implements UserDetails {
     @JoinColumn(name = "role_id")
     @JsonProperty("rol")
     private Rol rol;
+<<<<<<< HEAD
+    
+=======
 
+>>>>>>> e4c6ec0b1d7ea3fe5ace8acd2f65e7671195bd85
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority((rol.getName())));
@@ -46,7 +50,6 @@ public class Usuario implements UserDetails {
     public String getUsername() {
         return username;
     }
-
 
     @Override
     public boolean isAccountNonExpired() {

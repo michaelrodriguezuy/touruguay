@@ -1,7 +1,6 @@
 package com.dh.toururuguay.persistence.dao.impl;
 
 import com.dh.toururuguay.model.Categoria;
-import com.dh.toururuguay.model.Producto;
 import com.dh.toururuguay.persistence.dao.IDao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

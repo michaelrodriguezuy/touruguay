@@ -44,15 +44,4 @@ const Galeria = () => {
 
 export default Galeria;
 
-/*
-<div className="grid gap-2 gap-y-8 grid-cols-2 grid-rows-3 justify-items-center">
-        {products.urlImagen.map((image, index) => (
-            <img 
-                key={index} 
-                className='w-1/2 h-full shadow-md' 
-                src={products.urlImagen} 
-                alt={`Imagen ${index + 1}`} />
-            ))}
-        </div> 
 
-*/

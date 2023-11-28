@@ -1,6 +1,5 @@
 package com.dh.toururuguay.controller;
 
-import com.dh.toururuguay.model.Ciudad;
 import com.dh.toururuguay.model.Rol;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
