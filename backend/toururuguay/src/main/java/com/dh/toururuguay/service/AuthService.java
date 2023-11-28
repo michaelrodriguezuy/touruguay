@@ -11,6 +11,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 
 import lombok.RequiredArgsConstructor;
 
@@ -45,8 +48,16 @@ public class AuthService {
             // lo modifique para que la respuesta de login me devuelva el nombre y apellido
             // del usuario.
             return AuthResponse.forLogin(token, name, lastname, rol);
+        } catch (BadCredentialsException e) {
+            // Excepción lanzada si las credenciales (nombre de usuario o contraseña) son
+            // incorrectas.
+            return AuthResponse.forError("Credenciales inválidas. Verifica tu nombre de usuario y/o contraseña.");
+        } catch (UsernameNotFoundException e) {
+            // Excepción lanzada si el nombre de usuario no se encuentra en el sistema.
+            return AuthResponse.forError("Nombre de usuario no encontrado.");
+
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return AuthResponse.forError("Error durante el proceso de autenticación.");
         }
     }
 
@@ -71,7 +82,7 @@ public class AuthService {
         // el retorno del registro es el token generado y el nombre de usuario
         return AuthResponse.builder()
                 .token(jwtService.getToken(user))
-                .name(name)                
+                .name(name)
                 .build();
 
     }
