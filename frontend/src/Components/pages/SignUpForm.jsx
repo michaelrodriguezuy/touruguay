@@ -8,8 +8,8 @@ const Formulario = () => {
     const [correo, setCorreo] = useState('');
     const [password, setPassword] = useState('');
     const [errores, setErrores] = useState({});
-   
-    const {registerUser} = useContext(DataContext);
+
+    const { registerUser } = useContext(DataContext);
     const navigate = useNavigate();
 
     const validarFormulario = () => {
@@ -47,16 +47,16 @@ const Formulario = () => {
                     password: password,
                     name: nombre,
                     lastname: apellido,
-                    rol: {"role_id":2} //por defecto se crea como user
+                    rol: { "role_id": 2 } //por defecto se crea como user
                 });
-                                
+
                 if (registerUser !== null) {
                     console.log('Usuario registrado con éxito.');
                     navigate('/IniciarSesion');
                 } else {
                     console.log('Error al registrar el usuario.');
-                } 
-                
+                }
+
             } else {
                 console.log('Formulario inválido. Corrige los errores.');
             }
@@ -70,7 +70,7 @@ const Formulario = () => {
             <div className='mx-auto'>
                 <form onSubmit={handleSubmit} className="bg-gradient-to-t from-cyan-700 via-sky-200 to-cyan-700 p-8 rounded-lg">
                     <div className="mb-4">
-                    <img src="/public/TOURuguaySinFondo.png" class="h-80 w-auto block mx-auto" alt="Logo"/>
+                        <img src="/TOURuguaySinFondo.png" class="h-80 w-auto block mx-auto" alt="Logo" />
                         <input
                             placeholder='Nombre'
                             type="text"

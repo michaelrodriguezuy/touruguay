@@ -12,16 +12,15 @@ function Navbar() {
 
   return (
     <>
-      <nav className="flex flex-wrap items-center justify-between bg-[#202A44] p-4">
+      <nav className="sticky top-0 z-50 flex flex-wrap items-center justify-between bg-[#202A44] pr-4">
         <div className="flex items-center flex-shrink-0 text-white mr-6">
           <Link to="/">
             <img className="w-32" src="TOURuguaySinFondo.png" alt="Logo" />
           </Link>
           <Link to="/">
             <h3
-              className={`ml-4 text-lg lg:text-xl hidden sm:block md:text-base ${
-                isMenuOpen ? "hidden" : ""
-              }`}
+              className={`ml-4 text-lg lg:text-xl hidden sm:block md:text-base ${isMenuOpen ? "hidden" : ""
+                }`}
             >
               Descubriendo el paisito
             </h3>
@@ -36,17 +35,18 @@ function Navbar() {
           </button>
         </div>
         <div
-          className={`lg:flex items-center space-x-2 ${
-            isMenuOpen ? "block" : "hidden"
-          }`}
+          className={`lg:flex items-center space-x-2 ${isMenuOpen ? "block" : "hidden"
+            }`}
         >
           <ul className="flex lg:justify-end lg:gap-4 md:gap-4">
-            <li className="text-[#017999] hover:text-gray-300"><Link to="/iniciarSesion" >Iniciar Sesión</Link></li>
-            <li className="text-[#017999] hover:text-gray-300"><Link to="/crearCuenta" >Crear Cuenta</Link></li>
+            <li className="text-[#017999] hover:text-gray-300 font-bold"><Link to="/iniciarSesion" >Iniciar Sesión</Link></li>
+            <li className="text-[#017999] hover:text-gray-300 font-bold"><Link to="/crearCuenta" >Crear Cuenta</Link></li>
           </ul>
         </div>
       </nav>
-      <Outlet />
+      <div>
+        <Outlet />
+      </div>
     </>
   );
 }

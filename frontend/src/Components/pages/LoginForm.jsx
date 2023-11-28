@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import App from '../../App.css';
+import App from '../../App.css?inline';
 
 const LoginForm = () => {
 
@@ -41,7 +41,7 @@ const LoginForm = () => {
                 <h2 className='text-3xl font-bold text-center my-4'></h2>
                 <form onSubmit={handleSubmit} className="bg-gradient-to-t from-cyan-700 via-sky-200 to-cyan-700 p-8 rounded-lg">
                     <div className="mb-4">
-                    <img src="/public/TOURuguaySinFondo.png" class="h-80 w-auto block mx-auto" alt="Logo"/>
+                        <img src="/TOURuguaySinFondo.png" class="h-80 w-auto block mx-auto" alt="Logo" />
                         <input
                             placeholder='Ingrese su correo electronico'
                             type="email"
