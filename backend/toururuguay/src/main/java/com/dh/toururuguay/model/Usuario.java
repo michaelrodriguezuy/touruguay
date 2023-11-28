@@ -37,10 +37,6 @@ public class Usuario implements UserDetails {
     @JsonProperty("rol")
     private Rol rol;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "city_id")
-    private Ciudad city;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority((rol.getName())));

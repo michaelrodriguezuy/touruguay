@@ -1,13 +1,27 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "../../../App.css";
 
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const { user, isLogged, handleLogout } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const Logout = () => {
+    try {
+      handleLogout();
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
