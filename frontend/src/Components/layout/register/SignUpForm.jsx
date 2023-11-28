@@ -52,8 +52,7 @@ const Formulario = () => {
           rol: { role_id: 2 }, //por defecto se crea como user
         });
 
-        if (resp !== null) {
-          console.log(resp)
+        if (resp !== null) {          
           if (resp.message) {
             Swal.fire({
               icon: "error",

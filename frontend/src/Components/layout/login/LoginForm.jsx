@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import { DataContext } from "../../context/DataContext";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
+import Swal from "sweetalert2";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -44,16 +45,22 @@ const LoginForm = () => {
         });
 
         if (userLogged !== null && userLogged !== undefined) {
-          console.log("Usuario logueado con éxito.");
-
-          handleLogin(userLogged);
-          if (userLogged && userLogged.rol === "Admin") {
-            navigate("/AdminPanel");
+          if (userLogged.error) {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: userLogged.error,
+            });
           } else {
-            navigate("/");
+            console.log("Usuario logueado con éxito.");
+
+            handleLogin(userLogged);
+            if (userLogged && userLogged.rol === "Admin") {
+              navigate("/AdminPanel");
+            } else {
+              navigate("/");
+            }
           }
-        } else {
-          console.log("Error al intentar loguearse.");
         }
       } else {
         console.log("Formulario inválido. Corrige los errores.");
