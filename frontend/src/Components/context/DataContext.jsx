@@ -9,16 +9,11 @@ const DataContextComponent = ({ children }) => {
   const [productsRandom, setProductsRandom] = useState([]);
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState();
-const [imgProduct, setImgProduct] = useState();
+  const [imgProduct, setImgProduct] = useState();
 
   const { user, tokenDevelop } = useContext(AuthContext);
 
-  let token;
-  if (user && user.token) {
-    token = user.token;
-  } else {
-    token = tokenDevelop;
-  }
+  const token = user && user.token ? user.token : tokenDevelop;
 
   const headers = {
     "Content-Type": "application/json",

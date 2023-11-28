@@ -12,14 +12,13 @@ public class ProductHomeDTO {
 
     private String pais;
 
+    private String urlImagen;
 
-    private List<String> urlImagen;
-
-    public List<String> getUrlImagen() {
+    public String getUrlImagen() {
         return urlImagen;
     }
 
-    public void setUrlImagen(List<String> urlImagen) {
+    public void setUrlImagen(String urlImagen) {
         this.urlImagen = urlImagen;
     }
 
@@ -47,7 +46,9 @@ public class ProductHomeDTO {
         this.description = description;
     }
 
-    public Double getPrice() {return price;}
+    public Double getPrice() {
+        return price;
+    }
 
     public void setPrice(Double price) {
         this.price = price;
@@ -72,7 +73,9 @@ public class ProductHomeDTO {
     public ProductHomeDTO() {
 
     }
-    public ProductHomeDTO(Integer product_id, String product_name, String description, Double price, String city, String pais, List<String> urlImagen) {
+
+    public ProductHomeDTO(Integer product_id, String product_name, String description, Double price, String city,
+            String pais, String urlImagen) {
         this.product_id = product_id;
         this.product_name = product_name;
         this.description = description;

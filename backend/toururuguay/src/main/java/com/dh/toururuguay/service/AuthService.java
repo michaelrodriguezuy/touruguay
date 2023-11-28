@@ -32,15 +32,22 @@ public class AuthService {
         
         String name ="";
         String lastname = "";
+        String rol = "";
 
         if (user instanceof Usuario) {
             Usuario usuario = (Usuario) user;
+<<<<<<< HEAD
+             name = usuario.getName();
+             lastname = usuario.getLastname();
+                rol = usuario.getRol().getName();
+=======
             name = usuario.getName();
             lastname = usuario.getLastname();
+>>>>>>> e4c6ec0b1d7ea3fe5ace8acd2f65e7671195bd85
         }
         
         //lo modifique para que la respuesta de login me devuelva el nombre y apellido del usuario.
-        return AuthResponse.forLogin(token, name, lastname);
+        return AuthResponse.forLogin(token, name, lastname, rol);
     }
         catch (Exception e)
         {

@@ -4,8 +4,6 @@ package com.dh.toururuguay.jwtConfig;
 import java.security.Key;
 import java.util.*;
 import java.util.function.Function;
-
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +33,7 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(user.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+(DEVELOPMENT_TOKEN)))
+                .setExpiration(new Date(System.currentTimeMillis()+(PRODUCTION_TOKEN)))
                 .signWith(getKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

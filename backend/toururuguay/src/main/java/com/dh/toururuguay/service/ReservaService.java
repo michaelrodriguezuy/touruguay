@@ -1,9 +1,7 @@
 package com.dh.toururuguay.service;
 
 import com.dh.toururuguay.model.Reserva;
-import com.dh.toururuguay.model.Rol;
 import com.dh.toururuguay.persistence.dao.impl.ReservaDao;
-import com.dh.toururuguay.persistence.dao.impl.RolDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

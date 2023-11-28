@@ -19,33 +19,33 @@ public class ImagenController {
     @Autowired
     private ImagenService imagenService;
 
-    //subirImagenS3
+    // subirImagenS3
     @PostMapping
-    public ResponseEntity<java.util.Map<java.lang.String, java.lang.String>> subirImagenS3(@RequestParam("imagen") List<MultipartFile> imagenes) {
-try {
+    public ResponseEntity<java.util.Map<java.lang.String, java.lang.String>> subirImagenS3(
+            @RequestParam("imagen") List<MultipartFile> imagenes) {
+        try {
 
-    boolean subidaExitosa = imagenService.subirImagenS3(imagenes);
-    Map<String, String> response = new HashMap<>();
+            boolean subidaExitosa = imagenService.subirImagenS3(imagenes);
+            Map<String, String> response = new HashMap<>();
 
-    if (subidaExitosa) {
-        response.put("mensaje", "Las imágenes se subieron exitosamente.");
-        return ResponseEntity.ok(response);
-    } else {
-        response.put("mensaje", "Error al subir las imágenes.");
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-    }
-    } catch (RuntimeException e) {
-        // Manejar la excepción según tus necesidades
-        Map<String, String> response = new HashMap<>();
-    response.put("mensaje", "Error al procesar y guardar las imágenes.");
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-    }
+            if (subidaExitosa) {
+                response.put("mensaje", "Las imágenes se subieron exitosamente.");
+                return ResponseEntity.ok(response);
+            } else {
+                response.put("mensaje", "Error al subir las imágenes.");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+            }
+        } catch (RuntimeException e) {
+            // Manejar la excepción según tus necesidades
+            Map<String, String> response = new HashMap<>();
+            response.put("mensaje", "Error al procesar y guardar las imágenes.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
     }
 
     @GetMapping("/todas")
-    public ResponseEntity<List<ImagenDTO>> buscarTodas(){
+    public ResponseEntity<List<ImagenDTO>> buscarTodas() {
         return ResponseEntity.ok(imagenService.buscarTodos());
     }
-
 
 }

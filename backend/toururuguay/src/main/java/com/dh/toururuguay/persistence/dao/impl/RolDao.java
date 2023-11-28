@@ -1,7 +1,6 @@
 package com.dh.toururuguay.persistence.dao.impl;
 
 import com.dh.toururuguay.model.Rol;
-import com.dh.toururuguay.model.Usuario;
 import com.dh.toururuguay.persistence.dao.IDao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -26,6 +25,7 @@ public class RolDao implements IDao<Rol> {
     @Override
     public Rol guardar(Rol rol) {
         entityManager.persist(rol);
+        log.info("Rol guardado con éxito");
         return rol;
     }
 

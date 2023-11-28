@@ -1,7 +1,6 @@
 package com.dh.toururuguay.persistence.dao.impl;
 
 import com.dh.toururuguay.model.Reserva;
-import com.dh.toururuguay.model.Rol;
 import com.dh.toururuguay.persistence.dao.IDao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -9,7 +8,6 @@ import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Collections;
 import java.util.List;
@@ -27,6 +25,7 @@ public class ReservaDao implements IDao<Reserva> {
     @Override
     public Reserva guardar(Reserva reserva) {
         entityManager.persist(reserva);
+        log.info("Reserva guardada con éxito");
         return reserva;
     }
 
