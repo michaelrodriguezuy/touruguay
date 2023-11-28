@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DataContext } from "../../context/DataContext.jsx";
+import Swal from "sweetalert2";
 
 const Formulario = () => {
   const [nombre, setNombre] = useState("");
@@ -38,12 +39,12 @@ const Formulario = () => {
     return Object.keys(erroresLocales).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (validarFormulario()) {
         console.log("Formulario válido. Enviando datos...");
-        registerUser({
+        const resp = await registerUser({
           username: correo,
           password: password,
           name: nombre,
@@ -51,11 +52,30 @@ const Formulario = () => {
           rol: { role_id: 2 }, //por defecto se crea como user
         });
 
-        if (registerUser !== null) {
-          console.log("Usuario registrado con éxito.");
-          navigate("/IniciarSesion");
+        if (resp !== null) {
+          console.log(resp)
+          if (resp.message) {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: resp.message,
+            });
+          } else {            
+            Swal.fire({
+              icon: "success",
+              title: resp.name + " tu cuenta ha sido creada con éxito.",
+              showConfirmButton: false,
+              timer: 2000,
+            });
+
+            navigate("/IniciarSesion");
+          }
         } else {
-          console.log("Error al registrar el usuario.");
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Error al registrar el usuario.",
+          });
         }
       } else {
         console.log("Formulario inválido. Corrige los errores.");

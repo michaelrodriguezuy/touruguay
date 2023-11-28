@@ -96,8 +96,7 @@ const [imgProduct, setImgProduct] = useState();
       const response = await axios.post(
         "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/auth/register",
         user
-      );
-
+      );      
       return response.data;
     } catch (error) {
       console.error("Error fetching data:", error);
