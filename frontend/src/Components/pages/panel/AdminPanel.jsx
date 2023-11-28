@@ -7,18 +7,18 @@ export const AdminPanel = ({ product }) => {
 
   return (
     <>
-      <div className="flex justify-end gap-4 p-4">
-        <button className="bg-[#e66a54] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full">
+      <div className="flex justify-end gap-4 p-4 bg-white">
+        <button className="bg-[#202A44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full">
           Agregar
         </button>
-        <button className="bg-[#e66a54] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full">
+        <button className="bg-[#202A44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full">
           Eliminar
         </button>
-        <button className="bg-[#e66a54] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full">
+        <button className="bg-[#202A44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full">
           Editar
         </button>
       </div>
-      <div class="flex flex-col items-center justify-center mb-5">
+      <div class="flex flex-col items-center justify-center mb-5 bg-white">
         <div class="overflow-x-auto shadow-md sm:rounded-lg">
           <table className="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700">
             <thead className="bg-gray-100 dark:bg-gray-700 text-white">
