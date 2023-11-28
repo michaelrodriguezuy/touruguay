@@ -1,6 +1,6 @@
 ###BACK###
 HELP.md
-target/
+backend/toururuguay/target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
@@ -60,3 +60,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+###INFRA###
+/infra/key_grupo2C12.pem
