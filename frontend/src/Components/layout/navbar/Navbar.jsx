@@ -70,15 +70,17 @@ function Navbar() {
                 {user.name && user.lastname && (
                   <>                  
 
-                    <li className="text-[#017999] hover:text-gray-300">
+<div>
+                    <li className="text-[#017999] text-[#017999]">
                       {user.name} {user.lastname}
                     </li>
                     <li className="text-[#017999] hover:text-gray-300">
+                      <button onClick={Logout}>Cerrar Sesion</button>
+                    </li>
+                    </div>
+                    <li className="w-10 h-10 flex items-center justify-center bg-gray-300 rounded-full">
                       {user.name[0]}
                       {user.lastname[0]}
-                    </li>
-                    <li className="text-[#017999] hover:text-gray-300">
-                      <button onClick={Logout}>Cerrar Sesión</button>
                     </li>
                   </>
                 )}
