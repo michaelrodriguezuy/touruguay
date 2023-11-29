@@ -27,7 +27,12 @@ public class ProductoController {
 
     @PostMapping
     public ResponseEntity<Producto> registrarProducto(@RequestBody Producto producto) {
-        return ResponseEntity.ok(productoService.registrarProducto(producto));
+        Producto productoGuardado = productoService.registrarProducto(producto);
+        if (productoGuardado != null) {
+            return ResponseEntity.ok(productoGuardado);
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null); // 409
+        }        
     }
 
     @GetMapping("/todosSinDTO")
