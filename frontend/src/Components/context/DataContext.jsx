@@ -33,7 +33,7 @@ const DataContextComponent = ({ children }) => {
       );
       setUsers(getUsers.data);
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error("Error obteniendo usuarios:", error);
     }
   };
 
@@ -45,7 +45,7 @@ const DataContextComponent = ({ children }) => {
       );
       setProductsRandom(productsRandom.data);
     } catch (error) {
-      console.error("Error fetching products:", error);
+      console.error("Error obteniendo productos random:", error);
     }
   };
 
@@ -55,10 +55,10 @@ const DataContextComponent = ({ children }) => {
         "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto/todos",
         { headers }
       );
-      
+
       setProducts(response.data);
     } catch (error) {
-      console.error("Error fetching products:", error);
+      console.error("Error obteniendo productos:", error);
     }
   };
 
@@ -70,7 +70,7 @@ const DataContextComponent = ({ children }) => {
       );
       setProduct(response.data);
     } catch (error) {
-      console.error("Error fetching product:", error);
+      console.error("Error obteniendo el producto:", error);
     }
   };
 
@@ -82,7 +82,7 @@ const DataContextComponent = ({ children }) => {
       );
       setImgProduct(response.data);
     } catch (error) {
-      console.error("Error fetching product:", error);
+      console.error("Error obteniendo las imagenes del producto:", error);
     }
   };
 
@@ -91,36 +91,58 @@ const DataContextComponent = ({ children }) => {
 
     imagen.forEach((image) => {
       formData.append("imagen", image.data, image.filename);
-    })   
+    });
 
     try {
       const responseImg = await axios.post(
         "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/imagen",
-         formData ,
+        formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,
           },
         }
-      );    
+      );
 
       const response = await axios.post(
         "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto",
         product,
         { headers }
       );
-      
+
       fetchProducts();
     } catch (error) {
-      console.error("Error creating product:", error);
+      console.error("Error creando el producto:", error);
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(
+        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/categoria/todas",
+        { headers }
+      );
+    } catch (error) {
+      console.error("Error obteniendo categorias:", error);
+    }
+  };
+
+  const fetchCities = async () => {
+    try {
+      const response = await axios.get(
+        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/ciudad/todas",
+        { headers }
+      );
+    } catch (error) {
+      console.error("Error obteniendo ciudades:", error);
     }
   };
 
   useEffect(() => {
-  //  fetchUsers();
+    //  fetchUsers();
     fetchProductsRandom();
-//    fetchProducts();
+    //    fetchProducts();
   }, [token]); //}, [token]);
 
   const registerUser = async (user) => {
@@ -131,7 +153,7 @@ const DataContextComponent = ({ children }) => {
       );
       return response.data;
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error registrando el usuario:", error);
     }
   };
 
@@ -162,6 +184,10 @@ const DataContextComponent = ({ children }) => {
     product,
     imgProduct,
     fetchAddProduct,
+
+    fetchCategories,
+    fetchCities,
+
     registerUser,
     loginUser,
   };

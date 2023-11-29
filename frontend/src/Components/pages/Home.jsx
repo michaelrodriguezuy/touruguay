@@ -3,11 +3,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../../App.css";
 import ProductCard from "../layout/cards/ProductCard";
 
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { DataContext } from "../context/dataContext";
 
 const Home = () => {
   const { productsRandom } = useContext(DataContext);
+
+  const itemsPerPage = 9;
+  const pageCount = Math.ceil(productsRandom.length / itemsPerPage);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const displayedProducts = productsRandom.slice(
+    currentPage * itemsPerPage,
+    (currentPage + 1) * itemsPerPage
+  );
+
+  const handlePageClick = ({ page }) => {
+    setCurrentPage(page);
+  };
 
   return (
     <section className="w-full flex flex-col">
@@ -42,7 +55,7 @@ const Home = () => {
         <div className="grid grid-cols-1 gap-4 width-full md:grid-cols-2 md:max-w-4xl m-auto">
           {productsRandom &&
             productsRandom.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product.product_id} product={product} />
             ))}
         </div>
       </section>
@@ -86,6 +99,51 @@ const Home = () => {
           </div>
         </div>
       </section>
+      
+      
+
+
+
+
+      <nav aria-label="Page navigation example">
+        <ul className="inline-flex -space-x-px text-sm">
+          <li>
+            <button
+              onClick={() => handlePageClick(currentPage - 1)}
+              disabled={currentPage === 0}
+              className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            >
+              Previous
+            </button>
+          </li>
+          
+          {Array.from({ length: pageCount }, (_, index) => (
+            <li key={index}>
+              <button
+                onClick={() => handlePageClick(index)}
+                className={`flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border ${
+                  index === currentPage
+                    ? "text-blue-600 bg-blue-50"
+                    : "hover:bg-gray-100 hover:text-gray-700"
+                } dark:border-gray-700 dark:bg-gray-700 dark:text-white`}
+              >
+                {index + 1}
+              </button>
+            </li>
+          ))}
+          <li>
+            <button
+              onClick={() => handlePageClick(currentPage + 1)}
+              disabled={currentPage === pageCount - 1}
+              className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border rounded-e-lg border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            >
+              Next
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+
     </section>
   );
 };
