@@ -57,7 +57,7 @@ function Navbar() {
           <ul className="flex lg:justify-end lg:gap-4 md:gap-4">
             {/* Provisorio */}
             {!isLogged ? (
-              <>                
+              <>
                 <li className="text-[#017999] hover:text-gray-300">
                   <Link to="/iniciarSesion">Iniciar Sesion</Link>
                 </li>
@@ -68,15 +68,14 @@ function Navbar() {
             ) : (
               <>
                 {user.name && user.lastname && (
-                  <>                  
-
-<div>
-                    <li className="text-[#017999] text-[#017999]">
-                      {user.name} {user.lastname}
-                    </li>
-                    <li className="text-[#017999] hover:text-gray-300">
-                      <button onClick={Logout}>Cerrar Sesion</button>
-                    </li>
+                  <>
+                    <div>
+                      <li className="text-[#017999] text-[#017999]">
+                        {user.name} {user.lastname}
+                      </li>
+                      <li className="text-[#017999] hover:text-gray-300">
+                        <button onClick={Logout}>Cerrar Sesion</button>
+                      </li>
                     </div>
                     <li className="w-10 h-10 flex items-center justify-center bg-gray-300 rounded-full">
                       {user.name[0]}

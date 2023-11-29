@@ -33,7 +33,7 @@ const DataContextComponent = ({ children }) => {
       );
       setUsers(getUsers.data);
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error("Error obteniendo usuarios:", error);
     }
   };
 
@@ -45,7 +45,7 @@ const DataContextComponent = ({ children }) => {
       );
       setProductsRandom(productsRandom.data);
     } catch (error) {
-      console.error("Error fetching products:", error);
+      console.error("Error obteniendo productos random:", error);
     }
   };
 
@@ -55,10 +55,14 @@ const DataContextComponent = ({ children }) => {
         "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto/todos",
         { headers }
       );
+<<<<<<< .merge_file_a25100
       
+=======
+
+>>>>>>> .merge_file_a30580
       setProducts(response.data);
     } catch (error) {
-      console.error("Error fetching products:", error);
+      console.error("Error obteniendo productos:", error);
     }
   };
 
@@ -70,7 +74,7 @@ const DataContextComponent = ({ children }) => {
       );
       setProduct(response.data);
     } catch (error) {
-      console.error("Error fetching product:", error);
+      console.error("Error obteniendo el producto:", error);
     }
   };
 
@@ -82,7 +86,72 @@ const DataContextComponent = ({ children }) => {
       );
       setImgProduct(response.data);
     } catch (error) {
-      console.error("Error fetching product:", error);
+      console.error("Error obteniendo las imagenes del producto:", error);
+    }
+  };
+
+  const fetchAddProduct = async (product, imagen) => {
+    const formData = new FormData();
+
+    imagen.forEach((image) => {
+      formData.append("imagen", image.data, image.filename);
+    });
+
+    try {
+      const responseImg = await axios.post(
+        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/imagen",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const response = await axios.post(
+        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto",
+        product,
+        { headers }
+      );
+      
+      if (response.status === 409) {
+        console.log("El producto ya existe");      
+      } else {      
+        fetchProducts();
+      }
+      return { success: true, data: response.data };
+
+    } catch (error) {
+      if (error.response && error.response.status === 409) {
+        return { success: false, error: { status: 409, message: "El producto ya existe" } };
+      } else {
+        return { success: false, error: { status: error.response.status, message: "Error desconocido" } };
+      }
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(
+        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/categoria/todas",
+        { headers }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error obteniendo categorias:", error);
+    }
+  };
+
+  const fetchCities = async () => {
+    try {
+      const response = await axios.get(
+        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/ciudad/todas",
+        { headers }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error obteniendo ciudades:", error);
     }
   };
 
@@ -118,9 +187,15 @@ const DataContextComponent = ({ children }) => {
   };
 
   useEffect(() => {
+<<<<<<< .merge_file_a25100
   //  fetchUsers();
     fetchProductsRandom();
 //    fetchProducts();
+=======
+    //  fetchUsers();
+    fetchProductsRandom();
+    //    fetchProducts();
+>>>>>>> .merge_file_a30580
   }, [token]); //}, [token]);
 
   const registerUser = async (user) => {
@@ -131,7 +206,7 @@ const DataContextComponent = ({ children }) => {
       );
       return response.data;
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error registrando el usuario:", error);
     }
   };
 
@@ -162,6 +237,13 @@ const DataContextComponent = ({ children }) => {
     product,
     imgProduct,
     fetchAddProduct,
+<<<<<<< .merge_file_a25100
+=======
+
+    fetchCategories,
+    fetchCities,
+
+>>>>>>> .merge_file_a30580
     registerUser,
     loginUser,
   };
