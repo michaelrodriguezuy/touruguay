@@ -33,8 +33,9 @@ function Navbar() {
           </Link>
           <Link to="/">
             <h3
-              className={`ml-4 text-lg lg:text-xl hidden sm:block md:text-base ${isMenuOpen ? "hidden" : ""
-                }`}
+              className={`ml-4 text-lg lg:text-xl hidden sm:block md:text-base ${
+                isMenuOpen ? "hidden" : ""
+              }`}
             >
               Descubriendo el paisito
             </h3>
@@ -49,18 +50,47 @@ function Navbar() {
           </button>
         </div>
         <div
-          className={`lg:flex items-center space-x-2 ${isMenuOpen ? "block" : "hidden"
-            }`}
+          className={`lg:flex items-center space-x-2 ${
+            isMenuOpen ? "block" : "hidden"
+          }`}
         >
           <ul className="flex lg:justify-end lg:gap-4 md:gap-4">
-            <li className="text-[#017999] hover:text-gray-300 font-bold"><Link to="/iniciarSesion" >Iniciar Sesión</Link></li>
-            <li className="text-[#017999] hover:text-gray-300 font-bold"><Link to="/crearCuenta" >Crear Cuenta</Link></li>
+            {/* Provisorio */}
+            {!isLogged ? (
+              <>                
+                <li className="text-[#017999] hover:text-gray-300">
+                  <Link to="/iniciarSesion">Iniciar Sesión</Link>
+                </li>
+                <li className="text-[#017999] hover:text-gray-300">
+                  <Link to="/crearCuenta">Crear Cuenta</Link>
+                </li>
+              </>
+            ) : (
+              <>
+                {user.name && user.lastname && (
+                  <>                  
+
+<div>
+                    <li className="text-[#017999] text-[#017999]">
+                      {user.name} {user.lastname}
+                    </li>
+                    <li className="text-[#017999] hover:text-gray-300">
+                      <button onClick={Logout}>Cerrar Sesion</button>
+                    </li>
+                    </div>
+                    <li className="w-10 h-10 flex items-center justify-center bg-gray-300 rounded-full">
+                      {user.name[0]}
+                      {user.lastname[0]}
+                    </li>
+                  </>
+                )}
+              </>
+            )}
           </ul>
         </div>
       </nav>
-      <div>
-        <Outlet />
-      </div>
+
+      <Outlet />
     </>
   );
 }

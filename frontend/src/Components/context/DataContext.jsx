@@ -13,7 +13,12 @@ const DataContextComponent = ({ children }) => {
 
   const { user, tokenDevelop } = useContext(AuthContext);
 
-  const token = user && user.token ? user.token : tokenDevelop;
+  let token;
+  if (user && user.token) {
+    token = user.token;
+  } else {
+    token = tokenDevelop;
+  }
 
   const headers = {
     "Content-Type": "application/json",
@@ -50,6 +55,7 @@ const DataContextComponent = ({ children }) => {
         "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto/todos",
         { headers }
       );
+      
       setProducts(response.data);
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -80,10 +86,41 @@ const DataContextComponent = ({ children }) => {
     }
   };
 
+  const fetchAddProduct = async (product, imagen) => {
+    const formData = new FormData();
+
+    imagen.forEach((image) => {
+      formData.append("imagen", image.data, image.filename);
+    })   
+
+    try {
+      const responseImg = await axios.post(
+        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/imagen",
+         formData ,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );    
+
+      const response = await axios.post(
+        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto",
+        product,
+        { headers }
+      );
+      
+      fetchProducts();
+    } catch (error) {
+      console.error("Error creating product:", error);
+    }
+  };
+
   useEffect(() => {
-    //fetchUsers();
+  //  fetchUsers();
     fetchProductsRandom();
-    fetchProducts();
+//    fetchProducts();
   }, [token]); //}, [token]);
 
   const registerUser = async (user) => {
@@ -91,7 +128,7 @@ const DataContextComponent = ({ children }) => {
       const response = await axios.post(
         "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/auth/register",
         user
-      );      
+      );
       return response.data;
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -120,8 +157,11 @@ const DataContextComponent = ({ children }) => {
     products,
     fetchProductById,
     fetchImgProductById,
+    fetchUsers,
+    fetchProducts,
     product,
     imgProduct,
+    fetchAddProduct,
     registerUser,
     loginUser,
   };

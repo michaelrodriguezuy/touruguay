@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { ProductTable } from './ProductTable';
-// import { UserTable } from './UserTable';
+import { UserTable } from './UserTable';
 import AddProduct from './AddProduct';
 
 
@@ -35,9 +35,9 @@ export const AdminPanel = ({ product }) => {
             {productShow && (
                 <ProductTable />
             )}
-            {/* {userShow && (
+            {userShow && (
                 <UserTable />
-            )} */}
+            )}
         </section>
     )
 }
