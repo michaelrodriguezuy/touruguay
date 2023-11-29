@@ -26,8 +26,8 @@ function Navbar() {
 
   return (
     <>
-      <nav className="flex flex-wrap items-center justify-between bg-[#202A44] p-4">
-        <div className="flex items-center flex-shrink-0 text-white font-sans mr-6">
+      <nav className="sticky top-0 z-10 flex flex-wrap items-center justify-between bg-[#202A44] pr-4 shadow-md">
+        <div className="flex items-center flex-shrink-0 text-white mr-6">
           <Link to="/">
             <img className="w-32" src="TOURuguaySinFondo.png" alt="Logo" />
           </Link>
@@ -69,7 +69,8 @@ function Navbar() {
               <>
                 {user.name && user.lastname && (
                   <>                  
-                    <div>
+
+<div>
                     <li className="text-[#017999] text-[#017999]">
                       {user.name} {user.lastname}
                     </li>
@@ -81,7 +82,6 @@ function Navbar() {
                       {user.name[0]}
                       {user.lastname[0]}
                     </li>
-                    
                   </>
                 )}
               </>
@@ -89,6 +89,7 @@ function Navbar() {
           </ul>
         </div>
       </nav>
+
       <Outlet />
     </>
   );

@@ -9,7 +9,7 @@ const DataContextComponent = ({ children }) => {
   const [productsRandom, setProductsRandom] = useState([]);
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState();
-const [imgProduct, setImgProduct] = useState();
+  const [imgProduct, setImgProduct] = useState();
 
   const { user, tokenDevelop } = useContext(AuthContext);
 
@@ -55,6 +55,7 @@ const [imgProduct, setImgProduct] = useState();
         "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto/todos",
         { headers }
       );
+      
       setProducts(response.data);
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -85,10 +86,41 @@ const [imgProduct, setImgProduct] = useState();
     }
   };
 
+  const fetchAddProduct = async (product, imagen) => {
+    const formData = new FormData();
+
+    imagen.forEach((image) => {
+      formData.append("imagen", image.data, image.filename);
+    })   
+
+    try {
+      const responseImg = await axios.post(
+        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/imagen",
+         formData ,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );    
+
+      const response = await axios.post(
+        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto",
+        product,
+        { headers }
+      );
+      
+      fetchProducts();
+    } catch (error) {
+      console.error("Error creating product:", error);
+    }
+  };
+
   useEffect(() => {
-    //fetchUsers();
+  //  fetchUsers();
     fetchProductsRandom();
-    fetchProducts();
+//    fetchProducts();
   }, [token]); //}, [token]);
 
   const registerUser = async (user) => {
@@ -97,7 +129,6 @@ const [imgProduct, setImgProduct] = useState();
         "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/auth/register",
         user
       );
-
       return response.data;
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -126,8 +157,11 @@ const [imgProduct, setImgProduct] = useState();
     products,
     fetchProductById,
     fetchImgProductById,
+    fetchUsers,
+    fetchProducts,
     product,
     imgProduct,
+    fetchAddProduct,
     registerUser,
     loginUser,
   };

@@ -19,8 +19,8 @@ const Detalle = () => {
   }
 
   return (
-    <section className="w-screen bg-slate-200">
-      <div className="flex justify-end pr-8 pt-4 ">
+    <section className="w-screen">
+      <div className="flex justify-end pr-8 pt-4 pb-4 ">
         <Link to="/">
           <FontAwesomeIcon
             className="hover:bg-[#017999] cursor-pointer"
@@ -31,21 +31,23 @@ const Detalle = () => {
       </div>
       <section className="flex flex-wrap w-screen justify-center ">
         <section>
-          <h1 className="text-3xl sm:pl-8 text-center sm:text-left">
+          <h1 id="title" className="text-left text-3xl sm:pl-8">
             {" "}
             {product.product_name}{" "}
           </h1>
           <div className="">
             <img className="p-8 max-w-2xl" src={product.urlImagen[0]} />
           </div>
-          <h2 className="sm:pl-8 pb-4 text-xl text-center sm:text-left">
-            DESCRIPCIÓN
+          <h2 className="sm:pl-8 pb-4 text-xl">
+          {product.city}
           </h2>
-          <p className="sm:pl-8 pb-4 text-center sm:text-left">
-            {" "}
-            {product.description}
-          </p>
-          <h2 className="sm:pl-8 pb-4 text-xl text-center sm:text-left">
+          <div className="max-w-prose">
+            <p id="description" className="pb-4 px-36 sm:px-8">
+              {" "}
+              {product.description}
+            </p>
+          </div>
+          <h2 id="price" className="sm:pl-8 pb-4 text-xl">
             {" "}
             $ {product.price}{" "}
           </h2>
@@ -82,11 +84,3 @@ const Detalle = () => {
 };
 
 export default Detalle;
-
-//Experiencia gastronómica
-//"https://s3-alpha-sig.figma.com/img/e04f/ecbc/9098d19c98cc6f21f67e558682929444?Expires=1701043200&Signature=admEQBbE2n1tv96tS7MOlg4HM1aoI~g3pt04ya6mFphh-9--nznCPTxMAEOUmKelo2NYdYUqVSgtbP~lKyNd0xzCYRMZbcL~pSMNine1dklzSX5EeNDy3JaXIsDFZMJHKn1bAK1H76gEBvQMT5ubTbHj0kpFmXDOKm4FL9ppndgGZIKfvZheyZVnnAP1~g5mDJ029-SPzO~eSAtT77lpnoWAzGirSUcjTWjNQZrlbAPNcfwVsXglRfEE43VVKla1fUqSY3TRMyPx9HZPflo0l5zx-6KMT9Cg9AjUEkjP1CMjOtuj-ei2LIyv0AKgzLX10NSxqM5lcKchsFNkgrPYjw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4" alt="English Breakfast"
-//Disfruta un almuerzo-cena en el Restaurante ‘La cava’ en Punta del Este.
-//<br />
-//Luego, podrás degustar el postre en Francesco.
-//<br />
-//El paquete incluye Menú de 4 pasos y traslado hasta ambos lugares.

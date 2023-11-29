@@ -156,6 +156,23 @@ footer {
   .cat {
     display: none;
   }
+
+  #title{
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  #description{
+    text-align: center;
+    padding-left: 170px;
+    padding-right: 170px;
+  }
+
+  #price{
+    text-align: center;
+    padding-bottom:0px
+  }
 }
 /*--------INICIO DE SESION----------*/
 /* .inicioSesion {
@@ -191,3 +208,4 @@ button:hover {
   text-align: center;
   color: #202a44;
 }
+

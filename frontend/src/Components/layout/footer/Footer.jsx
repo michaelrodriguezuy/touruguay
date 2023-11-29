@@ -3,7 +3,7 @@ import { Outlet } from "react-router";
 
 function Footer() {
   return (
-    <>
+    <div className="flex flex-col min-h-screen justify-between">
       <Outlet />
       <footer className="bg-[#202A44] text-white sm:h-20 md:w-full p-0 mt-auto m-0 overflow-hidden">
         <div className="flex flex-col items-center justify-center lg:flex-row lg:justify-between">
@@ -17,7 +17,7 @@ function Footer() {
           </div>
         </div>
       </footer>
-    </>
+    </div>
   );
 }
 

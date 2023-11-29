@@ -4,7 +4,7 @@ import "../../App.css";
 import ProductCard from "../layout/cards/ProductCard";
 
 import { useContext } from "react";
-import { DataContext } from "../context/DataContext";
+import { DataContext } from "../context/dataContext";
 
 const Home = () => {
   const { productsRandom } = useContext(DataContext);
@@ -36,14 +36,25 @@ const Home = () => {
         </div>
       </div>
       <section className="flex flex-col p-4">
-        <h2 className="text-center text-[#202a44] text-4xl p-10">
+        <h2 className="text-center text-2xl p-10 font-bold">
           Recomendados de esta semana
         </h2>
-        <div className="grid grid-cols-1 gap-2 width-full md:grid-cols-2 md:max-w-lg m-auto">
+        <div className="grid grid-cols-1 gap-4 width-full md:grid-cols-2 md:max-w-4xl m-auto">
           {productsRandom &&
             productsRandom.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
+        </div>
+      </section>
+      <section className="flex justify-center">
+        <div className="flex flex-col py-4">
+          <h3 className="text-4xl font-bold">Más categorías</h3>
+          <ul className="list-none">
+            <li className="text-2xl">Automovilismo</li>
+            <li className="text-2xl">Paseos</li>
+            <li className="text-2xl">Cursos y Talleres</li>
+            <li className="text-2xl">Imperdibles</li>
+          </ul>
         </div>
       </section>
       <section className="p-4">
@@ -72,15 +83,6 @@ const Home = () => {
             <h3 className="absolute bottom-1 right-1 text-2xl text-white font-bold opacity-50">
               Místico
             </h3>
-          </div>
-          <div className="flex flex-col py-4">
-            <h3 className="text-2xl">Mas categorias</h3>
-            <ul className="list-none">
-              <li>Automovilismo</li>
-              <li>Paseos</li>
-              <li>Cursos y Talleres</li>
-              <li>Imperdibles</li>
-            </ul>
           </div>
         </div>
       </section>
