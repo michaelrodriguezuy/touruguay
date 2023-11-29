@@ -31,6 +31,7 @@ const AddProduct = ({ isOpen, onClose }) => {
     const loadCities = async () => {
       try {
         const resp = await fetchCities();
+
         setCities(resp);
       } catch (error) {
         console.error("Error obteniendo ciudades:", error);
@@ -65,9 +66,12 @@ const AddProduct = ({ isOpen, onClose }) => {
     const productData = {
       product_name: name,
       description,
+      category: {category_id:selectedCategory},
+      city: {city_id:selectedCity},
     };
     const IMG = images.map((image) => ({ filename: image.name, data: image }));
 
+    console.log("productData", productData);
     await fetchAddProduct(productData, IMG);
     onClose();
   };
@@ -77,13 +81,13 @@ const AddProduct = ({ isOpen, onClose }) => {
       style={{ display: isOpen ? "block" : "none" }}
       className="z-50 fixed left-[50%] -translate-y-[50%] -translate-x-[50%] top-[50%]"
     >
-      <div className="flex flex-col p-10 m-10 rounded-lg gap-5 bg-[#202a44] w-[25rem] border-2 border-white">
+      <div className="flex flex-col p-10 m-10 rounded-lg gap-3 bg-[#202a44] w-[25rem] border-2 border-white">
         <div className="flex flex-col">
           <label className="text-white m-2 flex-shrink-0 w-[6rem]">
             Nombre:
           </label>
           <input
-            className="rounded p-2 flex-grow"
+            className="rounded p-1 flex-grow"
             type="text"
             value={name}
             onChange={handleNameChange}
@@ -94,7 +98,7 @@ const AddProduct = ({ isOpen, onClose }) => {
             Descripción:
           </label>
           <textarea
-            className="rounded p-2 flex-grow"
+            className="rounded p-1 flex-grow"
             value={description}
             onChange={handleDescriptionChange}
           />

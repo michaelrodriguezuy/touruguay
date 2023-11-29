@@ -111,6 +111,8 @@ const DataContextComponent = ({ children }) => {
         { headers }
       );
 
+      console.log("response: ", response);
+
       fetchProducts();
     } catch (error) {
       console.error("Error creando el producto:", error);
@@ -123,6 +125,7 @@ const DataContextComponent = ({ children }) => {
         "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/categoria/todas",
         { headers }
       );
+      return response.data;
     } catch (error) {
       console.error("Error obteniendo categorias:", error);
     }
@@ -134,6 +137,7 @@ const DataContextComponent = ({ children }) => {
         "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/ciudad/todas",
         { headers }
       );
+      return response.data;
     } catch (error) {
       console.error("Error obteniendo ciudades:", error);
     }
