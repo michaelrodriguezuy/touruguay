@@ -42,7 +42,7 @@ const Home = () => {
         <div className="grid grid-cols-1 gap-4 width-full md:grid-cols-2 md:max-w-4xl m-auto">
           {productsRandom &&
             productsRandom.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product.product_id} product={product} />
             ))}
         </div>
       </section>
