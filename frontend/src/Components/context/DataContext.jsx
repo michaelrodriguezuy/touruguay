@@ -112,6 +112,9 @@ const DataContextComponent = ({ children }) => {
       );
 
       console.log("response: ", response);
+      if (response === null){
+        console.log("el producto ya existe");
+      }
 
       fetchProducts();
     } catch (error) {

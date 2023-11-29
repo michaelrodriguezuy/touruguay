@@ -70,8 +70,7 @@ const AddProduct = ({ isOpen, onClose }) => {
       city: {city_id:selectedCity},
     };
     const IMG = images.map((image) => ({ filename: image.name, data: image }));
-
-    console.log("productData", productData);
+    
     await fetchAddProduct(productData, IMG);
     onClose();
   };
