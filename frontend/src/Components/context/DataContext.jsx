@@ -110,15 +110,20 @@ const DataContextComponent = ({ children }) => {
         product,
         { headers }
       );
-
-      console.log("response: ", response);
-      if (response === null){
-        console.log("el producto ya existe");
+      
+      if (response.status === 409) {
+        console.log("El producto ya existe");      
+      } else {      
+        fetchProducts();
       }
+      return { success: true, data: response.data };
 
-      fetchProducts();
     } catch (error) {
-      console.error("Error creando el producto:", error);
+      if (error.response && error.response.status === 409) {
+        return { success: false, error: { status: 409, message: "El producto ya existe" } };
+      } else {
+        return { success: false, error: { status: error.response.status, message: "Error desconocido" } };
+      }
     }
   };
 

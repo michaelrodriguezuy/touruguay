@@ -3,7 +3,7 @@ import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 import { DataContext } from "../../context/DataContext";
 
-// ! Chequear el endpoint de los productos no funca
+import Swal from "sweetalert2";
 
 const AddProduct = ({ isOpen, onClose }) => {
   const [name, setName] = useState("");
@@ -66,12 +66,33 @@ const AddProduct = ({ isOpen, onClose }) => {
     const productData = {
       product_name: name,
       description,
-      category: {category_id:selectedCategory},
-      city: {city_id:selectedCity},
+      category: { category_id: selectedCategory },
+      city: { city_id: selectedCity },
     };
     const IMG = images.map((image) => ({ filename: image.name, data: image }));
-    
-    await fetchAddProduct(productData, IMG);
+
+    const resp = await fetchAddProduct(productData, IMG);
+
+    console.log(resp);
+
+    if (resp.success) {
+      Swal.fire({
+        icon: "success",
+        title: "Producto creado con éxito",
+      });
+    }  else if (resp.error && resp.error.status === 409) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "El producto ya existe",
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Error desconocido",
+      });
+    }
     onClose();
   };
 
