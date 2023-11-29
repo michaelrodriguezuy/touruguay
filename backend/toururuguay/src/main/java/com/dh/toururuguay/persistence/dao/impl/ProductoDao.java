@@ -42,8 +42,8 @@ public class ProductoDao implements IDao<Producto> {
         List<Producto> productos = new ArrayList<>();
         productos = buscarTodos();
         Producto productoEncontrado = buscarProductoPorNombre(productos, producto.getProduct_name());
-        if (productoEncontrado != null) {
-            System.out.println("El producto ya existe");
+        if (productoEncontrado != null) {            
+            log.info("El producto ya existe");
             return null;
         } else {
 
