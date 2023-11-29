@@ -36,14 +36,20 @@ public class Usuario implements UserDetails {
     @JoinColumn(name = "role_id")
     @JsonProperty("rol")
     private Rol rol;
+<<<<<<< .merge_file_a22844
 <<<<<<< .merge_file_a05976
 =======
+=======
+>>>>>>> .merge_file_a17580
 <<<<<<< HEAD
     
 =======
 
 >>>>>>> e4c6ec0b1d7ea3fe5ace8acd2f65e7671195bd85
+<<<<<<< .merge_file_a22844
 >>>>>>> .merge_file_a18272
+=======
+>>>>>>> .merge_file_a17580
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority((rol.getName())));

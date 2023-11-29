@@ -1,26 +1,15 @@
-<<<<<<< .merge_file_a26696
-import React, { useState, useContext } from "react";
-=======
 import React, { useState, useContext, useEffect } from "react";
->>>>>>> .merge_file_a31712
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 import { DataContext } from "../../context/DataContext";
 
-<<<<<<< .merge_file_a26696
-// ! Chequear el endpoint de los productos no funca
-=======
 import Swal from "sweetalert2";
->>>>>>> .merge_file_a31712
 
 const AddProduct = ({ isOpen, onClose }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
 
-<<<<<<< .merge_file_a26696
-  const { fetchAddProduct } = useContext(DataContext);
-=======
   const { fetchAddProduct, fetchCategories, fetchCities } =
     useContext(DataContext);
 
@@ -52,7 +41,6 @@ const AddProduct = ({ isOpen, onClose }) => {
     loadCategories();
     loadCities();
   }, []);
->>>>>>> .merge_file_a31712
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -66,16 +54,6 @@ const AddProduct = ({ isOpen, onClose }) => {
     setImages(Array.from(e.target.files));
   };
 
-<<<<<<< .merge_file_a26696
-  const handleSubmit = async () => {
-    const productData = {
-        product_name: name,
-        description,
-    };
-    const IMG = images.map((image) => ({ filename: image.name, data: image }))
-    
-    await fetchAddProduct(productData, IMG);
-=======
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
   };
@@ -115,7 +93,6 @@ const AddProduct = ({ isOpen, onClose }) => {
         text: "Error desconocido",
       });
     }
->>>>>>> .merge_file_a31712
     onClose();
   };
 
@@ -124,21 +101,13 @@ const AddProduct = ({ isOpen, onClose }) => {
       style={{ display: isOpen ? "block" : "none" }}
       className="z-50 fixed left-[50%] -translate-y-[50%] -translate-x-[50%] top-[50%]"
     >
-<<<<<<< .merge_file_a26696
-      <div className="flex flex-col p-10 m-10 rounded-lg gap-5 bg-[#202a44] w-[25rem] border-2 border-white">
-=======
       <div className="flex flex-col p-10 m-10 rounded-lg gap-3 bg-[#202a44] w-[25rem] border-2 border-white">
->>>>>>> .merge_file_a31712
         <div className="flex flex-col">
           <label className="text-white m-2 flex-shrink-0 w-[6rem]">
             Nombre:
           </label>
           <input
-<<<<<<< .merge_file_a26696
-            className="rounded p-2 flex-grow"
-=======
             className="rounded p-1 flex-grow"
->>>>>>> .merge_file_a31712
             type="text"
             value={name}
             onChange={handleNameChange}
@@ -149,11 +118,7 @@ const AddProduct = ({ isOpen, onClose }) => {
             Descripción:
           </label>
           <textarea
-<<<<<<< .merge_file_a26696
-            className="rounded p-2 flex-grow"
-=======
             className="rounded p-1 flex-grow"
->>>>>>> .merge_file_a31712
             value={description}
             onChange={handleDescriptionChange}
           />
@@ -169,8 +134,6 @@ const AddProduct = ({ isOpen, onClose }) => {
             onChange={handleImageChange}
           />
         </div>
-<<<<<<< .merge_file_a26696
-=======
 
         <div className="flex flex-col">
           <label className="text-white m-2 flex-shrink-0 w-[6rem]">
@@ -212,7 +175,6 @@ const AddProduct = ({ isOpen, onClose }) => {
           </select>
         </div>
 
->>>>>>> .merge_file_a31712
         <button
           className="text-white bg-[#017999] rounded p-2 hover:bg-[#e66a54]"
           onClick={handleSubmit}
