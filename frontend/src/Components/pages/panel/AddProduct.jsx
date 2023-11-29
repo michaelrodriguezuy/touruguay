@@ -80,7 +80,7 @@ const AddProduct = ({ isOpen, onClose }) => {
         icon: "success",
         title: "Producto creado con éxito",
       });
-    }  else if (resp.error && resp.error.status === 409) {
+    } else if (resp.error && resp.error.status === 409) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -93,6 +93,15 @@ const AddProduct = ({ isOpen, onClose }) => {
         text: "Error desconocido",
       });
     }
+    handleClose();
+  };
+
+  const handleClose = () => {
+    setName("");
+    setDescription("");
+    setImages([]);
+    setSelectedCategory("");
+    setSelectedCity("");
     onClose();
   };
 
