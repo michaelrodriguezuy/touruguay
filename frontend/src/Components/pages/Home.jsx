@@ -52,7 +52,6 @@ const Home = () => {
           />
         </div>
       </div>
-
       <section className="p-4">
         <h2 className="text-center text-2xl p-10 font-bold">Busca por categoria</h2>
         <div class="flex flex-row gap-4 justify-center m-auto">
@@ -124,15 +123,15 @@ const Home = () => {
               Previous
             </button>
           </li>
-
           {Array.from({ length: pageCount }, (_, index) => (
             <li key={index}>
               <button
                 onClick={() => handlePageClick(index)}
-                className={`flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border ${index === currentPage
+                className={`flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border ${
+                  index === currentPage
                     ? "text-blue-600 bg-blue-50"
                     : "hover:bg-gray-100 hover:text-gray-700"
-                  } dark:border-gray-700 dark:bg-gray-700 dark:text-white`}
+                } dark:border-gray-700 dark:bg-gray-700 dark:text-white`}
               >
                 {index + 1}
               </button>
@@ -151,7 +150,7 @@ const Home = () => {
       </nav>
 
 
-    </section >
+    </section>
   );
 };
 

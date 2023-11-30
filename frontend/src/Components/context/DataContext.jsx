@@ -34,7 +34,6 @@ const DataContextComponent = ({ children }) => {
       setUsers(getUsers.data);
     } catch (error) {
       console.error("Error obteniendo usuarios:", error);
-      console.error("Error obteniendo usuarios:", error);
     }
   };
 
@@ -47,7 +46,7 @@ const DataContextComponent = ({ children }) => {
       setProductsRandom(productsRandom.data);
     } catch (error) {
       console.error("Error obteniendo productos random:", error);
-      console.error("Error obteniendo productos random:", error);
+
     }
   };
 
@@ -57,10 +56,9 @@ const DataContextComponent = ({ children }) => {
         "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto/todos",
         { headers }
       );
-      
+
       setProducts(response.data);
     } catch (error) {
-      console.error("Error obteniendo productos:", error);
       console.error("Error obteniendo productos:", error);
     }
   };
@@ -73,7 +71,6 @@ const DataContextComponent = ({ children }) => {
       );
       setProduct(response.data);
     } catch (error) {
-      console.error("Error obteniendo el producto:", error);
       console.error("Error obteniendo el producto:", error);
     }
   };
@@ -156,9 +153,9 @@ const DataContextComponent = ({ children }) => {
   };
 
   useEffect(() => {
-  //  fetchUsers();
+    //  fetchUsers();
     fetchProductsRandom();
-//    fetchProducts();
+    //    fetchProducts();
   }, [token]); //}, [token]);
 
   const registerUser = async (user) => {

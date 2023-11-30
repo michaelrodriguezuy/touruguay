@@ -40,19 +40,25 @@ public class AuthService {
              name = usuario.getName();
              lastname = usuario.getLastname();
                 rol = usuario.getRol().getName();
+<<<<<<< HEAD
 <<<<<<< .merge_file_a20944
 <<<<<<< .merge_file_a34216
 =======
 =======
 >>>>>>> .merge_file_a14884
 =======
+>>>>>>> 4187cebf0a0cb683cd83a99ab0335e38c9966ab4
+=======
             name = usuario.getName();
             lastname = usuario.getLastname();
 >>>>>>> e4c6ec0b1d7ea3fe5ace8acd2f65e7671195bd85
+<<<<<<< HEAD
 <<<<<<< .merge_file_a20944
 >>>>>>> .merge_file_a31724
 =======
 >>>>>>> .merge_file_a14884
+=======
+>>>>>>> 4187cebf0a0cb683cd83a99ab0335e38c9966ab4
         }
         
         //lo modifique para que la respuesta de login me devuelva el nombre y apellido del usuario.
