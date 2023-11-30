@@ -90,8 +90,10 @@ function Navbar() {
                       </button>
                       {isOpen && (
                         <div className="absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded-lg shadow-lg">
-                          <a href="#" className="block py-2 px-4 hover:bg-gray-200 rounded-lg">Perfil</a>
-                          <a href="#" className="block py-2 px-4 hover:bg-gray-200 rounded-lg">Configuración</a>
+                          <a href="#" className="block py-2 px-4 hover:bg-gray-200 rounded-lg">Mis datos</a>
+                          <Link to="/reservas" className="block py-2 px-4 hover:bg-gray-200 rounded-lg">Mis reservas</Link>
+                          <Link to="/favoritos" className="block py-2 px-4 hover:bg-gray-200 rounded-lg">Mis favoritos</Link>
+                          <a href="#" className="block py-2 px-4 hover:bg-gray-200 rounded-lg">Panel de control</a>
                         </div>
                       )}
                     </div>
