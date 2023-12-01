@@ -21,6 +21,7 @@ public class ImagenController {
     private ImagenService imagenService;
 
     // subirImagenS3
+    @CrossOrigin(origins = "*", methods = {RequestMethod.POST})
     @PostMapping
     public ResponseEntity<java.util.Map<java.lang.String, java.lang.String>> subirImagenS3(
             @RequestParam("imagen") List<MultipartFile> imagenes) {
