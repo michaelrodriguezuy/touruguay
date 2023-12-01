@@ -9,8 +9,20 @@ export const AdminPanel = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [isChange, setIsChange] = useState(false);
 
-  const {fetchUsers, fetchProducts, fetchAddProduct, fetchEditProduct,  fetchCategories, fetchCities, products, users, categories, cities } = useContext(DataContext);
-  
+  const {
+    fetchUsers,
+    fetchProducts,
+    fetchAddProduct,
+    fetchEditProduct,
+    fetchDeleteProduct,
+    fetchCategories,
+    fetchCities,
+    products,
+    users,
+    categories,
+    cities,
+  } = useContext(DataContext);
+
   const [productShow, setProducts] = useState(false);
   const [userShow, setUsers] = useState(false);
 
@@ -20,7 +32,7 @@ export const AdminPanel = () => {
     fetchUsers();
     fetchCategories();
     fetchCities();
-}, [isChange]);
+  }, [isChange]);
 
   const openModal = () => {
     setModalOpen(true);
@@ -59,10 +71,26 @@ export const AdminPanel = () => {
           </button>
         </div>
       </div>
-      <ProductForm isOpen={modalOpen} onClose={closeModal} categories={categories} cities={cities} fetchAddProduct={fetchAddProduct} setIsChange={setIsChange}/>
-      
-      {productShow && <ProductTable products={products} categories={categories} cities={cities} fetchEditProduct={fetchEditProduct} setIsChange={setIsChange}/>}
-      {userShow && <UserTable users={users}/>}
+      <ProductForm
+        isOpen={modalOpen}
+        onClose={closeModal}
+        categories={categories}
+        cities={cities}
+        fetchAddProduct={fetchAddProduct}
+        setIsChange={setIsChange}
+      />
+
+      {productShow && (
+        <ProductTable
+          products={products}
+          categories={categories}
+          cities={cities}
+          fetchDeleteProduct={fetchDeleteProduct}
+          fetchEditProduct={fetchEditProduct}
+          setIsChange={setIsChange}
+        />
+      )}
+      {userShow && <UserTable users={users} />}
     </section>
   );
 };

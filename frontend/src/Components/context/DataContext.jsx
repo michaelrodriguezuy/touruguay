@@ -202,8 +202,9 @@ const DataContextComponent = ({ children }) => {
 
   const fetchDeleteProduct = async (productId) => {
     try {
+      
       const deleteProduct = await axios.delete(
-        `http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto/${productId}/?eliminarImagenes=true`,
+        `http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto/${productId}?eliminarImagenes=true`,         
         { headers }
       );
       
