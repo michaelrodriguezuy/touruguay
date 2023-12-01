@@ -33,7 +33,7 @@ public class ProductoController {
             return ResponseEntity.ok(productoGuardado);
         } else {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(null); // 409
-        }        
+        }
     }
 
     @GetMapping("/todosSinDTO")
@@ -76,11 +76,15 @@ public class ProductoController {
     public ResponseEntity<Producto> actualizar(@RequestBody Producto producto) {
         ResponseEntity<Producto> response = null;
 
-        if (producto.getProduct_id() != null && productoService.buscar(producto.getProduct_id()).isPresent())
+        if (producto.getProduct_id() != null && productoService.buscar(producto.getProduct_id()).isPresent()) {
             response = ResponseEntity.ok(productoService.actualizar(producto));
-        else
+            log.info("Producto actualizado");
+        } else {
             response = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            log.info("Producto no encontrado");
+        }
         return response;
+
     }
 
     @DeleteMapping("/{id}")
@@ -92,8 +96,10 @@ public class ProductoController {
 
             productoService.eliminar(id, eliminarImagenes);
             response = ResponseEntity.status(HttpStatus.NO_CONTENT).body("Eliminado");
+            log.info("Producto eliminado");
         } else {
             response = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            log.info("Producto no encontrado");
         }
 
         return response;
