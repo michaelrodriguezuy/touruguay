@@ -73,10 +73,12 @@ public class ProductoController {
     }
 
     @PutMapping()
-    public ResponseEntity<Producto> actualizar(@RequestBody Producto producto) {
+    public ResponseEntity<Producto> actualizar(@RequestBody Producto producto,
+            @RequestParam(name = "eliminarImagenes", defaultValue = "false") boolean eliminarImagenes) {
         ResponseEntity<Producto> response = null;
 
         if (producto.getProduct_id() != null && productoService.buscar(producto.getProduct_id()).isPresent()) {
+
             response = ResponseEntity.ok(productoService.actualizar(producto));
             log.info("Producto actualizado");
         } else {
@@ -84,7 +86,6 @@ public class ProductoController {
             log.info("Producto no encontrado");
         }
         return response;
-
     }
 
     @DeleteMapping("/{id}")

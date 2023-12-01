@@ -305,6 +305,10 @@ public class ProductoDao implements IDao<Producto> {
             // quiero quitar del listado de productos el producto que estoy actualizando
             productos.remove(productoEncontrado);
 
+            //elimino las imagenes asociadas al producto
+            imagenService.eliminarImagenesDelProducto(producto);
+            log.info("Imagenes eliminadas con éxito");            
+            
             if (buscarProductoPorNombre(productos, producto.getProduct_name()) != null) {
                 System.out.println("El nombre del producto ya existe");
                 return null;
@@ -318,6 +322,11 @@ public class ProductoDao implements IDao<Producto> {
             productoEncontrado.setCity(producto.getCity());
             entityManager.merge(productoEncontrado);
             log.info("Producto actualizado con éxito", productoEncontrado);
+            
+            //guardo las nuevas imagenes
+            imagenService.guardarImagenesDelProducto(producto);
+            log.info("Nuevas imagenes guardadas con éxito");
+
             return productoEncontrado;
         } catch (Exception e) {
             e.printStackTrace();
