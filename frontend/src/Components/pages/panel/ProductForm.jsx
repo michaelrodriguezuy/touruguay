@@ -1,85 +1,92 @@
-import React, { useState, useContext, useEffect } from "react";
-import axios from "axios";
-import { AuthContext } from "../../context/AuthContext";
-import { DataContext } from "../../context/DataContext";
-
+import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 
-const AddProduct = ({ isOpen, onClose }) => {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+const ProductForm = ({
+  isOpen,
+  onClose,
+  setIsChange,
+  productSelected,
+  setProductSelected,
+  categories,
+  cities,
+  fetchAddProduct,
+  fetchEditProduct,
+}) => {
+  const initialProductState = {
+    product_name: "",
+    description: "",
+    price: 0,
+    category: null,
+    city: null,
+  };
+
+  const [newProduct, setNewProduct] = useState(initialProductState);
   const [images, setImages] = useState([]);
 
-  const { fetchAddProduct, fetchCategories, fetchCities } =
-    useContext(DataContext);
-
-  const [categories, setCategories] = useState([]);
-  const [cities, setCities] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedCity, setSelectedCity] = useState("");
-
   useEffect(() => {
-    const loadCategories = async () => {
-      try {
-        const resp = await fetchCategories();
-        setCategories(resp);
-      } catch (error) {
-        console.error("Error obteniendo categorías:", error);
-      }
-    };
+    if (productSelected) {
+      setNewProduct((prevProduct) => ({
+        ...prevProduct,
+        product_name: productSelected.product_name || "",
+        description: productSelected.description || "",
+        price: productSelected.price || 0,
+        category: productSelected?.category?.category_id || "",
+        city: productSelected?.city?.city_id || "",
+      }));
+    } else {
+      setNewProduct(initialProductState);
+    }
+  }, [productSelected]);
+  
 
-    const loadCities = async () => {
-      try {
-        const resp = await fetchCities();
-
-        setCities(resp);
-      } catch (error) {
-        console.error("Error obteniendo ciudades:", error);
-      }
-    };
-
-    loadCategories();
-    loadCities();
-  }, []);
-
-  const handleNameChange = (e) => {
-    setName(e.target.value);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+  
+    setNewProduct((prevProduct) => ({
+      ...prevProduct,
+      [name]: value === "" ? null : value,
+    }));
   };
-
-  const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
-  };
+  
 
   const handleImageChange = (e) => {
     setImages(Array.from(e.target.files));
   };
 
-  const handleCategoryChange = (e) => {
-    setSelectedCategory(e.target.value);
-  };
-
-  const handleCityChange = (e) => {
-    setSelectedCity(e.target.value);
-  };
-
   const handleSubmit = async () => {
-    const productData = {
-      product_name: name,
-      description,
-      category: { category_id: selectedCategory },
-      city: { city_id: selectedCity },
-    };
+
+    if (images.length === 0) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Debe seleccionar al menos una imagen",
+      });
+      return;
+    }
+
     const IMG = images.map((image) => ({ filename: image.name, data: image }));
 
-    const resp = await fetchAddProduct(productData, IMG);
+    let resp = "";
 
-    console.log(resp);
+    if (productSelected) {
+      resp = await fetchEditProduct(productSelected, IMG);
+    } else {
+      const { category, city, ...rest } = newProduct;
+      const modifiedProduct = {
+        ...rest,
+        category: { category_id: category !== "" ? category : null },
+        city: { city_id: city !== "" ? city : null },
+      };
+
+      resp = await fetchAddProduct(modifiedProduct, IMG);
+    }
 
     if (resp.success) {
       Swal.fire({
         icon: "success",
         title: "Producto creado con éxito",
       });
+      setIsChange(true);
     } else if (resp.error && resp.error.status === 409) {
       Swal.fire({
         icon: "error",
@@ -97,12 +104,8 @@ const AddProduct = ({ isOpen, onClose }) => {
   };
 
   const handleClose = () => {
-    setName("");
-    setDescription("");
-    setImages([]);
-    setSelectedCategory("");
-    setSelectedCity("");
     onClose();
+    setNewProduct(initialProductState);
   };
 
   return (
@@ -118,8 +121,9 @@ const AddProduct = ({ isOpen, onClose }) => {
           <input
             className="rounded p-1 flex-grow"
             type="text"
-            value={name}
-            onChange={handleNameChange}
+            value={newProduct.product_name}
+            onChange={handleChange}
+            name="product_name"
           />
         </div>
         <div className="flex flex-col">
@@ -128,10 +132,25 @@ const AddProduct = ({ isOpen, onClose }) => {
           </label>
           <textarea
             className="rounded p-1 flex-grow"
-            value={description}
-            onChange={handleDescriptionChange}
+            value={newProduct.description}
+            onChange={handleChange}
+            name="description"
           />
         </div>
+        <div className="flex flex-col">
+          <label className="text-white m-2 flex-shrink-0 w-[6rem]">
+            Precio:
+          </label>
+          <input
+            type="number"
+            step="0.01"
+            className="rounded p-1 flex-grow text-right"
+            value={newProduct.price}
+            onChange={handleChange}
+            name="price"
+          />
+        </div>
+
         <div className="flex flex-col">
           <label className="text-white m-2 flex-shrink-0 w-[6rem]">
             Imágenes:
@@ -150,8 +169,10 @@ const AddProduct = ({ isOpen, onClose }) => {
           </label>
           <select
             className="rounded p-2 flex-grow"
-            value={selectedCategory}
-            onChange={handleCategoryChange}
+            value={newProduct.category || ""}
+            onChange={(e) => handleChange(e, "category")}
+            name="category"
+            key="category-select"
           >
             <option value="" disabled>
               Seleccione una categoría
@@ -170,8 +191,10 @@ const AddProduct = ({ isOpen, onClose }) => {
           </label>
           <select
             className="rounded p-2 flex-grow"
-            value={selectedCity}
-            onChange={handleCityChange}
+            value={newProduct.city || ""}
+            onChange={(e) => handleChange(e, "city")}
+            name="city"
+            key="city-select"
           >
             <option value="" disabled>
               Seleccione una ciudad
@@ -188,11 +211,11 @@ const AddProduct = ({ isOpen, onClose }) => {
           className="text-white bg-[#017999] rounded p-2 hover:bg-[#e66a54]"
           onClick={handleSubmit}
         >
-          Agregar
+          {productSelected ? "Modificar" : "Agregar"}
         </button>
         <button
           className="text-white bg-gray-500 rounded p-2 hover:bg-gray-700"
-          onClick={onClose}
+          onClick={handleClose}
         >
           Cerrar
         </button>
@@ -201,4 +224,4 @@ const AddProduct = ({ isOpen, onClose }) => {
   );
 };
 
-export default AddProduct;
+export default ProductForm;

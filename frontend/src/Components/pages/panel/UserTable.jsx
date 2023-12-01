@@ -1,15 +1,25 @@
-import React, { useContext, useEffect } from "react";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { DataContext } from "../../context/DataContext";
+import UserForm from "./UserForm";
+import { useState } from "react";
 
-export const UserTable = () => {
-  const { users, fetchUsers} = useContext(DataContext);
+export const UserTable = ({ users, fetchDeleteUser, setIsChange, roles }) => {
+  const [modalOpen, setModalOpen] = useState(false);
 
-  useEffect(() => {
-    fetchUsers();
-  }
-    , []);    
+  const [userSelected, setUserSelected] = useState(null);
+
+  const deleteUser = async (id) => {
+    fetchDeleteUser(id);
+    setIsChange(true);
+  };
+
+  const handleOpen = (user) => {
+    setUserSelected(user);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   return (
     <div className="overflow:hidden">
@@ -36,46 +46,55 @@ export const UserTable = () => {
             </th>
           </tr>
         </thead>
-        <tbody>            
-          {users.map((user) => (
-            <tr className="odd:bg-gray-200 even:bg-white" key={user.user_id}>
-              {/* <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap"><input type="checkbox" name="" id="" /></td> */}
-              <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                {user.user_id}
-              </td>
-              <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                {user.username}
-              </td>
+        <tbody>
+          {users &&
+            users.map((user) => (
+              <tr className="odd:bg-gray-200 even:bg-white" key={user.user_id}>
+                {/* <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap"><input type="checkbox" name="" id="" /></td> */}
+                <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                  {user.user_id}
+                </td>
+                <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                  {user.username}
+                </td>
 
-              <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                {user.name}
-              </td>
-              <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                {user.lastname}
-              </td>
-              <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                {user.rol.name}
-              </td>
-              <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                <button>
-                  <FontAwesomeIcon
-                    className="text-[#e66a54] hover:text-[#f2ebc3]"
-                    icon="fas fa-solid fa-pencil"
-                  />
-                </button>
-              </td>
-              <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                <button>
-                  <FontAwesomeIcon
-                    className="text-[#e66a54] hover:text-[#f2ebc3]"
-                    icon="fas fa-solid fa-trash"
-                  />
-                </button>
-              </td>
-            </tr>
-          ))}
+                <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                  {user.name}
+                </td>
+                <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                  {user.lastname}
+                </td>
+                <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                  {user.rol.name}
+                </td>
+                <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                  <button>
+                    <FontAwesomeIcon
+                      className="text-[#e66a54] hover:text-[#f2ebc3]"
+                      icon="fas fa-solid fa-pencil"
+                      onClick={() => handleOpen(user)}
+                    />
+                  </button>
+                </td>
+                <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                  <button>
+                    <FontAwesomeIcon
+                      className="text-[#e66a54] hover:text-[#f2ebc3]"
+                      icon="fas fa-solid fa-trash"
+                      onClick={() => deleteUser(user.user_id)}
+                    />
+                  </button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
+      <UserForm
+        isOpen={modalOpen}
+        onClose={closeModal}
+        userSelected={userSelected}
+        roles={roles || []}
+      />
     </div>
   );
 };

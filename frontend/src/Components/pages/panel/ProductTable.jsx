@@ -1,14 +1,33 @@
-import React, { useContext, useEffect } from "react";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { DataContext } from "../../context/DataContext";
+import { useState } from "react";
+import ProductForm from "./ProductForm";
 
-export const ProductTable = () => {
-  const { products, fetchProducts } = useContext(DataContext);
+export const ProductTable = ({
+  setIsChange,
+  fetchAddProduct,
+  fetchEditProduct,
+  fetchDeleteProduct,
+  products,
+  categories,
+  cities,
+}) => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [productSelected, setProductSelected] = useState(null);
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  
+  const deleteProduct = (id) => {
+    fetchDeleteProduct(id);
+    setIsChange(true);
+  };
+
+  const handleOpen = (product) => {
+    setProductSelected(product);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   return (
     <div className="overflow:hidden">
@@ -25,6 +44,9 @@ export const ProductTable = () => {
               Descripción
             </th>
             <th scope="col" className="p-4">
+              Categoría
+            </th>
+            <th scope="col" className="p-4">
               Precio
             </th>
             <th scope="col" className="p-4">
@@ -39,50 +61,69 @@ export const ProductTable = () => {
           </tr>
         </thead>
         <tbody>
-          {products.map((product) => (
-            <tr
-              className="odd:bg-gray-200 even:bg-white"
-              key={product.product_id}
-            >
-              {/* <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap"><input type="checkbox" name="" id="" /></td> */}
-              <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                {product.product_id}
-              </td>
-              <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                {product.product_name}
-              </td>
-              <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                {product.description}
-              </td>
-              <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                {product.price}
-              </td>
-              <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                {product.city}
-              </td>
-              <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                {product.pais}
-              </td>
-              <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                <button>
-                  <FontAwesomeIcon
-                    className="text-[#e66a54] hover:text-[#f2ebc3]"
-                    icon="fas fa-solid fa-pencil"
-                  />
-                </button>
-              </td>
-              <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                <button>
-                  <FontAwesomeIcon
-                    className="text-[#e66a54] hover:text-[#f2ebc3]"
-                    icon="fas fa-solid fa-trash"
-                  />
-                </button>
-              </td>
-            </tr>
-          ))}
+          {products &&
+            products.map((product) => (              
+              <tr
+                className="odd:bg-gray-200 even:bg-white"
+                key={product.product_id}
+              >
+                {/* <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap"><input type="checkbox" name="" id="" /></td> */}
+                <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                  {product.product_id}
+                </td>
+                <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                  {product.product_name}
+                </td>
+                <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                  {product.description}
+                </td>
+
+                <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                  {product.category.category_name}
+                </td>
+
+                <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                  {product.price}
+                </td>
+                <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                  {product.city.city_name}
+                </td>
+                <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                  {product.city.country.country_name}
+                </td>
+                <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                  <button>
+                    <FontAwesomeIcon
+                      className="text-[#e66a54] hover:text-[#f2ebc3]"
+                      icon="fas fa-solid fa-pencil"
+                      onClick={() => handleOpen(product)}
+                    />
+                  </button>
+                </td>
+                <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                  <button>
+                    <FontAwesomeIcon
+                      className="text-[#e66a54] hover:text-[#f2ebc3]"
+                      icon="fas fa-solid fa-trash"
+                      onClick={() => deleteProduct(product.product_id)}
+                    />
+                  </button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
+      <ProductForm
+        isOpen={modalOpen}
+        onClose={closeModal}
+        setIsChange={setIsChange}
+        productSelected={productSelected}
+        setProductSelected={setProductSelected}
+        fetchAddProduct={fetchAddProduct}
+        fetchEditProduct={fetchEditProduct}
+        categories={categories}
+        cities={cities}
+      />
     </div>
   );
 };
