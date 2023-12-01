@@ -180,7 +180,8 @@ const DataContextComponent = ({ children }) => {
         product,
         { headers }
       );
-
+    console.log(response);
+    
       fetchProducts();
       return { success: true, data: response.data };
 

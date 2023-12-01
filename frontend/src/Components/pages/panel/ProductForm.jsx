@@ -37,24 +37,21 @@ const ProductForm = ({
       setNewProduct(initialProductState);
     }
   }, [productSelected]);
-  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-  
+
     setNewProduct((prevProduct) => ({
       ...prevProduct,
       [name]: value === "" ? null : value,
     }));
   };
-  
 
   const handleImageChange = (e) => {
     setImages(Array.from(e.target.files));
   };
 
   const handleSubmit = async () => {
-
     if (images.length === 0) {
       Swal.fire({
         icon: "error",
@@ -82,10 +79,15 @@ const ProductForm = ({
     }
 
     if (resp.success) {
+      const successMessage = productSelected
+        ? "Producto modificado con éxito"
+        : "Producto creado con éxito";
+    
       Swal.fire({
         icon: "success",
-        title: "Producto creado con éxito",
+        title: successMessage,
       });
+    
       setIsChange(true);
     } else if (resp.error && resp.error.status === 409) {
       Swal.fire({
@@ -100,7 +102,9 @@ const ProductForm = ({
         text: "Error desconocido",
       });
     }
+    
     handleClose();
+    
   };
 
   const handleClose = () => {
