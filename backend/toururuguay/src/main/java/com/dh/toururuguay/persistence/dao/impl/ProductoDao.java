@@ -297,6 +297,8 @@ public class ProductoDao implements IDao<Producto> {
     @Override
     public Producto actualizar(Producto producto) {
         try {
+            log.info("Producto a actualizar: {}", producto);
+            
             Producto productoEncontrado = entityManager.find(Producto.class, producto.getProduct_id());
             List<Producto> productos = new ArrayList<>();
             productos = buscarTodos();
@@ -315,7 +317,7 @@ public class ProductoDao implements IDao<Producto> {
             productoEncontrado.setCategory(producto.getCategory());
             productoEncontrado.setCity(producto.getCity());
             entityManager.merge(productoEncontrado);
-            log.info("Producto actualizado con éxito");
+            log.info("Producto actualizado con éxito", productoEncontrado);
             return productoEncontrado;
         } catch (Exception e) {
             e.printStackTrace();
