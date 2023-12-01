@@ -157,6 +157,10 @@ const DataContextComponent = ({ children }) => {
   };
   
   const fetchEditProduct = async (product, imagen) => {
+
+    console.log("producto pa actualizar:",product);
+    console.log("imagen pa actualizar:",imagen);
+    
     const formData = new FormData();
 
     imagen.forEach((image) => {
@@ -181,7 +185,7 @@ const DataContextComponent = ({ children }) => {
         { headers }
       );
     console.log(response);
-    
+
       fetchProducts();
       return { success: true, data: response.data };
 

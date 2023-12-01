@@ -25,25 +25,44 @@ const ProductForm = ({
 
   useEffect(() => {
     if (productSelected) {
-      setNewProduct((prevProduct) => ({
-        ...prevProduct,
+      setNewProduct({
         product_name: productSelected.product_name || "",
         description: productSelected.description || "",
         price: productSelected.price || 0,
-        category: productSelected?.category?.category_id || "",
-        city: productSelected?.city?.city_id || "",
-      }));
+        category: productSelected.category
+          ? { category_id: productSelected.category.category_id }
+          : null,
+        city: productSelected.city
+          ? { city_id: productSelected.city.city_id }
+          : null,
+      });
     } else {
       setNewProduct(initialProductState);
     }
   }, [productSelected]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
+  const handleTextChange = (e, name) => {
+    const { value } = e.target;
     setNewProduct((prevProduct) => ({
       ...prevProduct,
       [name]: value === "" ? null : value,
+    }));
+  };
+
+  const handleSelectChange = (e, name) => {
+    const { value } = e.target;
+
+    setNewProduct((prevProduct) => ({
+      ...prevProduct,
+      [name]: value === "" ? null : { [`${name}_id`]: value },
+    }));
+  };
+
+  const handlePriceChange = (e) => {
+    const { value } = e.target;
+    setNewProduct((prevProduct) => ({
+      ...prevProduct,
+      price: value === "" ? null : parseFloat(value),
     }));
   };
 
@@ -66,7 +85,13 @@ const ProductForm = ({
     let resp = "";
 
     if (productSelected) {
-      resp = await fetchEditProduct(productSelected, IMG);
+      resp = await fetchEditProduct(
+        {
+          product_id: productSelected.product_id,
+          ...newProduct,
+        },
+        IMG
+      );
     } else {
       const { category, city, ...rest } = newProduct;
       const modifiedProduct = {
@@ -82,12 +107,12 @@ const ProductForm = ({
       const successMessage = productSelected
         ? "Producto modificado con éxito"
         : "Producto creado con éxito";
-    
+
       Swal.fire({
         icon: "success",
         title: successMessage,
       });
-    
+
       setIsChange(true);
     } else if (resp.error && resp.error.status === 409) {
       Swal.fire({
@@ -102,9 +127,8 @@ const ProductForm = ({
         text: "Error desconocido",
       });
     }
-    
+
     handleClose();
-    
   };
 
   const handleClose = () => {
@@ -126,7 +150,7 @@ const ProductForm = ({
             className="rounded p-1 flex-grow"
             type="text"
             value={newProduct.product_name}
-            onChange={handleChange}
+            onChange={(e) => handleTextChange(e, "product_name")}
             name="product_name"
           />
         </div>
@@ -137,7 +161,7 @@ const ProductForm = ({
           <textarea
             className="rounded p-1 flex-grow"
             value={newProduct.description}
-            onChange={handleChange}
+            onChange={(e) => handleTextChange(e, "description")}
             name="description"
           />
         </div>
@@ -149,8 +173,8 @@ const ProductForm = ({
             type="number"
             step="0.01"
             className="rounded p-1 flex-grow text-right"
-            value={newProduct.price}
-            onChange={handleChange}
+            value={newProduct.price || ""}
+            onChange={handlePriceChange}
             name="price"
           />
         </div>
@@ -173,8 +197,8 @@ const ProductForm = ({
           </label>
           <select
             className="rounded p-2 flex-grow"
-            value={newProduct.category || ""}
-            onChange={(e) => handleChange(e, "category")}
+            value={newProduct.category ? newProduct.category.category_id : ""}
+            onChange={(e) => handleSelectChange(e, "category")}
             name="category"
             key="category-select"
           >
@@ -195,8 +219,8 @@ const ProductForm = ({
           </label>
           <select
             className="rounded p-2 flex-grow"
-            value={newProduct.city || ""}
-            onChange={(e) => handleChange(e, "city")}
+            value={newProduct.city ? newProduct.city.city_id : ""}
+            onChange={(e) => handleSelectChange(e, "city")}
             name="city"
             key="city-select"
           >

@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
+import Swal from "sweetalert2";
 import ProductForm from "./ProductForm";
 
 export const ProductTable = ({
@@ -14,7 +15,22 @@ export const ProductTable = ({
   const [modalOpen, setModalOpen] = useState(false);
   const [productSelected, setProductSelected] = useState(null);
 
-  
+  const confirmDelete = (id) => {
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "No podrás revertir esto.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Sí, eliminarlo",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteProduct(id);
+      }
+    });
+  };
+
   const deleteProduct = (id) => {
     fetchDeleteProduct(id);
     setIsChange(true);
@@ -62,7 +78,7 @@ export const ProductTable = ({
         </thead>
         <tbody>
           {products &&
-            products.map((product) => (              
+            products.map((product) => (
               <tr
                 className="odd:bg-gray-200 even:bg-white"
                 key={product.product_id}
@@ -105,7 +121,7 @@ export const ProductTable = ({
                     <FontAwesomeIcon
                       className="text-[#e66a54] hover:text-[#f2ebc3]"
                       icon="fas fa-solid fa-trash"
-                      onClick={() => deleteProduct(product.product_id)}
+                      onClick={() => confirmDelete(product.product_id)}
                     />
                   </button>
                 </td>
