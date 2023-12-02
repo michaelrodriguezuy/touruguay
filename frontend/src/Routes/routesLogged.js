@@ -2,6 +2,7 @@
 
 import Reserva from "../Components/pages/users/reservas/Reserva";
 import Favoritos from "../Components/pages/users/favoritos/Favoritos";
+import DataUser from "../Components/pages/users/dataUser/DataUser";
 
 export const routesLogged = [
     {
@@ -13,5 +14,11 @@ export const routesLogged = [
         id: "favorite",
         path: "/favorite",
         Element: Favoritos,
-    }    
+    }    ,
+    {
+        id: "data",
+        path: "/dataUser",
+        Element: DataUser,
+    }
+
 ];

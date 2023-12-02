@@ -98,12 +98,15 @@ function Navbar() {
                       </button>
                       {isOpen && (
                         <div className="absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded-lg shadow-lg">
-                          <a
-                            href="#"
+                          
+                          <Link
+                            to="/dataUser"
+                            onClick={closeAvatarMenu}
                             className="block py-2 px-4 hover:bg-gray-200 rounded-lg"
                           >
                             Mis datos
-                          </a>
+                          </Link>
+
                           <Link
                             to="/booking"
                             onClick={closeAvatarMenu}
