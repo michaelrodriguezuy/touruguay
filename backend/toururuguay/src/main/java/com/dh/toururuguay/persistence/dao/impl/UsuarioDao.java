@@ -31,7 +31,7 @@ public class UsuarioDao implements IDao<Usuario> {
     public Optional<Usuario> buscar(Integer id) {
         try {
             Usuario usuario = entityManager.createQuery(
-                            "SELECT u FROM Usuario u WHERE u.user_id = :userId\n", Usuario.class)
+                    "SELECT u FROM Usuario u WHERE u.user_id = :userId\n", Usuario.class)
                     .setParameter("userId", id)
                     .getSingleResult();
 
@@ -46,19 +46,21 @@ public class UsuarioDao implements IDao<Usuario> {
         }
     }
 
-
+    @Transactional
     @Override
     public void eliminar(Integer id) {
-
+        Usuario usuario = entityManager.find(Usuario.class, id);
+        entityManager.remove(usuario);
+        log.info("Usuario eliminado con éxito");
     }
 
-    //con esto devuelvo todos los datos completos
+    
     @Transactional
     @Override
     public List<Usuario> buscarTodos() {
-        try{
+        try {
             return entityManager.createQuery(
-                            "SELECT u FROM Usuario u ", Usuario.class)
+                    "SELECT u FROM Usuario u ", Usuario.class)
                     .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,8 +68,16 @@ public class UsuarioDao implements IDao<Usuario> {
         }
     }
 
+    @Transactional
     @Override
     public Usuario actualizar(Usuario usuario) {
-        return null;
+        try {
+            Usuario usuarioActualizado = entityManager.merge(usuario);
+            log.info("Usuario actualizado con éxito");
+            return usuarioActualizado;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al actualizar el usuario", e);
+        }
     }
 }
