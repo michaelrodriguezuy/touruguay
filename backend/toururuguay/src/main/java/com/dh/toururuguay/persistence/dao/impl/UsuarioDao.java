@@ -23,21 +23,27 @@ public class UsuarioDao implements IDao<Usuario> {
     @Override
     public Usuario guardar(Usuario usuario) {
         entityManager.persist(usuario);
+<<<<<<< HEAD
 <<<<<<< .merge_file_a30932
 <<<<<<< .merge_file_a22640
         log.info("Usuario guardado con exito");
 =======
 =======
 >>>>>>> .merge_file_a15492
+=======
+>>>>>>> 4187cebf0a0cb683cd83a99ab0335e38c9966ab4
 <<<<<<< HEAD
         log.info("Usuario guardado con éxito");
 =======
         log.info("Usuario guardado con exito");
 >>>>>>> e4c6ec0b1d7ea3fe5ace8acd2f65e7671195bd85
+<<<<<<< HEAD
 <<<<<<< .merge_file_a30932
 >>>>>>> .merge_file_a33280
 =======
 >>>>>>> .merge_file_a15492
+=======
+>>>>>>> 4187cebf0a0cb683cd83a99ab0335e38c9966ab4
         return usuario;
     }
 

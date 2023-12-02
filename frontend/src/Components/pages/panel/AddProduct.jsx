@@ -176,7 +176,7 @@ const AddProduct = ({ isOpen, onClose }) => {
         </div>
 
         <button
-          className="text-white bg-[#017999] rounded p-2 hover:bg-[#e66a54]"
+          className="text-white bg-[#017999] rounded p-2 hover:bg-[#1f4955]"
           onClick={handleSubmit}
         >
           Agregar

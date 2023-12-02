@@ -9,15 +9,22 @@ function Navbar() {
 
   const { user, isLogged, handleLogout } = useContext(AuthContext);
 
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+    setIsOpen(!isOpen);
+  };
+
+  const closeAvatarMenu = () => {
+    setIsOpen(false);
   };
 
   const Logout = () => {
     try {
       handleLogout();
+      closeAvatarMenu();
       navigate("/");
     } catch (error) {
       console.log(error);
@@ -33,9 +40,8 @@ function Navbar() {
           </Link>
           <Link to="/">
             <h3
-              className={`ml-4 text-lg lg:text-xl hidden sm:block md:text-base ${
-                isMenuOpen ? "hidden" : ""
-              }`}
+              className={`ml-4 text-lg lg:text-xl hidden sm:block md:text-base ${isMenuOpen ? "hidden" : ""
+                }`}
             >
               Descubriendo el paisito
             </h3>
@@ -50,12 +56,10 @@ function Navbar() {
           </button>
         </div>
         <div
-          className={`lg:flex items-center space-x-2 ${
-            isMenuOpen ? "block" : "hidden"
-          }`}
+          className={`lg:flex items-center space-x-2 ${isMenuOpen ? "block" : "hidden"
+            }`}
         >
           <ul className="flex lg:justify-end lg:gap-4 md:gap-4">
-            {/* Provisorio */}
             {!isLogged ? (
               <>
                 <li className="text-[#017999] hover:text-gray-300">
@@ -77,10 +81,50 @@ function Navbar() {
                         <button onClick={Logout}>Cerrar Sesion</button>
                       </li>
                     </div>
-                    <li className="w-10 h-10 flex items-center justify-center bg-gray-300 rounded-full">
-                      {user.name[0]}
-                      {user.lastname[0]}
-                    </li>
+
+                    <div className="relative">
+                      <button
+                        onClick={toggleMenu}
+                        className="flex items-center focus:outline-none"
+                        aria-label="Toggle dropdown"
+                      >
+                        <li className="w-10 h-10 flex items-center justify-center bg-gray-300 rounded-full">
+                          {user.name[0]}
+                          {user.lastname[0]}
+                        </li>
+                      </button>
+                      {isOpen && (
+                        <div className="absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded-lg shadow-lg">
+                          <a
+                            href="#"
+                            className="block py-2 px-4 hover:bg-gray-200 rounded-lg"
+                          >
+                            Mis datos
+                          </a>
+                          <Link
+                            to="/booking"
+                            onClick={closeAvatarMenu}
+                            className="block py-2 px-4 hover:bg-gray-200 rounded-lg"
+                          >
+                            Mis reservas
+                          </Link>
+                          <Link
+                            to="/favorite"
+                            onClick={closeAvatarMenu}
+                            className="block py-2 px-4 hover:bg-gray-200 rounded-lg"
+                          >
+                            Mis favoritos
+                          </Link>
+                          <Link
+                            to="/AdminPanel"
+                            onClick={closeAvatarMenu}
+                            className="block py-2 px-4 hover:bg-gray-200 rounded-lg"
+                          >
+                            Panel de control
+                          </Link>
+                        </div>
+                      )}
+                    </div>
                   </>
                 )}
               </>

@@ -63,4 +63,8 @@ dist-ssr
 
 
 ###INFRA###
+<<<<<<< .merge_file_a21196
 /infra/key_grupo2C12.pem
+=======
+/infra/key_grupo2C12.pem
+>>>>>>> .merge_file_a06632

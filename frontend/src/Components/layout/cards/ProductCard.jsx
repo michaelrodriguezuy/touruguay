@@ -5,12 +5,15 @@ import { Link } from 'react-router-dom'
 const ProductCard = ({ product }) => {
 
   return (
-    <div className="w-full mx-auto bg-white shadow-2xl rounded-lg overflow-hidden relative border-2">
+    <div className="w-full mx-auto bg-white shadow-2xl rounded-lg overflow-hidden relative border-2 cursor-pointer transition transform hover:scale-110">
+
       <img
         className="w-full h-48 object-cover"
-        src={product.urlImagen}
+        src={product.urlImagen} 
         alt={product.product_name}
+        
       />
+
       <div className="p-4">
         <h2 className="text-xl font-semibold text-[#e66a54]">
           <Link to={`/detalle/${product.product_id}`}>{product.product_name}</Link>
