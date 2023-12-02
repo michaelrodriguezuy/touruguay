@@ -8,6 +8,7 @@ function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const { user, isLogged, handleLogout } = useContext(AuthContext);
+  const rolAdmin = import.meta.env.VITE_ROLADMIN;
 
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -40,8 +41,9 @@ function Navbar() {
           </Link>
           <Link to="/">
             <h3
-              className={`ml-4 text-lg lg:text-xl hidden sm:block md:text-base ${isMenuOpen ? "hidden" : ""
-                }`}
+              className={`ml-4 text-lg lg:text-xl hidden sm:block md:text-base ${
+                isMenuOpen ? "hidden" : ""
+              }`}
             >
               Descubriendo el paisito
             </h3>
@@ -56,8 +58,9 @@ function Navbar() {
           </button>
         </div>
         <div
-          className={`lg:flex items-center space-x-2 ${isMenuOpen ? "block" : "hidden"
-            }`}
+          className={`lg:flex items-center space-x-2 ${
+            isMenuOpen ? "block" : "hidden"
+          }`}
         >
           <ul className="flex lg:justify-end lg:gap-4 md:gap-4">
             {!isLogged ? (
@@ -115,13 +118,16 @@ function Navbar() {
                           >
                             Mis favoritos
                           </Link>
-                          <Link
-                            to="/AdminPanel"
-                            onClick={closeAvatarMenu}
-                            className="block py-2 px-4 hover:bg-gray-200 rounded-lg"
-                          >
-                            Panel de control
-                          </Link>
+
+                          {user?.rol === rolAdmin && (
+                            <Link
+                              to="/AdminPanel"
+                              onClick={closeAvatarMenu}
+                              className="block py-2 px-4 hover:bg-gray-200 rounded-lg"
+                            >
+                              Panel de control
+                            </Link>
+                          )}
                         </div>
                       )}
                     </div>
