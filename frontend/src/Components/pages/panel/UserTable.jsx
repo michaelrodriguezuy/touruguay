@@ -1,11 +1,33 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UserForm from "./UserForm";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
-export const UserTable = ({ users, fetchDeleteUser, setIsChange, roles }) => {
+export const UserTable = ({
+  users,
+  fetchDeleteUser,
+  fetchEditUser,
+  setIsChange,
+  roles,
+}) => {
   const [modalOpen, setModalOpen] = useState(false);
-
   const [userSelected, setUserSelected] = useState(null);
+
+  const confirmDelete = (id) => {
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "No podrás revertir esto.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Sí, eliminarlo",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteUser(id);
+      }
+    });
+  };
 
   const deleteUser = async (id) => {
     fetchDeleteUser(id);
@@ -81,7 +103,7 @@ export const UserTable = ({ users, fetchDeleteUser, setIsChange, roles }) => {
                     <FontAwesomeIcon
                       className="text-[#e66a54] hover:text-[#f2ebc3]"
                       icon="fas fa-solid fa-trash"
-                      onClick={() => deleteUser(user.user_id)}
+                      onClick={() => confirmDelete(user.user_id)}
                     />
                   </button>
                 </td>
@@ -92,8 +114,11 @@ export const UserTable = ({ users, fetchDeleteUser, setIsChange, roles }) => {
       <UserForm
         isOpen={modalOpen}
         onClose={closeModal}
+        setIsChange={setIsChange}
         userSelected={userSelected}
+        setUserSelected={setUserSelected}
         roles={roles || []}
+        fetchEditUser={fetchEditUser}
       />
     </div>
   );

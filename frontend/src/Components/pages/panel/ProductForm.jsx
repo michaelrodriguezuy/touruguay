@@ -99,6 +99,8 @@ const ProductForm = ({
         category: { category_id: category !== "" ? category : null },
         city: { city_id: city !== "" ? city : null },
       };
+      modifiedProduct.category = modifiedProduct.category.category_id;
+      modifiedProduct.city = modifiedProduct.city.city_id;
 
       resp = await fetchAddProduct(modifiedProduct, IMG);
     }
@@ -134,6 +136,7 @@ const ProductForm = ({
   const handleClose = () => {
     onClose();
     setNewProduct(initialProductState);
+    setImages([]);
   };
 
   return (

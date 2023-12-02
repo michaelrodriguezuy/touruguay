@@ -10,15 +10,21 @@ export const AdminPanel = () => {
   const [isChange, setIsChange] = useState(false);
 
   const {
+    users,
+    roles,
     fetchUsers,
+    fetchEditUser,
+    fetchDeleteUser,
+    fetchRoles,
+
+    products,
     fetchProducts,
     fetchAddProduct,
     fetchEditProduct,
     fetchDeleteProduct,
     fetchCategories,
     fetchCities,
-    products,
-    users,
+
     categories,
     cities,
   } = useContext(DataContext);
@@ -30,6 +36,7 @@ export const AdminPanel = () => {
     setIsChange(false);
     fetchProducts();
     fetchUsers();
+    fetchRoles();    
     fetchCategories();
     fetchCities();
   }, [isChange]);
@@ -90,7 +97,15 @@ export const AdminPanel = () => {
           setIsChange={setIsChange}
         />
       )}
-      {userShow && <UserTable users={users} />}
+      {userShow && (
+        <UserTable
+          users={users}
+          roles={roles}
+          fetchEditUser={fetchEditUser}          
+          fetchDeleteUser={fetchDeleteUser}
+          setIsChange={setIsChange}
+        />
+      )}
     </section>
   );
 };

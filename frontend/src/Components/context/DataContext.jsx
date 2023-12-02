@@ -41,6 +41,8 @@ const DataContextComponent = ({ children }) => {
     }
   };
   
+  
+
   const fetchDeleteUser = async (userId) => {
     try {
       const deleteUser = await axios.delete(
@@ -57,7 +59,7 @@ const DataContextComponent = ({ children }) => {
   const fetchRoles = async () => {
     try {
       const getRoles = await axios.get(
-        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/roles",
+        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/rol/todosSinDTO",
         { headers }
       );
       setRoles(getRoles.data);
@@ -118,6 +120,8 @@ const DataContextComponent = ({ children }) => {
   const fetchAddProduct = async (product, imagen) => {
     const formData = new FormData();
 
+    console.log("producto pa agregar:",product);
+
     imagen.forEach((image) => {
       formData.append("imagen", image.data, image.filename);
     });
@@ -134,12 +138,16 @@ const DataContextComponent = ({ children }) => {
         }
       );
 
+      console.log("respuesta back img: ",responseImg);
+
       const response = await axios.post(
         "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto",
         product,
         { headers }
       );
       
+      console.log("respuesta back prod: ",response);
+
       if (response.status === 409) {
         console.log("El producto ya existe");      
       } else {      
@@ -158,9 +166,6 @@ const DataContextComponent = ({ children }) => {
   
   const fetchEditProduct = async (product, imagen) => {
 
-    console.log("producto pa actualizar:",product);
-    console.log("imagen pa actualizar:",imagen);
-    
     const formData = new FormData();
 
     imagen.forEach((image) => {
@@ -301,7 +306,9 @@ const DataContextComponent = ({ children }) => {
     registerUser,
     loginUser,
     fetchUsers,
+    fetchRoles,
     fetchDeleteUser,
+    
       
     fetchCategories,
     fetchCities,
