@@ -1,7 +1,11 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DataContext } from "../../context/DataContext.jsx";
+
 import Swal from "sweetalert2";
+
+import nodemailer from 'nodemailer';
+
 
 const Formulario = () => {
   const [nombre, setNombre] = useState("");
@@ -83,6 +87,8 @@ const Formulario = () => {
       console.error("Error al registrar el usuario:", error);
     }
   };
+
+
   return (
     <div className="relative top-[-100px] flex items-center justify-center md:w-1/2">
       <div className="mx-auto">
