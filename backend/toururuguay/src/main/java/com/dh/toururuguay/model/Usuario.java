@@ -37,10 +37,25 @@ public class Usuario implements UserDetails {
     @JsonProperty("rol")
     private Rol rol;
 <<<<<<< HEAD
+<<<<<<< .merge_file_a22844
+<<<<<<< .merge_file_a05976
+=======
+=======
+>>>>>>> .merge_file_a17580
+=======
+>>>>>>> 4187cebf0a0cb683cd83a99ab0335e38c9966ab4
+<<<<<<< HEAD
     
 =======
 
 >>>>>>> e4c6ec0b1d7ea3fe5ace8acd2f65e7671195bd85
+<<<<<<< HEAD
+<<<<<<< .merge_file_a22844
+>>>>>>> .merge_file_a18272
+=======
+>>>>>>> .merge_file_a17580
+=======
+>>>>>>> 4187cebf0a0cb683cd83a99ab0335e38c9966ab4
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority((rol.getName())));

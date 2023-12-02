@@ -4,7 +4,6 @@ import App from "./App.jsx";
 import "./index.css";
 
 import DataProvider from "./Components/context/DataContext.jsx";
-// import { AdminDataProvider } from "../src/Components/context/adminContext.jsx";
 import AuthContextComponent from "./Components/context/AuthContext.jsx";
 
 import { library } from "@fortawesome/fontawesome-svg-core";

@@ -9,9 +9,11 @@ const ProductCard = ({ product }) => {
 
       <img
         className="w-full h-48 object-cover"
-        src={product.urlImagen}
+        src={product.urlImagen} 
         alt={product.product_name}
+        
       />
+
       <div className="p-4">
         <h2 className="text-xl font-semibold text-[#e66a54]">
           <Link to={`/detalle/${product.product_id}`}>{product.product_name}</Link>

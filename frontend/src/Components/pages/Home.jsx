@@ -30,7 +30,7 @@ const Home = () => {
           <input
             type="search"
             placeholder="Salto en paracaídas, tour por..."
-            className="md:w-full w-full px-4 py-2 rounded-lg focus:outline-none"
+            className="md:w-full w-full px-6 py-2 rounded-lg focus:outline-none"
           />
           <FontAwesomeIcon
             className="searchIcon text-gray-600 ml-1"
@@ -51,7 +51,6 @@ const Home = () => {
         <button className=" mx-auto bg-[#202A44] hover:bg-[#131a2b] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
           Realizar busqueda</button>
       </div>
-
       <section className="p-4">
         <h2 className="text-center text-2xl p-10 font-bold">Busca por categoria</h2>
         <div class="flex flex-row gap-4 justify-center m-auto">
@@ -133,7 +132,6 @@ const Home = () => {
               Previous
             </button>
           </li>
-          
           {Array.from({ length: pageCount }, (_, index) => (
             <li key={index}>
               <button

@@ -77,6 +77,7 @@ const DataContextComponent = ({ children }) => {
       setProductsRandom(productsRandom.data);
     } catch (error) {
       console.error("Error obteniendo productos random:", error);
+
     }
   };
 
