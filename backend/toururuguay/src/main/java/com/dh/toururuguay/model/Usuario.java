@@ -1,6 +1,7 @@
 package com.dh.toururuguay.model;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -32,14 +33,19 @@ public class Usuario implements UserDetails {
     @Column(name = "last_name")
     private String lastname;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
     @JsonProperty("rol")
     private Rol rol;
-    
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority((rol.getName())));
+        System.out.println("Usuario: " + username + ", Rol: " + rol);
+        if (rol == null) {
+            System.out.println("El rol es nulo.");
+            return Collections.emptyList(); // O retorna una colección vacía según tu lógica
+        }
+        return List.of(new SimpleGrantedAuthority(rol.getName()));
     }
 
     @Override

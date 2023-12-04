@@ -1,5 +1,6 @@
 package com.dh.toururuguay.controller.secure;
 
+import com.dh.toururuguay.dto.ReservaDTO;
 import com.dh.toururuguay.model.Reserva;
 import com.dh.toururuguay.service.ReservaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,20 @@ public class ReservaController {
         return ResponseEntity.ok(reservaService.registrarReserva(reserva));
     }
 
+    // public ResponseEntity<ReservaDTO> registrarReserva(@RequestBody ReservaDTO
+    // reserva) {
+    // ReservaDTO reservaDTO = reservaService.registrarReservaDTO(reserva);
+    // return ResponseEntity.ok(reservaDTO);
+    // }
+
     @GetMapping("/todosSinDTO")
-    public ResponseEntity<List<Reserva>> buscarTodos(){
+    public ResponseEntity<List<Reserva>> buscarTodos() {
         return ResponseEntity.ok(reservaService.buscarTodos());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ReservaDTO> buscarReserva(@PathVariable Integer id) {
+        ReservaDTO reserva = reservaService.buscarReserva(id).orElse(null);
+        return ResponseEntity.ok(reserva);
     }
 }

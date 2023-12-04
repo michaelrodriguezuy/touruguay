@@ -1,47 +1,26 @@
-package com.dh.toururuguay.model;
+package com.dh.toururuguay.dto;
 
 import java.sql.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import jakarta.persistence.*;
+public class ReservaDTO {
 
-@Entity
-@Table(name = "booking")
-public class Reserva {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer booking_id;
     private String title;
     private String description;
 
-    @ManyToOne()
-    @JoinColumn(name = "user_id")
-    private Usuario user;
+    private String user;
 
-    // @ManyToOne(optional = false)
-    // @JoinColumn(name = "city_id")
-    // private Ciudad city;
+    private String product;
 
-    @ManyToOne()
-    @JoinColumn(name = "product_id")
-    private Producto product;
+    private String City;
 
-    @Column(name = "start_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date desde;
 
-    @Column(name = "end_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date hasta;
-
-    // public Ciudad getCity() {
-    //     return city;
-    // }
-
-    // public void setCity(Ciudad city) {
-    //     this.city = city;
-    // }
 
     public Integer getBooking_id() {
         return booking_id;
@@ -67,19 +46,27 @@ public class Reserva {
         this.description = description;
     }
 
-    public Usuario getUser() {
+    public String getCity() {
+        return City;
+    }
+
+    public void setCity(String city) {
+        this.City = city;
+    }
+
+    public String getUser() {
         return user;
     }
 
-    public void setUser(Usuario user) {
+    public void setUser(String user) {
         this.user = user;
     }
 
-    public Producto getProduct() {
+    public String getProduct() {
         return product;
     }
 
-    public void setProduct(Producto product) {
+    public void setProduct(String product) {
         this.product = product;
     }
 
@@ -99,19 +86,20 @@ public class Reserva {
         this.hasta = hasta;
     }
 
-    public Reserva() {
+    public ReservaDTO() {
 
     }
 
-    public Reserva(Integer booking_id, String title, String description, Usuario user, Producto product, 
+    public ReservaDTO(Integer booking_id, String title, String description, String city, String user, String product,
             Date desde, Date hasta) {
         this.booking_id = booking_id;
         this.title = title;
         this.description = description;
+        this.City = city;
         this.user = user;
         this.product = product;
-        // this.city = city;
         this.desde = desde;
         this.hasta = hasta;
     }
+
 }
