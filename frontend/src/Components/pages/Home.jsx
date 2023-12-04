@@ -26,7 +26,7 @@ const Home = () => {
     <section className="w-full flex flex-col bg-slate-200">
       <div className="grid grid-cols-1 bg-[#017999] place-content-evenly gap-10 p-10 md:px-85 md:py-10 md:grid-cols-3">
         <div className="flex bg-gray-100 rounded-md overflow-hidden">
-        <h2 className="text-center">Realiza una busqueda</h2>
+        <h2 className="text-center">Realiza una búsqueda</h2>
           <input
             type="search"
             placeholder="Salto en paracaídas, tour por..."
@@ -52,7 +52,7 @@ const Home = () => {
           Realizar busqueda</button>
       </div>
       <section className="p-4">
-        <h2 className="text-center text-2xl p-10 font-bold">Busca por categoria</h2>
+        <h3 className="text-center text-4xl p-10 font-bold">Busca por categoría</h3>
         <div class="flex flex-row gap-4 justify-center m-auto">
 
           <div className="w-72 md:w-96 mx-auto bg-white shadow-lg rounded-lg overflow-hidden relative cursor-pointer transition transform hover:scale-110">
@@ -80,6 +80,8 @@ const Home = () => {
             </h3>
           </div>
         </div>
+        
+      
       </section>
 
       <section className="flex flex-col p-4">
@@ -94,28 +96,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="flex justify-center">
-        <div>
-          <h3 className="text-4xl font-bold text-center">Mas categorias</h3>
-          <div className="flex flex-row py-4 space-x-4 gap-10">
-          <button className=" mx-auto bg-slate-400 hover:bg-[#b4b6bc] text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline cursor-pointer transition transform hover:scale-110">
-          Automovilismo</button>
-          <button className=" mx-auto bg-slate-400 hover:bg-[#b4b6bc] text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline cursor-pointer transition transform hover:scale-110">
-          Paseos</button>
-          <button className=" mx-auto bg-slate-400 hover:bg-[#b4b6bc] text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline cursor-pointer transition transform hover:scale-110">
-          Cursos y Talleres</button>
-          <button className=" mx-auto bg-slate-400 hover:bg-[#b4b6bc] text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline cursor-pointer transition transform hover:scale-110">
-          Imperdibles</button>
-          <button className=" mx-auto bg-slate-400 hover:bg-[#b4b6bc] text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline cursor-pointer transition transform hover:scale-110">
-          Arquitectura</button>
-          <button className=" mx-auto bg-slate-400 hover:bg-[#b4b6bc] text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline cursor-pointer transition transform hover:scale-110">
-          Deporte</button>
-          <button className=" mx-auto bg-slate-400 hover:bg-[#b4b6bc] text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline cursor-pointer transition transform hover:scale-110">
-          Museos</button>
-            </div>
-        </div>
-      </section>
-      
+
       
 
 
