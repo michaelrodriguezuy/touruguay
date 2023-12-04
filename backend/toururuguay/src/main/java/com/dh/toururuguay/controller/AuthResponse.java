@@ -13,6 +13,7 @@ public class AuthResponse {
     String token;
     private String name;
     private String lastname;
+    private String username;
     private String rol;
     private String message;
     private String error;
@@ -21,11 +22,12 @@ public class AuthResponse {
         this.message = message;
     }
 
-    public static AuthResponse forLogin(String token, String name, String lastname, String rol) {
+    public static AuthResponse forLogin(String token, String name, String lastname, String rol, String username) {
         return AuthResponse.builder()
                 .token(token)
                 .name(name)
                 .lastname(lastname)
+                .username(username)
                 .rol(rol)
                 .build();
     }
