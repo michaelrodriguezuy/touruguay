@@ -60,6 +60,7 @@ const UserForm = ({
     if (userSelected) {
       resp = await fetchEditUser({
         user_id: userSelected.user_id,
+        password: userSelected.password,
         ...newUser,
       });
     }

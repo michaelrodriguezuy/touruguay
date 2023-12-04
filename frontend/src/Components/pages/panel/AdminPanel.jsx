@@ -2,12 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import { ProductTable } from "./ProductTable";
 import { UserTable } from "./UserTable";
 import ProductForm from "./ProductForm";
-
+import AddCategory from './AddCategory';
 import { DataContext } from "../../context/DataContext";
 
 export const AdminPanel = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [isChange, setIsChange] = useState(false);
+  const [modalOpenCategory, setModalOpenCategory] = useState(false)
 
   const {
     users,
@@ -36,7 +37,7 @@ export const AdminPanel = () => {
     setIsChange(false);
     fetchProducts();
     fetchUsers();
-    fetchRoles();    
+    fetchRoles();
     fetchCategories();
     fetchCities();
   }, [isChange]);
@@ -47,6 +48,14 @@ export const AdminPanel = () => {
 
   const closeModal = () => {
     setModalOpen(false);
+  };
+
+  const openModalCategory = () => {
+    setModalOpenCategory(true);
+  };
+
+  const closeModalCategory = () => {
+    setModalOpenCategory(false);
   };
 
   return (
@@ -73,7 +82,7 @@ export const AdminPanel = () => {
           >
             Agregar Producto
           </button>
-          <button className='bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full'>
+          <button onClick={openModalCategory} className='bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full'>
             Agregar categoría
           </button>
         </div>
@@ -86,6 +95,7 @@ export const AdminPanel = () => {
         fetchAddProduct={fetchAddProduct}
         setIsChange={setIsChange}
       />
+      <AddCategory isOpen={modalOpenCategory} onClose={closeModalCategory}/>
 
       {productShow && (
         <ProductTable
@@ -101,7 +111,7 @@ export const AdminPanel = () => {
         <UserTable
           users={users}
           roles={roles}
-          fetchEditUser={fetchEditUser}          
+          fetchEditUser={fetchEditUser}
           fetchDeleteUser={fetchDeleteUser}
           setIsChange={setIsChange}
         />
