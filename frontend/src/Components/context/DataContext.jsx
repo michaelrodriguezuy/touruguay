@@ -371,6 +371,7 @@ const DataContextComponent = ({ children }) => {
     fetchImgProductById,
     fetchProducts,
     fetchAddProduct,
+    fetchAddCategory,
     fetchEditProduct,
     fetchDeleteProduct,
 
@@ -389,6 +390,61 @@ const DataContextComponent = ({ children }) => {
   };
 
   return <DataContext.Provider value={data}>{children}</DataContext.Provider>;
+};
+
+const fetchAddCategory = async (categories, imagen) => {
+  const formData = new FormData();
+
+  console.log("Categoria a agregar:", categories);
+
+  imagen.forEach((image) => {
+    formData.append("imagen", image.data, image.filename);
+  });
+
+  try {
+    const responseImg = await axios.post(
+      "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/imagen",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    console.log("respuesta back img: ", responseImg);
+
+    const response = await axios.post(
+      "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/categoria/todas",
+      categories,
+      { headers }
+    );
+
+    console.log("respuesta back catg: ", response);
+
+    if (response.status === 409) {
+      console.log("Categoria ya existente");
+    } else {
+      fetchCategories();
+    }
+    return { success: true, data: response.data };
+  } catch (error) {
+    if (error.response && error.response.status === 409) {
+      return {
+        success: false,
+        error: { status: 409, message: "Categoria ya existente" },
+      };
+    } else {
+      return {
+        success: false,
+        error: {
+          status: error.response.status,
+          message: "Error desconocido",
+        },
+      };
+    }
+  }
 };
 
 export default DataContextComponent;
