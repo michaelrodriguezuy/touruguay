@@ -10,6 +10,9 @@ public class ReservaDTO {
     private String title;
     private String description;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private Date date;
+
     private String user;
 
     private String product;
@@ -44,6 +47,15 @@ public class ReservaDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+
     }
 
     public String getCity() {
@@ -90,11 +102,12 @@ public class ReservaDTO {
 
     }
 
-    public ReservaDTO(Integer booking_id, String title, String description, String city, String user, String product,
+    public ReservaDTO(Integer booking_id, String title, String description, Date date,String city, String user, String product,
             Date desde, Date hasta) {
         this.booking_id = booking_id;
         this.title = title;
         this.description = description;
+        this.date = date;
         this.City = city;
         this.user = user;
         this.product = product;

@@ -313,6 +313,7 @@ public class ReservaDao implements IDao<Reserva> {
                     reservaDTO.setBooking_id(reserva.getBooking_id());
                     reservaDTO.setTitle(reserva.getTitle());
                     reservaDTO.setDescription(reserva.getDescription());
+                    reservaDTO.setDate(reserva.getDate());
                     reservaDTO.setUser(usuario.getName());
                     reservaDTO.setProduct(producto.getProduct_name());
                     reservaDTO.setCity(producto.getCity().getCity_name());

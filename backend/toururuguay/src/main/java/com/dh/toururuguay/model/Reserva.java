@@ -15,6 +15,10 @@ public class Reserva {
     private String title;
     private String description;
 
+    @Column(name = "date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private Date date;
+
     @ManyToOne()
     @JoinColumn(name = "user_id")
     private Usuario user;
@@ -67,6 +71,15 @@ public class Reserva {
         this.description = description;
     }
 
+    public Date getDate() {
+        return date;
+    }
+    public void setDate(Date date) {
+        this.date = date;
+
+    }
+
+
     public Usuario getUser() {
         return user;
     }
@@ -103,11 +116,12 @@ public class Reserva {
 
     }
 
-    public Reserva(Integer booking_id, String title, String description, Usuario user, Producto product, 
+    public Reserva(Integer booking_id, String title, String description, Date date, Usuario user, Producto product, 
             Date desde, Date hasta) {
         this.booking_id = booking_id;
         this.title = title;
         this.description = description;
+        this.date = date;
         this.user = user;
         this.product = product;
         // this.city = city;
