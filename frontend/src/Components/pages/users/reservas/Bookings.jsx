@@ -15,7 +15,7 @@ const Reserva = () => {
   }, [user]);
 
   return (
-    <div>
+    <section className="w-full flex flex-col bg-slate-200">
       {/* texto centrado */}
       <div className="text-center">
         <h1 className="text-3xl font-semibold text-gray-800 dark:text-black">
@@ -86,7 +86,7 @@ const Reserva = () => {
             ))}
         </tbody>
       </table>
-    </div>
+    </section>
   );
 };
 
