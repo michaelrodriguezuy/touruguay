@@ -37,6 +37,10 @@ const Reserva = () => {
             </th>
             
             <th scope="col" className="p-4">
+              Fecha
+            </th>
+
+            <th scope="col" className="p-4">
               Producto
             </th>
             <th scope="col" className="p-4">
@@ -64,7 +68,9 @@ const Reserva = () => {
                   {booking.description}
                 </td>
 
-                
+                <td className="py-4 px-6 text-sm font-medium text-gray-900">
+                  {booking.date}
+                </td>
                 
                 <td className="py-4 px-6 text-sm font-medium text-gray-900">
                   {booking.product}
