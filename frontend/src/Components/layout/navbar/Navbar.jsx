@@ -65,10 +65,10 @@ function Navbar() {
           <ul className="flex lg:justify-end lg:gap-4 md:gap-4">
             {!isLogged ? (
               <>
-                <li className="text-[#017999] hover:text-gray-300">
+                <li className="text-[#63c1dc] hover:text-gray-300">
                   <Link to="/iniciarSesion">Iniciar Sesion</Link>
                 </li>
-                <li className="text-[#017999] hover:text-gray-300">
+                <li className="text-[#63c1dc] hover:text-gray-300">
                   <Link to="/crearCuenta">Crear Cuenta</Link>
                 </li>
               </>
@@ -76,15 +76,6 @@ function Navbar() {
               <>
                 {user.name && user.lastname && (
                   <>
-                    <div>
-                      <li className="text-[#017999] text-[#017999]">
-                        {user.name} {user.lastname}
-                      </li>
-                      <li className="text-[#017999] hover:text-gray-300">
-                        <button onClick={Logout}>Cerrar Sesion</button>
-                      </li>
-                    </div>
-
                     <div className="relative">
                       <button
                         onClick={toggleMenu}
@@ -98,7 +89,6 @@ function Navbar() {
                       </button>
                       {isOpen && (
                         <div className="absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded-lg shadow-lg">
-                          
                           <Link
                             to="/dataUser"
                             onClick={closeAvatarMenu}
@@ -133,6 +123,9 @@ function Navbar() {
                           )}
                         </div>
                       )}
+                      <li className="text-[#63c1dc] hover:text-gray-300">
+                        <button onClick={Logout}>Cerrar Sesión</button>
+                      </li>
                     </div>
                   </>
                 )}
