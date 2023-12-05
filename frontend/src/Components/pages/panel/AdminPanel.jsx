@@ -18,8 +18,8 @@ export const AdminPanel = () => {
     fetchDeleteUser,
     fetchRoles,
 
-    products,
-    fetchProducts,
+    productsPanel,
+    fetchProductsPanel,
     fetchAddProduct,
     fetchEditProduct,
     fetchDeleteProduct,
@@ -35,7 +35,7 @@ export const AdminPanel = () => {
 
   useEffect(() => {
     setIsChange(false);
-    fetchProducts();
+    fetchProductsPanel();
     fetchUsers();
     fetchRoles();
     fetchCategories();
@@ -98,7 +98,7 @@ export const AdminPanel = () => {
 
       {productShow && (
         <ProductTable
-          products={products}
+          products={productsPanel}
           categories={categories}
           cities={cities}
           fetchDeleteProduct={fetchDeleteProduct}

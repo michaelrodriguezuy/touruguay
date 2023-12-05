@@ -11,7 +11,7 @@ const LoginForm = () => {
   const [errors, setErrors] = useState({});
 
   //logueo contra la base
-  const { loginUser } = useContext(DataContext);
+  const { loginUser, fetchFavourites } = useContext(DataContext);
 
   //logueo para el contexto
   const { handleLogin } = useContext(AuthContext);
@@ -32,6 +32,10 @@ const LoginForm = () => {
     setErrors(validationErrors);
 
     return Object.keys(validationErrors).length === 0;
+  };
+
+  const cargaFavorites = async () => {
+    await fetchFavourites();
   };
 
   const handleSubmit = async (e) => {
@@ -60,6 +64,8 @@ const LoginForm = () => {
             } else {
               navigate("/");
             }
+            //cargo sus favoritos
+            //cargaFavorites();
           }
         }
       } else {

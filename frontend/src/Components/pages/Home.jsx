@@ -7,7 +7,7 @@ import { useContext, useState } from "react";
 import { DataContext } from "../context/dataContext";
 
 const Home = () => {
-  const { productsRandom } = useContext(DataContext);
+  const { productsRandom, favourites } = useContext(DataContext);
 
   const itemsPerPage = 9;
   const pageCount = Math.ceil(productsRandom.length / itemsPerPage);
@@ -17,7 +17,7 @@ const Home = () => {
     currentPage * itemsPerPage,
     (currentPage + 1) * itemsPerPage
   );
-
+  
   const handlePageClick = ({ page }) => {
     setCurrentPage(page);
   };

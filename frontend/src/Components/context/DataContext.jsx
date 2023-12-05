@@ -12,7 +12,10 @@ const DataContextComponent = ({ children }) => {
   const [favourites, setFavourites] = useState([]);
 
   const [productsRandom, setProductsRandom] = useState([]);
-  const [products, setProducts] = useState([]);
+
+  const [products, setProducts] = useState([]);   //home y favoritos
+  const [productsPanel, setProductsPanel] = useState([]); // panel
+
   const [product, setProduct] = useState();
   const [imgProduct, setImgProduct] = useState();
 
@@ -87,7 +90,7 @@ const DataContextComponent = ({ children }) => {
 
   //inicio sesion
   const fetchFavourites = async () => {
-    try {
+    try {      
       const response = await axios.get(
         `http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/favorito/${user.id}`,
         { headers }
@@ -141,10 +144,22 @@ const DataContextComponent = ({ children }) => {
   const fetchProducts = async () => {
     try {
       const response = await axios.get(
+        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto/todos",
+        { headers }
+      );
+      setProducts(response.data);      
+    } catch (error) {
+      console.error("Error obteniendo productos:", error);
+    }
+  };
+
+  const fetchProductsPanel = async () => {
+    try {
+      const response = await axios.get(
         "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto/todosSinDTO",
         { headers }
       );
-      setProducts(response.data);
+      setProductsPanel(response.data);      
     } catch (error) {
       console.error("Error obteniendo productos:", error);
     }
@@ -176,8 +191,6 @@ const DataContextComponent = ({ children }) => {
 
   const fetchAddProduct = async (product, imagen) => {
     const formData = new FormData();
-
-    console.log("producto pa agregar:", product);
 
     imagen.forEach((image) => {
       formData.append("imagen", image.data, image.filename);
@@ -339,7 +352,7 @@ const DataContextComponent = ({ children }) => {
   useEffect(() => {
     //  fetchUsers();
     fetchProductsRandom();
-    //    fetchProducts();
+        fetchProducts();
   }, [token]); //}, [token]);
 
   const registerUser = async (user) => {
@@ -385,6 +398,7 @@ const DataContextComponent = ({ children }) => {
     users,
     productsRandom,
     products,
+    productsPanel,
     product,
     imgProduct,
     categories,
@@ -392,13 +406,15 @@ const DataContextComponent = ({ children }) => {
     roles,
     bookings,
     favourites,
+    setFavourites,
 
     fetchProductById,
-    fetchImgProductById,
-    fetchProducts,
+    fetchImgProductById,    
     fetchAddProduct,
     fetchEditProduct,
     fetchDeleteProduct,
+    fetchProducts,
+    fetchProductsPanel,
 
     registerUser,
     loginUser,
