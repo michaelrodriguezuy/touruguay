@@ -328,6 +328,17 @@ const DataContextComponent = ({ children }) => {
     }
   };
 
+  const fetchSendEmail = async () => {
+    try {
+      const response = await axios.get(
+        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/auth/email",
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error enviando el email:", error);
+    }
+  };
+
   const loginUser = async (user) => {
     try {
       const response = await axios.post(
@@ -370,6 +381,7 @@ const DataContextComponent = ({ children }) => {
     fetchDeleteUser,
     fetchEditUser,
     fetchReservas,
+    fetchSendEmail,
     
 
     fetchCategories,
