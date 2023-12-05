@@ -8,7 +8,8 @@ const DataContextComponent = ({ children }) => {
   const { user, tokenDevelop } = useContext(AuthContext);
   const [users, setUsers] = useState([]);
   const [roles, setRoles] = useState([]);
-  // const [dataUser, setDataUser] = useState([]);
+
+  const [favourites, setFavourites] = useState([]);
 
   const [productsRandom, setProductsRandom] = useState([]);
   const [products, setProducts] = useState([]);
@@ -19,7 +20,6 @@ const DataContextComponent = ({ children }) => {
   const [cities, setCities] = useState([]);
 
   const [bookings, setBookings] = useState([]);
-
 
   let token;
   if (user && user.token) {
@@ -85,8 +85,35 @@ const DataContextComponent = ({ children }) => {
     }
   };
 
+  //inicio sesion
+  const fetchFavourites = async () => {
+    try {
+      const response = await axios.get(
+        `http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/favorito/${user.id}`,
+        { headers }
+      );
+      setFavourites(response.data);
+    } catch (error) {
+      console.error("Error obteniendo favoritos:", error);
+    }
+  };
 
-  // const fetchDataUser = async (userId) => { 
+  //le paso una lista de favoritos, lista temporal
+  //cierro sesion
+  const fetchAddFavourite = async (favoritos) => {
+    try {
+      const response = await axios.post(
+        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/favorito",
+        favoritos,
+        { headers }
+      );
+      setFavourites([]);
+    } catch (error) {
+      console.error("Error agregando favorito:", error);
+    }
+  };
+
+  // const fetchDataUser = async (userId) => {
   //   try {
   //     const response = await axios.get(
   //       `http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/usuario/${userId}`,
@@ -98,7 +125,6 @@ const DataContextComponent = ({ children }) => {
   //     console.error("Error obteniendo el usuario:", error);
   //   }
   // };
-
 
   const fetchProductsRandom = async () => {
     try {
@@ -331,7 +357,7 @@ const DataContextComponent = ({ children }) => {
   const fetchSendEmail = async () => {
     try {
       const response = await axios.get(
-        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/auth/email",
+        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/auth/email"
       );
       return response.data;
     } catch (error) {
@@ -365,7 +391,7 @@ const DataContextComponent = ({ children }) => {
     cities,
     roles,
     bookings,
-  
+    favourites,
 
     fetchProductById,
     fetchImgProductById,
@@ -382,7 +408,8 @@ const DataContextComponent = ({ children }) => {
     fetchEditUser,
     fetchReservas,
     fetchSendEmail,
-    
+    fetchFavourites,
+    fetchAddFavourite, //pasar lista temporal de favoritos
 
     fetchCategories,
     fetchCities,
