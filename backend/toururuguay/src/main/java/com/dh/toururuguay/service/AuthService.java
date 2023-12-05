@@ -26,7 +26,7 @@ public class AuthService {
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-    
+
     @Autowired
     private EmailService emailService;
 
@@ -38,6 +38,7 @@ public class AuthService {
             UserDetails user = userRepository.findByUsername(request.getUsername()).orElseThrow();
             String token = jwtService.getToken(user);
 
+            Integer id = 0;
             String name = "";
             String lastname = "";
             String username = "";
@@ -45,6 +46,7 @@ public class AuthService {
 
             if (user instanceof Usuario) {
                 Usuario usuario = (Usuario) user;
+                id = usuario.getUser_id();
                 name = usuario.getName();
                 lastname = usuario.getLastname();
                 username = usuario.getUsername();
@@ -53,7 +55,7 @@ public class AuthService {
 
             // lo modifique para que la respuesta de login me devuelva el nombre y apellido
             // del usuario.
-            return AuthResponse.forLogin(token, name, lastname, rol, username);
+            return AuthResponse.forLogin(token, id, name, lastname, rol, username);
         } catch (BadCredentialsException e) {
 
             return AuthResponse.forError("Credenciales inválidas. Verifica tu nombre de usuario y/o contraseña.");
@@ -84,13 +86,13 @@ public class AuthService {
 
         // activo el envio de correo
         emailService.enviarCorreoRegistro(user.getUsername(), user.getName(), user.getLastname());
-        
+
         // el retorno del registro es el token generado y el nombre de usuario
         return AuthResponse.builder()
                 .token(jwtService.getToken(user))
                 .name(user.getName())
                 .lastname(user.getLastname())
-                .username(user.getUsername())                
+                .username(user.getUsername())
                 .build();
 
     }
