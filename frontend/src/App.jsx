@@ -5,11 +5,11 @@ import { routes } from "./Routes/routes";
 import { routesLogged } from "./Routes/routesLogged";
 import Navbar from "./Components/layout/navbar/Navbar";
 import Footer from "./Components/layout/footer/Footer";
-import IniciarSesion from "./Components/pages/login/IniciarSesion";
+import IniciarSesion from "./Components/pages/login/Login";
 import AdminPanel from "./Components/pages/panel/AdminPanel";
 import "./App.css";
 import "./index.css";
-import CrearCuenta from "./Components/pages/registro/CrearCuenta";
+import CrearCuenta from "./Components/pages/registro/SignUp";
 import ProtectedAdmin from "./Routes/ProtectedAdmin";
 import ProtectedUsers from "./Routes/ProtectedUsers";
 

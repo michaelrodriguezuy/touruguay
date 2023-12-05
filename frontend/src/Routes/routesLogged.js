@@ -1,24 +1,24 @@
 //ir agregando segun las paginas que se vayan creando
 
-import Reserva from "../Components/pages/users/reservas/Reserva";
-import Favoritos from "../Components/pages/users/favoritos/Favoritos";
-import DataUser from "../Components/pages/users/dataUser/DataUser";
+import MisReservas from "../Components/pages/users/reservas/Bookings";
+import MisFavoritos from "../Components/pages/users/favoritos/Favourites";
+import MisDatos from "../Components/pages/users/dataUser/DataUser";
 
 export const routesLogged = [
     {
         id: "booking",
         path: "/booking",
-        Element: Reserva,
+        Element: MisReservas,
     },
     {
         id: "favorite",
         path: "/favorite",
-        Element: Favoritos,
+        Element: MisFavoritos,
     }    ,
     {
         id: "data",
         path: "/dataUser",
-        Element: DataUser,
+        Element: MisDatos,
     }
 
 ];

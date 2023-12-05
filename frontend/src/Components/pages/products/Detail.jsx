@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import MyCalendar from "../../layout/MyCalendar";
+import MyCalendar from "../../layout/calendar/MyCalendar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
