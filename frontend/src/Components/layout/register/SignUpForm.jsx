@@ -4,9 +4,6 @@ import { DataContext } from "../../context/DataContext.jsx";
 
 import Swal from "sweetalert2";
 
-import nodemailer from 'nodemailer';
-
-
 const Formulario = () => {
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");

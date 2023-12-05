@@ -15,6 +15,8 @@ const DataContextComponent = ({ children }) => {
   const [categories, setCategories] = useState([]);
   const [cities, setCities] = useState([]);
 
+  const [bookings, setBookings] = useState([]);
+
   const { user, tokenDevelop } = useContext(AuthContext);
 
   let token;
@@ -278,6 +280,20 @@ const DataContextComponent = ({ children }) => {
     }
   };
 
+  const fetchReservas = async (userId) => {
+    try {
+      const response = await axios.get(
+        `http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/reserva/usuario/${userId}`,
+        { headers }
+      );
+
+      setBookings(response.data);
+      // return response.data;
+    } catch (error) {
+      console.error("Error obteniendo reservas:", error);
+    }
+  };
+
   useEffect(() => {
     //  fetchUsers();
     fetchProductsRandom();
@@ -321,6 +337,7 @@ const DataContextComponent = ({ children }) => {
     categories,
     cities,
     roles,
+    bookings,
 
     fetchProductById,
     fetchImgProductById,
@@ -335,6 +352,7 @@ const DataContextComponent = ({ children }) => {
     fetchRoles,
     fetchDeleteUser,
     fetchEditUser,
+    fetchReservas,
 
     fetchCategories,
     fetchCities,
