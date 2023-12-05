@@ -4,10 +4,13 @@ import { UserTable } from "./UserTable";
 import ProductForm from "./ProductForm";
 
 import { DataContext } from "../../context/DataContext";
+import AddCategory from "./AddCategory";
 
 export const AdminPanel = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [isChange, setIsChange] = useState(false);
+
+  const [modalOpenCategory, setModalOpenCategory] = useState(false)
 
   const {
     users,
@@ -49,6 +52,13 @@ export const AdminPanel = () => {
     setModalOpen(false);
   };
 
+  const openModalCategory = () => {
+    setModalOpenCategory(true);
+  };
+  const closeModalCategory = () => {
+    setModalOpenCategory(false);
+  };
+
   return (
     <section>
       <div className='flex justify-between bg-slate-200'>
@@ -73,7 +83,7 @@ export const AdminPanel = () => {
           >
             Agregar Producto
           </button>
-          <button className='bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full'>
+          <button onClick={openModalCategory} className='bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full'>
             Agregar categoría
           </button>
         </div>
@@ -86,6 +96,8 @@ export const AdminPanel = () => {
         fetchAddProduct={fetchAddProduct}
         setIsChange={setIsChange}
       />
+
+      <AddCategory isOpen={modalOpenCategory} onClose={closeModalCategory}/>
 
       {productShow && (
         <ProductTable
