@@ -2,9 +2,21 @@ import React from "react";
 
 const DataUser = () => {
   return (
-    <section className="w-full flex flex-col bg-slate-200">
-      <div>Mis Datos</div>
-    </section>
+    <div className="bg-slate-200">
+      <div className=" bg-slate-200">
+        <div className="relative">
+          <img
+            className="w-full h-80 object-cover"
+            src='/public/misdatos.jpg'
+            alt='Banner'
+          />
+          <div class="absolute top-1/2 left-60 transform -translate-x-1/2 -translate-y-1/2 text-white">
+            <h1 class="text-6xl font-bold">Mis datos</h1>
+          </div>
+        </div>
+      </div>
+      </div>
+
   );
 };
 

@@ -8,23 +8,30 @@ const Reserva = () => {
 
   useEffect(() => {
 
-    if (user && user?.id){
+    if (user && user?.id) {
       fetchReservas(user.id);
     }
 
   }, [user]);
 
   return (
-    <div>
-      {/* texto centrado */}
-      <div className="text-center">
-        <h1 className="text-3xl font-semibold text-gray-800 dark:text-black">
-          Mis reservas
-        </h1>
+    <div className="bg-slate-200">
+      <div className=" bg-slate-200">
+        <div className="relative">
+          <img
+            className="w-full h-80 object-cover"
+            src='/public/avion-cielo.jpg'
+            alt='Banner'
+          />
+          <div class="absolute top-1/2 left-60 transform -translate-x-1/2 -translate-y-1/2 text-white">
+            <h1 class="text-6xl font-bold">Mis reservas</h1>
+          </div>
+        </div>
       </div>
-      
+
+      <div className="flex justify-center">
       <table className="m-10 rounded-full">
-        <thead className="bg-gray-100 dark:bg-gray-700 text-white">
+        <thead className="bg-gray-100 dark:bg-[#202A44] text-white ">
           <tr>
             <th scope="col" className="p-4">
               ID
@@ -35,7 +42,7 @@ const Reserva = () => {
             <th scope="col" className="p-4">
               Descripción
             </th>
-            
+
             <th scope="col" className="p-4">
               Fecha
             </th>
@@ -48,9 +55,10 @@ const Reserva = () => {
             </th>
             <th scope="col" className="p-4">
               Hasta
-            </th>            
+            </th>
           </tr>
         </thead>
+        
         <tbody>
           {bookings &&
             bookings.map((booking) => (
@@ -71,7 +79,7 @@ const Reserva = () => {
                 <td className="py-4 px-6 text-sm font-medium text-gray-900">
                   {booking.date}
                 </td>
-                
+
                 <td className="py-4 px-6 text-sm font-medium text-gray-900">
                   {booking.product}
                 </td>
@@ -86,6 +94,7 @@ const Reserva = () => {
             ))}
         </tbody>
       </table>
+    </div>
     </div>
   );
 };

@@ -6,14 +6,15 @@ const ProductCard = ({ product }) => {
 
   return (
     <div className="w-full mx-auto bg-white shadow-2xl rounded-lg overflow-hidden relative border-2 cursor-pointer transition transform hover:scale-110">
-
+      <Link to={`/detalle/${product.product_id}`}>
       <img
         className="w-full h-48 object-cover"
         src={product.urlImagen} 
         alt={product.product_name}
         
       />
-
+      </Link>
+  <Link to={`/detalle/${product.product_id}`}>
       <div className="p-4">
         <h2 className="text-xl font-semibold text-[#e66a54]">
           <Link to={`/detalle/${product.product_id}`}>{product.product_name}</Link>
@@ -27,6 +28,7 @@ const ProductCard = ({ product }) => {
           />
         </button>
       </div>
+      </Link>
     </div>
   );
 };

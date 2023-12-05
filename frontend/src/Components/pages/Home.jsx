@@ -4,7 +4,7 @@ import "../../App.css";
 import ProductCard from "../layout/cards/ProductCard";
 
 import { useContext, useState } from "react";
-import { DataContext } from "../context/dataContext";
+import { DataContext } from "../context/DataContext.jsx";
 
 const Home = () => {
   const { productsRandom } = useContext(DataContext);
