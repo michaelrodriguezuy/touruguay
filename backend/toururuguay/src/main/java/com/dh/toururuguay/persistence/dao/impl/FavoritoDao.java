@@ -105,8 +105,8 @@ public class FavoritoDao implements IDao<Favorito> {
     
                 FavoritoDTO newDTO = new FavoritoDTO();
     
-                newDTO.setFavouriteId(favorito.getFavourite_id());
-                newDTO.setUser(usuario.getUser_id());
+                // newDTO.setFavouriteId(favorito.getFavourite_id());
+                // newDTO.setUser(usuario.getUser_id());
                 newDTO.setProduct(producto.getProduct_id());
     
                 favoritoDTO.add(newDTO);
