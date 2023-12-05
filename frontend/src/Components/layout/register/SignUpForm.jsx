@@ -64,8 +64,16 @@ const Formulario = () => {
             Swal.fire({
               icon: "success",
               title: resp.name + " tu cuenta ha sido creada con éxito.",
-              showConfirmButton: false,
-              timer: 2000,
+              html:
+                "Hemos enviado un correo a tu cuenta. Por favor, revisa tu bandeja de entrada. Si no has recibido el correo, puedes hacer clic en 'Reenviar Correo'.",
+              showConfirmButton: true,
+              showCancelButton: true,
+              confirmButtonText: "Reenviar Correo",
+              cancelButtonText: "Cerrar",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                reenviarCorreo();
+              }
             });
 
             navigate("/IniciarSesion");
@@ -85,6 +93,9 @@ const Formulario = () => {
     }
   };
 
+  const reenviarCorreo = () => {
+    
+  };
 
   return (
     <div className="relative top-[-100px] flex items-center justify-center md:w-1/2">
