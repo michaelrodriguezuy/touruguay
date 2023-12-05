@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/producto")
 public class ProductoController {
 
@@ -27,7 +28,12 @@ public class ProductoController {
 
     @PostMapping
     public ResponseEntity<Producto> registrarProducto(@RequestBody Producto producto) {
-        return ResponseEntity.ok(productoService.registrarProducto(producto));
+        Producto productoGuardado = productoService.registrarProducto(producto);
+        if (productoGuardado != null) {
+            return ResponseEntity.ok(productoGuardado);
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null); // 409
+        }
     }
 
     @GetMapping("/todosSinDTO")
@@ -67,13 +73,18 @@ public class ProductoController {
     }
 
     @PutMapping()
-    public ResponseEntity<Producto> actualizar(@RequestBody Producto producto) {
+    public ResponseEntity<Producto> actualizar(@RequestBody Producto producto,
+            @RequestParam(name = "eliminarImagenes", defaultValue = "false") boolean eliminarImagenes) {
         ResponseEntity<Producto> response = null;
 
-        if (producto.getProduct_id() != null && productoService.buscar(producto.getProduct_id()).isPresent())
+        if (producto.getProduct_id() != null && productoService.buscar(producto.getProduct_id()).isPresent()) {
+
             response = ResponseEntity.ok(productoService.actualizar(producto));
-        else
+            log.info("Producto actualizado");
+        } else {
             response = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            log.info("Producto no encontrado");
+        }
         return response;
     }
 
@@ -86,8 +97,10 @@ public class ProductoController {
 
             productoService.eliminar(id, eliminarImagenes);
             response = ResponseEntity.status(HttpStatus.NO_CONTENT).body("Eliminado");
+            log.info("Producto eliminado");
         } else {
             response = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            log.info("Producto no encontrado");
         }
 
         return response;

@@ -2,15 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import { ProductTable } from "./ProductTable";
 import { UserTable } from "./UserTable";
 import ProductForm from "./ProductForm";
-
+import AddCategory from './AddCategory';
 import { DataContext } from "../../context/DataContext";
-import AddCategory from "./AddCategory";
 
 export const AdminPanel = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [isChange, setIsChange] = useState(false);
-
-  const [modalOpenCategory, setModalOpenCategory] = useState(false)
+  const [modalOpenCategory, setModalOpenCategory] = useState(false);
 
   const {
     users,
@@ -39,7 +37,7 @@ export const AdminPanel = () => {
     setIsChange(false);
     fetchProducts();
     fetchUsers();
-    fetchRoles();    
+    fetchRoles();
     fetchCategories();
     fetchCities();
   }, [isChange]);
@@ -96,7 +94,6 @@ export const AdminPanel = () => {
         fetchAddProduct={fetchAddProduct}
         setIsChange={setIsChange}
       />
-
       <AddCategory isOpen={modalOpenCategory} onClose={closeModalCategory}/>
 
       {productShow && (
@@ -113,7 +110,7 @@ export const AdminPanel = () => {
         <UserTable
           users={users}
           roles={roles}
-          fetchEditUser={fetchEditUser}          
+          fetchEditUser={fetchEditUser}
           fetchDeleteUser={fetchDeleteUser}
           setIsChange={setIsChange}
         />
