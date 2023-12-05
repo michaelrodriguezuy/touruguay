@@ -1,42 +1,42 @@
 package com.dh.toururuguay.dto;
 
 public class FavoritoDTO {
-    
-        private Integer favourite_id;
-        private String user;
-        private String product;
-    
-        public Integer getFavourite_id() {
-            return favourite_id;
+
+    private Integer favouriteId;
+    private Integer user;
+    private Integer product;
+
+    public Integer getFavouriteId() {
+            return favouriteId;
         }
-    
-        public void setFavourite_id(Integer favourite_id) {
-            this.favourite_id = favourite_id;
-        }
-    
-        public String getUser() {
-            return user;
-        }
-    
-        public void setUser(String user) {
-            this.user = user;
-        } 
-    
-        public String getProduct() {
-            return product;
-        }
-    
-        public void setProduct(String product) {
-            this.product = product;
-        }
-    
-        public FavoritoDTO(){
-    
-        }
-    
-        public FavoritoDTO(Integer favourite_id, String user, String product) {
-            this.favourite_id = favourite_id;
-            this.user = user;
-            this.product = product;
-        }
+
+    public void setFavouriteId(Integer favouriteId) {
+        this.favouriteId = favouriteId;
+    }
+
+    public Integer getUser() {
+        return user;
+    }
+
+    public void setUser(Integer user) {
+        this.user = user;
+    }
+
+    public Integer getProduct() {
+        return product;
+    }
+
+    public void setProduct(Integer product) {
+        this.product = product;
+    }
+
+    public FavoritoDTO(Integer favouriteId, Integer user, Integer product) {
+        this.favouriteId = favouriteId;
+        this.user = user;
+        this.product = product;
+    }
+
+    public FavoritoDTO() {
+    }
+
 }

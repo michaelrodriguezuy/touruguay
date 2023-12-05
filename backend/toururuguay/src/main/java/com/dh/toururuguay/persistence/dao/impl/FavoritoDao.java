@@ -1,7 +1,9 @@
 package com.dh.toururuguay.persistence.dao.impl;
 
 import com.dh.toururuguay.dto.FavoritoDTO;
+import com.dh.toururuguay.dto.ProductHomeDTO;
 import com.dh.toururuguay.model.Favorito;
+import com.dh.toururuguay.model.Imagen;
 import com.dh.toururuguay.model.Producto;
 import com.dh.toururuguay.model.Usuario;
 import com.dh.toururuguay.persistence.dao.IDao;
@@ -82,7 +84,6 @@ public class FavoritoDao implements IDao<Favorito> {
 
     // devuelvo los favoritos de un usuario
     public List<FavoritoDTO> buscarFavorito(Integer id) {
-
         try {
             List<Object[]> results = entityManager.createQuery(
                     "SELECT f, u, p " +
@@ -93,25 +94,25 @@ public class FavoritoDao implements IDao<Favorito> {
                     Object[].class)
                     .setParameter("userId", id)
                     .getResultList();
-
-            List<FavoritoDTO> favoritosDTO = new ArrayList<>();
-
-            if (!results.isEmpty()) {
-                results.forEach(result -> {
-                    Favorito favorito = (Favorito) result[0];
-                    Usuario usuario = (Usuario) result[1];
-                    Producto producto = (Producto) result[2];
-
-                    FavoritoDTO favoritoDTO = new FavoritoDTO();
-
-                    favoritoDTO.setFavourite_id(favorito.getFavourite_id());
-                    favoritoDTO.setUser(usuario.getName() + " " + usuario.getLastname());
-                    favoritoDTO.setProduct(producto.getProduct_name());
-
-                    favoritosDTO.add(favoritoDTO);
-                });
-            }
-            return favoritosDTO;
+    
+            List<FavoritoDTO> favoritoDTO = new ArrayList<>();
+    
+            results.forEach(result -> {
+    
+                Favorito favorito = (Favorito) result[0];
+                Usuario usuario = (Usuario) result[1];
+                Producto producto = (Producto) result[2];
+    
+                FavoritoDTO newDTO = new FavoritoDTO();
+    
+                newDTO.setFavouriteId(favorito.getFavourite_id());
+                newDTO.setUser(usuario.getUser_id());
+                newDTO.setProduct(producto.getProduct_id());
+    
+                favoritoDTO.add(newDTO);
+            });
+            return favoritoDTO;
+    
         } catch (NoResultException e) {
             return Collections.emptyList();
         } catch (Exception e) {
@@ -120,6 +121,7 @@ public class FavoritoDao implements IDao<Favorito> {
             return Collections.emptyList();
         }
     }
+    
 
     @Override
     public Favorito actualizar(Favorito favorito) {
