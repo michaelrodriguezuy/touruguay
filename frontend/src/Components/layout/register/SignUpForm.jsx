@@ -11,7 +11,7 @@ const Formulario = () => {
   const [password, setPassword] = useState("");
   const [errores, setErrores] = useState({});
 
-  const { registerUser } = useContext(DataContext);
+  const { registerUser, fetchSendEmail } = useContext(DataContext);
   const navigate = useNavigate();
 
   const validarFormulario = () => {
@@ -53,21 +53,34 @@ const Formulario = () => {
           rol: { role_id: 2 }, //por defecto se crea como user
         });
 
-        if (resp !== null) {          
+        if (resp !== null) {
           if (resp.message) {
             Swal.fire({
               icon: "error",
               title: "Oops...",
               text: resp.message,
             });
-          } else {            
+          } else {
             Swal.fire({
               icon: "success",
               title: resp.name + " tu cuenta ha sido creada con éxito.",
-              showConfirmButton: false,
-              timer: 2000,
+              html: "Hemos enviado un correo a tu cuenta. Por favor, revisa tu bandeja de entrada. Si no has recibido el correo, puedes hacer clic en 'Reenviar Correo'.",
+              showConfirmButton: true,
+              showCancelButton: true,
+              confirmButtonText: "Reenviar Correo",
+              cancelButtonText: "Cerrar",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                reenviarCorreo().then((correoEnviado) => {
+                  if (correoEnviado) {
+                    Swal.fire({
+                      icon: "success",
+                      title: "Correo reenviado con éxito.",
+                    });
+                  }
+                });
+              }
             });
-
             navigate("/IniciarSesion");
           }
         } else {
@@ -85,6 +98,15 @@ const Formulario = () => {
     }
   };
 
+  const reenviarCorreo = async () => {
+    try {
+      const resp = await fetchSendEmail();
+      return resp.ok;
+    } catch (error) {
+      console.error("Error al reenviar el correo:", error);
+      return false;
+    }
+  };
 
   return (
     <div className="relative top-[-100px] flex items-center justify-center md:w-1/2">

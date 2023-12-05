@@ -5,8 +5,11 @@ import { AuthContext } from "./AuthContext";
 export const DataContext = createContext();
 
 const DataContextComponent = ({ children }) => {
+  const { user, tokenDevelop } = useContext(AuthContext);
   const [users, setUsers] = useState([]);
   const [roles, setRoles] = useState([]);
+  // const [dataUser, setDataUser] = useState([]);
+
   const [productsRandom, setProductsRandom] = useState([]);
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState();
@@ -17,7 +20,6 @@ const DataContextComponent = ({ children }) => {
 
   const [bookings, setBookings] = useState([]);
 
-  const { user, tokenDevelop } = useContext(AuthContext);
 
   let token;
   if (user && user.token) {
@@ -82,6 +84,21 @@ const DataContextComponent = ({ children }) => {
       console.error("Error obteniendo roles:", error);
     }
   };
+
+
+  // const fetchDataUser = async (userId) => { 
+  //   try {
+  //     const response = await axios.get(
+  //       `http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/usuario/${userId}`,
+  //       { headers }
+  //     );
+  //     setDataUser(response.data);
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.error("Error obteniendo el usuario:", error);
+  //   }
+  // };
+
 
   const fetchProductsRandom = async () => {
     try {
@@ -311,6 +328,17 @@ const DataContextComponent = ({ children }) => {
     }
   };
 
+  const fetchSendEmail = async () => {
+    try {
+      const response = await axios.get(
+        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/auth/email",
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error enviando el email:", error);
+    }
+  };
+
   const loginUser = async (user) => {
     try {
       const response = await axios.post(
@@ -337,6 +365,7 @@ const DataContextComponent = ({ children }) => {
     cities,
     roles,
     bookings,
+  
 
     fetchProductById,
     fetchImgProductById,
@@ -352,6 +381,8 @@ const DataContextComponent = ({ children }) => {
     fetchDeleteUser,
     fetchEditUser,
     fetchReservas,
+    fetchSendEmail,
+    
 
     fetchCategories,
     fetchCities,

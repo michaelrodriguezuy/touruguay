@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { DataContext } from "../../../context/DataContext";
+import { AuthContext } from "../../../context/AuthContext";
 
 const DataUser = () => {
+
+  const { user } = useContext(AuthContext);
+
+
   return (
     <div className="bg-slate-200">
       <div className=" bg-slate-200">
