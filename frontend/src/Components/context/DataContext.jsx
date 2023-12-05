@@ -288,7 +288,6 @@ const DataContextComponent = ({ children }) => {
       );
 
       setBookings(response.data);
-      // return response.data;
     } catch (error) {
       console.error("Error obteniendo reservas:", error);
     }

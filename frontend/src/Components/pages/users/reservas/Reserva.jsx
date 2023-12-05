@@ -1,16 +1,28 @@
 import React, { useContext, useEffect } from "react";
 import { DataContext } from "../../../context/DataContext";
+import { AuthContext } from "../../../context/AuthContext";
 
-const Booking = () => {
+const Reserva = () => {
   const { fetchReservas, bookings } = useContext(DataContext);
-  const { user } = useContext(DataContext);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    fetchReservas(user.user_id);
-  }, []);
+
+    if (user && user?.id){
+      fetchReservas(user.id);
+    }
+
+  }, [user]);
 
   return (
     <div>
+      {/* texto centrado */}
+      <div className="text-center">
+        <h1 className="text-3xl font-semibold text-gray-800 dark:text-black">
+          Mis reservas
+        </h1>
+      </div>
+      
       <table className="m-10 rounded-full">
         <thead className="bg-gray-100 dark:bg-gray-700 text-white">
           <tr>
@@ -23,9 +35,7 @@ const Booking = () => {
             <th scope="col" className="p-4">
               Descripción
             </th>
-            <th scope="col" className="p-4">
-              Usuario
-            </th>
+            
             <th scope="col" className="p-4">
               Producto
             </th>
@@ -54,19 +64,17 @@ const Booking = () => {
                   {booking.description}
                 </td>
 
-                <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                  {booking.user.name}
-                </td>
+                
                 
                 <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                  {booking.product.product_name}
+                  {booking.product}
                 </td>
                 <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                  {booking.start_date}
+                  {booking.desde}
                 </td>
 
                 <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                  {booking.end_date}
+                  {booking.hasta}
                 </td>
               </tr>
             ))}
@@ -76,4 +84,4 @@ const Booking = () => {
   );
 };
 
-export default Booking;
+export default Reserva;
