@@ -71,7 +71,11 @@ const ProductForm = ({
   };
 
   const handleSubmit = async () => {
-    if (images.length === 0) {
+    //si es un producto nuevo obligo a pedir imagen, si es una modificacion no
+
+
+
+    if (!productSelected && images.length === 0) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -79,8 +83,10 @@ const ProductForm = ({
       });
       return;
     }
-
     const IMG = images.map((image) => ({ filename: image.name, data: image }));
+
+
+
 
     let resp = "";
 

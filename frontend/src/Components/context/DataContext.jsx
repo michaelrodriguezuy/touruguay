@@ -250,23 +250,23 @@ const DataContextComponent = ({ children }) => {
   };
 
   const fetchEditProduct = async (product, imagen) => {
-    const formData = new FormData();
+    // const formData = new FormData();
 
-    imagen.forEach((image) => {
-      formData.append("imagen", image.data, image.filename);
-    });
+    // imagen.forEach((image) => {
+    //   formData.append("imagen", image.data, image.filename);
+    // });
 
     try {
-      const responseImg = await axios.post(
-        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/imagen",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      // const responseImg = await axios.post(
+      //   "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/imagen",
+      //   formData,
+      //   {
+      //     headers: {
+      //       "Content-Type": "multipart/form-data",
+      //       Authorization: `Bearer ${token}`,
+      //     },
+      //   }
+      // );
 
       const response = await axios.put(
         "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto",
