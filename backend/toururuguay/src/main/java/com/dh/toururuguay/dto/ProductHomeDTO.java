@@ -11,6 +11,7 @@ public class ProductHomeDTO {
     private String city;
 
     private String pais;
+    private Integer categoria;
 
     private String urlImagen;
 
@@ -70,12 +71,20 @@ public class ProductHomeDTO {
         this.pais = pais;
     }
 
+    public Integer getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Integer categoria_id) {
+        this.categoria = categoria_id;
+    }
+
     public ProductHomeDTO() {
 
     }
 
     public ProductHomeDTO(Integer product_id, String product_name, String description, Double price, String city,
-            String pais, String urlImagen) {
+            String pais, String urlImagen, Integer categoria) {
         this.product_id = product_id;
         this.product_name = product_name;
         this.description = description;
@@ -83,5 +92,6 @@ public class ProductHomeDTO {
         this.city = city;
         this.pais = pais;
         this.urlImagen = urlImagen;
+        this.categoria = categoria;
     }
 }
