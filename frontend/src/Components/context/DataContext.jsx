@@ -13,7 +13,7 @@ const DataContextComponent = ({ children }) => {
 
   const [productsRandom, setProductsRandom] = useState([]);
 
-  const [products, setProducts] = useState([]);   //home y favoritos
+  const [products, setProducts] = useState([]); //home y favoritos
   const [productsPanel, setProductsPanel] = useState([]); // panel
 
   const [product, setProduct] = useState();
@@ -90,44 +90,52 @@ const DataContextComponent = ({ children }) => {
 
   //inicio sesion
   const fetchFavourites = async () => {
-    try {      
+    try {
+      const user1 = JSON.parse(localStorage.getItem("user"));
+  
       const response = await axios.get(
-        `http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/favorito/${user.id}`,
+        `http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/favorito/${user1.id}`,
         { headers }
       );
-      setFavourites(response.data);
+  
+      const newFavourites = response.data;
+  
+      setFavourites(newFavourites);
+      localStorage.setItem("favourites", JSON.stringify(newFavourites));
     } catch (error) {
       console.error("Error obteniendo favoritos:", error);
     }
   };
+  
 
   //le paso una lista de favoritos, lista temporal
   //cierro sesion
-  const fetchAddFavourite = async (favoritos) => {
+  const fetchAddFavourite = async () => {
+    //lo tengo en localStorage
+    const storedFav = JSON.parse(localStorage.getItem("favourites"));
+
     try {
+      const formattedFav = mapToFavouriteStructure(storedFav);
+
       const response = await axios.post(
         "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/favorito",
-        favoritos,
+        formattedFav,
         { headers }
       );
-      setFavourites([]);
+      //setFavourites([]);
     } catch (error) {
       console.error("Error agregando favorito:", error);
     }
   };
 
-  // const fetchDataUser = async (userId) => {
-  //   try {
-  //     const response = await axios.get(
-  //       `http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/usuario/${userId}`,
-  //       { headers }
-  //     );
-  //     setDataUser(response.data);
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     console.error("Error obteniendo el usuario:", error);
-  //   }
-  // };
+  const mapToFavouriteStructure = (favourites) => {
+    if (favourites.length > 0) {
+      return favourites.map((fav) => ({
+        user: { user_id: user.id },
+        product: { product_id: fav.product },
+      }));
+    }
+  };
 
   const fetchProductsRandom = async () => {
     try {
@@ -147,7 +155,7 @@ const DataContextComponent = ({ children }) => {
         "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto/todos",
         { headers }
       );
-      setProducts(response.data);      
+      setProducts(response.data);
     } catch (error) {
       console.error("Error obteniendo productos:", error);
     }
@@ -159,7 +167,7 @@ const DataContextComponent = ({ children }) => {
         "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto/todosSinDTO",
         { headers }
       );
-      setProductsPanel(response.data);      
+      setProductsPanel(response.data);
     } catch (error) {
       console.error("Error obteniendo productos:", error);
     }
@@ -352,7 +360,7 @@ const DataContextComponent = ({ children }) => {
   useEffect(() => {
     //  fetchUsers();
     fetchProductsRandom();
-        fetchProducts();
+    fetchProducts();
   }, [token]); //}, [token]);
 
   const registerUser = async (user) => {
@@ -394,6 +402,36 @@ const DataContextComponent = ({ children }) => {
     }
   };
 
+
+
+  //MANEJO DE FAVORITOS
+  useEffect(() => {
+    const storedFavourites = JSON.parse(localStorage.getItem('favourites')) || [];
+    setFavourites(storedFavourites);
+  }, []);
+  const handleLike = (selectedProduct) => {
+    const isLiked = favourites.some(
+      (favorite) => favorite.product === selectedProduct.product_id
+    );
+
+    let updatedFavourites;
+
+    if (isLiked) {
+      updatedFavourites = favourites.filter(
+        (favorite) => favorite.product !== selectedProduct.product_id
+      );
+    } else {
+      updatedFavourites = [
+        ...favourites,
+        { product: selectedProduct.product_id },
+      ];
+    }
+
+    setFavourites(updatedFavourites);
+    localStorage.setItem('favourites', JSON.stringify(updatedFavourites));
+  };
+
+
   let data = {
     users,
     productsRandom,
@@ -405,17 +443,15 @@ const DataContextComponent = ({ children }) => {
     cities,
     roles,
     bookings,
-    favourites,
-    setFavourites,
-
+    
     fetchProductById,
-    fetchImgProductById,    
+    fetchImgProductById,
     fetchAddProduct,
     fetchEditProduct,
     fetchDeleteProduct,
     fetchProducts,
     fetchProductsPanel,
-
+    
     registerUser,
     loginUser,
     fetchUsers,
@@ -426,7 +462,12 @@ const DataContextComponent = ({ children }) => {
     fetchSendEmail,
     fetchFavourites,
     fetchAddFavourite, //pasar lista temporal de favoritos
-
+    
+    
+    favourites,
+    setFavourites,
+    handleLike, //lo consumo desde Favoritos.jsx y Home.jsx
+    
     fetchCategories,
     fetchCities,
   };

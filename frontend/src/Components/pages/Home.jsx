@@ -6,8 +6,8 @@ import ProductCard from "../layout/cards/ProductCard";
 import { useContext, useState } from "react";
 import { DataContext } from "../context/dataContext";
 
-const Home = () => {
-  const { productsRandom, favourites } = useContext(DataContext);
+const Home = ({ handleLike }) => {
+  const { productsRandom } = useContext(DataContext);
 
   const itemsPerPage = 9;
   const pageCount = Math.ceil(productsRandom.length / itemsPerPage);
@@ -17,7 +17,7 @@ const Home = () => {
     currentPage * itemsPerPage,
     (currentPage + 1) * itemsPerPage
   );
-  
+
   const handlePageClick = ({ page }) => {
     setCurrentPage(page);
   };
@@ -107,7 +107,11 @@ const Home = () => {
         <div className="grid grid-cols-1 gap-4 width-full md:grid-cols-2 md:max-w-4xl m-auto">
           {productsRandom &&
             productsRandom.map((product) => (
-              <ProductCard key={product.product_id} product={product} />
+              <ProductCard
+                key={product.product_id}
+                product={product}
+                handleLike={handleLike}
+              />
             ))}
         </div>
       </section>

@@ -3,12 +3,15 @@ import "../../../App.css";
 
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import { DataContext } from "../../context/DataContext";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const { user, isLogged, handleLogout } = useContext(AuthContext);
   const rolAdmin = import.meta.env.VITE_ROLADMIN;
+
+  const { fetchAddFavourite } = useContext(DataContext);
 
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -24,7 +27,8 @@ function Navbar() {
 
   const Logout = () => {
     try {
-      handleLogout();
+      fetchAddFavourite(); //actualizo los favoritos en la base de datos
+      handleLogout(); //limpio el local storage
       closeAvatarMenu();
       navigate("/");
     } catch (error) {
@@ -81,14 +85,11 @@ function Navbar() {
                         onClick={toggleMenu}
                         className="flex items-center ml-6 focus:outline-none"
                         aria-label="Toggle dropdown"
-                        
                       >
                         <li className="w-10 h-10 flex items-center justify-center bg-gray-300 rounded-full">
                           {user.name[0]}
-                          {user.lastname[0]} 
-                          
+                          {user.lastname[0]}
                         </li>
-                    
                       </button>
                       {isOpen && (
                         <div className="absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded-lg shadow-lg">
@@ -125,7 +126,6 @@ function Navbar() {
                             </Link>
                           )}
                         </div>
-                        
                       )}
                       <li className="text-[#63c1dc] hover:text-gray-300">
                         <button onClick={Logout}>Cerrar Sesión</button>

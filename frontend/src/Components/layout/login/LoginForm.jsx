@@ -65,7 +65,7 @@ const LoginForm = () => {
               navigate("/");
             }
             //cargo sus favoritos
-            //cargaFavorites();
+            cargaFavorites();
           }
         }
       } else {
