@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { ProductTable } from "./ProductTable";
 import { UserTable } from "./UserTable";
 import ProductForm from "./ProductForm";
-import AddCategory from './AddCategory';
+import CategoryForm from "./CategoryForm";
 import { DataContext } from "../../context/DataContext";
 
 export const AdminPanel = () => {
@@ -27,6 +27,8 @@ export const AdminPanel = () => {
     fetchCities,
 
     categories,
+    fetchAddCatergory,
+    fetchEditCategory,
     cities,
   } = useContext(DataContext);
 
@@ -59,17 +61,17 @@ export const AdminPanel = () => {
 
   return (
     <section>
-      <div className='flex justify-between bg-slate-200'>
+      <div className="flex justify-between bg-slate-200">
         <div className="flex flex-row p-4 gap-4">
           <button
             onClick={() => setProducts((current) => !current)}
-            className='bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full'
+            className="bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full"
           >
             Listado de Productos
           </button>
           <button
             onClick={() => setUsers((current) => !current)}
-            className='bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full'
+            className="bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full"
           >
             Listado de Usuarios
           </button>
@@ -77,11 +79,14 @@ export const AdminPanel = () => {
         <div className="flex flex-row p-4 gap-4 justify-end">
           <button
             onClick={openModal}
-            className='bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full'
+            className="bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full"
           >
             Agregar Producto
           </button>
-          <button onClick={openModalCategory} className='bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full'>
+          <button
+            onClick={openModalCategory}
+            className="bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full"
+          >
             Agregar categoría
           </button>
         </div>
@@ -94,7 +99,15 @@ export const AdminPanel = () => {
         fetchAddProduct={fetchAddProduct}
         setIsChange={setIsChange}
       />
-      <AddCategory isOpen={modalOpenCategory} onClose={closeModalCategory}/>
+      <CategoryForm
+        isOpen={modalOpenCategory}
+        onClose={closeModalCategory}
+        categories={categories}
+
+        fetchAddCatergory={fetchAddCatergory}
+        fetchEditCategory={fetchEditCategory}
+        setIsChange={setIsChange}
+      />
 
       {productShow && (
         <ProductTable

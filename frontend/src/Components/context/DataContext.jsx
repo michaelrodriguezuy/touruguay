@@ -13,8 +13,8 @@ const DataContextComponent = ({ children }) => {
 
   const [productsRandom, setProductsRandom] = useState([]);
 
-  const [products, setProducts] = useState([]); //home y favoritos
-  const [productsPanel, setProductsPanel] = useState([]); // panel
+  const [products, setProducts] = useState([]); //home y favoritos (con img)
+  const [productsPanel, setProductsPanel] = useState([]); // panel (completo sin img)
 
   const [product, setProduct] = useState();
   const [imgProduct, setImgProduct] = useState();
@@ -92,21 +92,20 @@ const DataContextComponent = ({ children }) => {
   const fetchFavourites = async () => {
     try {
       const user1 = JSON.parse(localStorage.getItem("user"));
-  
+
       const response = await axios.get(
         `http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/favorito/${user1.id}`,
         { headers }
       );
-  
+
       const newFavourites = response.data;
-  
+
       setFavourites(newFavourites);
       localStorage.setItem("favourites", JSON.stringify(newFavourites));
     } catch (error) {
       console.error("Error obteniendo favoritos:", error);
     }
   };
-  
 
   //le paso una lista de favoritos, lista temporal
   //cierro sesion
@@ -361,6 +360,7 @@ const DataContextComponent = ({ children }) => {
     //  fetchUsers();
     fetchProductsRandom();
     fetchProducts();
+    fetchCategories();
   }, [token]); //}, [token]);
 
   const registerUser = async (user) => {
@@ -402,11 +402,111 @@ const DataContextComponent = ({ children }) => {
     }
   };
 
+  const fetchAddCategory = async (category, imagen) => {
+    const formData = new FormData();
 
+    imagen.forEach((image) => {
+      formData.append("imagen", image.data, image.filename);
+    });
+
+    try {
+      const responseImg = await axios.post(
+        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/imagen",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const response = await axios.post(
+        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/categoria",
+        category,
+        { headers }
+      );
+
+      if (response.status === 409) {
+        console.log("La categoria ya existe");
+      } else {
+        fetchCategories();
+      }
+      return { success: true, data: response.data };
+    } catch (error) {
+      if (error.response && error.response.status === 409) {
+        return {
+          success: false,
+          error: { status: 409, message: "La categoria ya existe" },
+        };
+      } else {
+        return {
+          success: false,
+          error: {
+            status: error.response.status,
+            message: "Error desconocido",
+          },
+        };
+      }
+    }
+  };
+
+  const fetchEditCategory = async (category, imagen) => {
+    const formData = new FormData();
+
+    imagen.forEach((image) => {
+      formData.append("imagen", image.data, image.filename);
+    });
+
+    try {
+      const responseImg = await axios.post(
+        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/imagen",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const response = await axios.put(
+        `http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/categoria/${category.category_id}`,
+        category,
+        { headers }
+      );
+
+      fetchCategories();
+      return { success: true, data: response.data };
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 409) {
+          return {
+            success: false,
+            error: { status: 409, message: "La categoria ya existe" },
+          };
+        } else {
+          return {
+            success: false,
+            error: {
+              status: error.response.status,
+              message: "Error desconocido",
+            },
+          };
+        }
+      } else {
+        return {
+          success: false,
+          error: { status: 500, message: "Error de red" },
+        };
+      }
+    }
+  };
 
   //MANEJO DE FAVORITOS
   useEffect(() => {
-    const storedFavourites = JSON.parse(localStorage.getItem('favourites')) || [];
+    const storedFavourites =
+      JSON.parse(localStorage.getItem("favourites")) || [];
     setFavourites(storedFavourites);
   }, []);
   const handleLike = (selectedProduct) => {
@@ -428,9 +528,8 @@ const DataContextComponent = ({ children }) => {
     }
 
     setFavourites(updatedFavourites);
-    localStorage.setItem('favourites', JSON.stringify(updatedFavourites));
+    localStorage.setItem("favourites", JSON.stringify(updatedFavourites));
   };
-
 
   let data = {
     users,
@@ -443,16 +542,17 @@ const DataContextComponent = ({ children }) => {
     cities,
     roles,
     bookings,
-    
+
     fetchProductById,
     fetchImgProductById,
     fetchAddProduct,
     fetchAddCategory,
+    fetchEditCategory,
     fetchEditProduct,
     fetchDeleteProduct,
     fetchProducts,
     fetchProductsPanel,
-    
+
     registerUser,
     loginUser,
     fetchUsers,
@@ -463,72 +563,16 @@ const DataContextComponent = ({ children }) => {
     fetchSendEmail,
     fetchFavourites,
     fetchAddFavourite, //pasar lista temporal de favoritos
-    
-    
+
     favourites,
     setFavourites,
     handleLike, //lo consumo desde Favoritos.jsx y Home.jsx
-    
+
     fetchCategories,
     fetchCities,
   };
 
   return <DataContext.Provider value={data}>{children}</DataContext.Provider>;
-};
-
-const fetchAddCategory = async (categories, imagen) => {
-  const formData = new FormData();
-
-  console.log("Categoria a agregar:", categories);
-
-  imagen.forEach((image) => {
-    formData.append("imagen", image.data, image.filename);
-  });
-
-  try {
-    const responseImg = await axios.post(
-      "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/imagen",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    console.log("respuesta back img: ", responseImg);
-
-    const response = await axios.post(
-      "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/categoria/todas",
-      categories,
-      { headers }
-    );
-
-    console.log("respuesta back catg: ", response);
-
-    if (response.status === 409) {
-      console.log("Categoria ya existente");
-    } else {
-      fetchCategories();
-    }
-    return { success: true, data: response.data };
-  } catch (error) {
-    if (error.response && error.response.status === 409) {
-      return {
-        success: false,
-        error: { status: 409, message: "Categoria ya existente" },
-      };
-    } else {
-      return {
-        success: false,
-        error: {
-          status: error.response.status,
-          message: "Error desconocido",
-        },
-      };
-    }
-  }
 };
 
 export default DataContextComponent;

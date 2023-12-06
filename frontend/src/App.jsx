@@ -14,6 +14,9 @@ import ProtectedAdmin from "./Routes/ProtectedAdmin";
 import ProtectedUsers from "./Routes/ProtectedUsers";
 
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 library.add(fas);
 
 function App() {

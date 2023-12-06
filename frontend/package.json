@@ -23,6 +23,8 @@
     "react-calendar": "^4.6.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.17.0",
+    "react-slick": "^0.29.0",
+    "slick-carousel": "^1.8.1",
     "sweetalert2": "^11.10.1"
   },
   "devDependencies": {

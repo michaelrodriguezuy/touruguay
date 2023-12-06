@@ -4,24 +4,11 @@ import { DataContext } from "../../context/DataContext";
 import Swal from "sweetalert2";
 
 const AddCategory = ({ isOpen, onClose }) => {
-  const { fetchAddCategory, fetchCategories } = useContext(DataContext);
+  const { fetchAddCategory, fetchEditCategory } = useContext(DataContext);
 
-  const [categories, setCategories] = useState([]);
+  const [category_name, setCategory_name] = useState("");
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
-  
-  useEffect(() => {
-    const loadCategories = async () => {
-      try {
-        const resp = await fetchCategories();
-        setCategories(resp);
-      } catch (error) {
-        console.error("Error obteniendo categorías:", error);
-      }
-    };
-
-    loadCategories();
-  }, []);
 
   const handleImageChange = (e) => {
     setImages(Array.from(e.target.files));
@@ -32,17 +19,27 @@ const AddCategory = ({ isOpen, onClose }) => {
   };
 
   const handleCategoryChange = (e) => {
-    setCategories(e.target.value);
+    setCategory_name(e.target.value);
   };
 
   const handleSubmit = async () => {
-    const productData = {
-      description,
-      category: { category_id: categories },
-    };
+    if (images.length === 0) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Debe seleccionar una imagen",
+      });
+      return;
+    }
+
     const IMG = images.map((image) => ({ filename: image.name, data: image }));
 
-    const resp = await fetchAddCategory(productData, IMG);
+    const categoryData = {
+      category_name,
+      description,
+    };
+
+    const resp = await fetchAddCategory(categoryData, IMG);
 
     console.log(resp);
 
@@ -64,6 +61,13 @@ const AddCategory = ({ isOpen, onClose }) => {
         text: "Error desconocido",
       });
     }
+    handleClose();
+  };
+
+  const handleClose = () => {
+    setCategory_name("");
+    setDescription("");
+    setImages([]);
     onClose();
   };
 
@@ -74,18 +78,16 @@ const AddCategory = ({ isOpen, onClose }) => {
     >
       <div className="flex flex-col p-10 m-10 rounded-lg gap-3 bg-[#202a44] w-[25rem] border-2 border-white">
         <div className="flex flex-col">
-          <label className="text-white m-2 flex-shrink-0">
-            Introduce el nombre de Categoria
-          </label>
+          <label className="text-white m-1 flex-shrink-0">Nombre</label>
           <input
             className="rounded p-2 flex-grow"
-            value={categories}
+            value={category_name}
             onChange={handleCategoryChange}
             placeholder="Escriba aqui"
           ></input>
         </div>
         <div className="flex flex-col">
-          <label className="text-white m-2 flex-shrink-0 w-[6rem]">
+          <label className="text-white m-1 flex-shrink-0 w-[6rem]">
             Descripción:
           </label>
           <textarea
@@ -95,8 +97,8 @@ const AddCategory = ({ isOpen, onClose }) => {
           />
         </div>
         <div className="flex flex-col">
-          <label className="text-white m-2 flex-shrink-0 w-[6rem]">
-            Selecciona una imagen
+          <label className="text-white m-1 flex-shrink-0 w-[6rem]">
+            Imágenes:
           </label>
           <input
             className="p-2"
@@ -105,36 +107,16 @@ const AddCategory = ({ isOpen, onClose }) => {
             onChange={handleImageChange}
           />
         </div>
-        <div className="flex flex-col">
-          <label className="text-white m-2 flex-shrink-0 w-[6rem]">
-            Descripción:
-          </label>
-          <textarea
-            className="rounded p-1 flex-grow"
-            value={description}
-            onChange={handleDescriptionChange}
-          />
-        </div>
-        <div className="flex flex-col">
-              <label className="text-white m-2 flex-shrink-0 w-[6rem]">
-                Selecciona una imagen
-              </label>
-              <input
-                className="p-2"
-                type="file"
-                multiple
-                onChange={handleImageChange}
-              />
-            </div>
+
         <button
-          className="text-white bg-[#017999] rounded p-2 hover:bg-[#1f4955]"
+          className="text-white bg-[#017999] rounded p-1 hover:bg-[#1f4955]"
           onClick={handleSubmit}
         >
           Agregar
         </button>
         <button
-          className="text-white bg-gray-500 rounded p-2 hover:bg-gray-700"
-          onClick={onClose}
+          className="text-white bg-gray-500 rounded p-1 hover:bg-gray-700"
+          onClick={handleClose}
         >
           Cerrar
         </button>

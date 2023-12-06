@@ -41,9 +41,9 @@ function Navbar() {
       <nav className="sticky top-0 z-10 flex flex-wrap items-center justify-between bg-[#202A44] pr-4 shadow-md">
         <div className="flex items-center flex-shrink-0 text-white mr-6">
           <Link to="/">
-            <img className="w-32" src="TOURuguaySinFondo.png" alt="Logo" />
-          </Link>
-          <Link to="/">
+            <img className="w-32" src="/TOURuguaySinFondo.png" alt="Logo" />
+            </Link>
+            <Link to="/">
             <h3
               className={`ml-4 text-lg lg:text-xl hidden sm:block md:text-base ${
                 isMenuOpen ? "hidden" : ""
