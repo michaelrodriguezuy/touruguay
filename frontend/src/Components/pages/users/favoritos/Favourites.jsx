@@ -21,7 +21,7 @@ const Favoritos = ({ handleLike }) => {
       <div className="relative">
         <img
           className="w-full h-80 object-cover"
-          src="./src/assets/favourites.jpg"
+          src="favourites.jpg"
           alt="Banner"
         />
         <div class="absolute top-1/2 left-60 transform -translate-x-1/2 -translate-y-1/2 text-white">
