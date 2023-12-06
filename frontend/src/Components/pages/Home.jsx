@@ -18,7 +18,7 @@ const Home = ({ handleLike }) => {
     (currentPage + 1) * itemsPerPage
   );
 
-  const handlePageClick = ({ page }) => {
+  const handlePageClick = ( page ) => {
     setCurrentPage(page);
   };
 
@@ -56,21 +56,21 @@ const Home = ({ handleLike }) => {
         <h3 className="text-center text-4xl p-10 font-bold">
           Busca por categoría
         </h3>
-        <div class="flex flex-row gap-4 justify-center m-auto">
+        <div className="flex flex-row gap-4 justify-center m-auto">
           <div className="w-72 md:w-96 mx-auto bg-white shadow-lg rounded-lg overflow-hidden relative cursor-pointer transition transform hover:scale-110">
             <img
               src="https://images.unsplash.com/photo-1496429862132-5ab36b6ae330?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               class="w-full h-48 md:h-64 object-cover"
               alt="Imagen"
             ></img>
-            <h3 class="absolute bottom-1 right-1 text-2xl text-white font-bold opacity-50">
+            <h3 className="absolute bottom-1 right-1 text-2xl text-white font-bold opacity-50">
               Extremo
             </h3>
           </div>
           <div className="w-72 md:w-96 mx-auto bg-white shadow-lg rounded-lg overflow-hidden relative cursor-pointer transition transform hover:scale-110">
             <img
               src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              class="w-full h-48 md:h-64 object-cover"
+              className="w-full h-48 md:h-64 object-cover"
               alt="Imagen"
             ></img>
             <h3 className="absolute bottom-1 right-1 text-2xl text-white font-bold opacity-50">
@@ -80,7 +80,7 @@ const Home = ({ handleLike }) => {
           <div className="w-72 md:w-96 mx-auto bg-white shadow-lg rounded-lg overflow-hidden relative cursor-pointer transition transform hover:scale-110">
             <img
               src="https://images.unsplash.com/photo-1501555088652-021faa106b9b?q=80&w=2946&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              class="w-full h-48 md:h-64 object-cover"
+              className="w-full h-48 md:h-64 object-cover"
               alt="Imagen"
             ></img>
             <h3 className="absolute bottom-1 right-1 text-2xl text-white font-bold opacity-50">
@@ -90,7 +90,7 @@ const Home = ({ handleLike }) => {
           <div className="w-72 md:w-96 mx-auto bg-white shadow-lg rounded-lg overflow-hidden relative cursor-pointer transition transform hover:scale-110">
             <img
               src="https://images.unsplash.com/photo-1533371452382-d45a9da51ad9?q=80&w=2946&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              class="w-full h-48 md:h-64 object-cover"
+              className="w-full h-48 md:h-64 object-cover"
               alt="Imagen"
             ></img>
             <h3 className="absolute bottom-1 right-1 text-2xl text-white font-bold opacity-50">

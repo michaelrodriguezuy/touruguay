@@ -1,16 +1,15 @@
 import React, { useState, useContext, useEffect } from "react";
-import axios from "axios";
-import { AuthContext } from "../../context/AuthContext";
-import { DataContext } from "../../context/DataContext";
 
+import { DataContext } from "../../context/DataContext";
 import Swal from "sweetalert2";
 
 const AddCategory = ({ isOpen, onClose }) => {
-  const { fetchAddCategory, fetchCategories} =
-    useContext(DataContext);
+  const { fetchAddCategory, fetchCategories } = useContext(DataContext);
 
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [description, setDescription] = useState("");
+  const [images, setImages] = useState([]);
+  
   useEffect(() => {
     const loadCategories = async () => {
       try {
@@ -24,14 +23,24 @@ const AddCategory = ({ isOpen, onClose }) => {
     loadCategories();
   }, []);
 
+  const handleImageChange = (e) => {
+    setImages(Array.from(e.target.files));
+  };
+
+  const handleDescriptionChange = (e) => {
+    setDescription(e.target.value);
+  };
+
   const handleCategoryChange = (e) => {
-    setSelectedCategory(e.target.value);
+    setCategories(e.target.value);
   };
 
   const handleSubmit = async () => {
     const productData = {
-      category: { category_id: selectedCategory }
+      description,
+      category: { category_id: categories },
     };
+    const IMG = images.map((image) => ({ filename: image.name, data: image }));
 
     const resp = await fetchAddCategory(productData, IMG);
 
@@ -42,7 +51,7 @@ const AddCategory = ({ isOpen, onClose }) => {
         icon: "success",
         title: "Categoria creada con éxito",
       });
-    }  else if (resp.error && resp.error.status === 409) {
+    } else if (resp.error && resp.error.status === 409) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -70,12 +79,31 @@ const AddCategory = ({ isOpen, onClose }) => {
           </label>
           <input
             className="rounded p-2 flex-grow"
-            value={selectedCategory}
+            value={categories}
             onChange={handleCategoryChange}
             placeholder="Escriba aqui"
-          >
-
-          </input>
+          ></input>
+        </div>
+        <div className="flex flex-col">
+          <label className="text-white m-2 flex-shrink-0 w-[6rem]">
+            Descripción:
+          </label>
+          <textarea
+            className="rounded p-1 flex-grow"
+            value={description}
+            onChange={handleDescriptionChange}
+          />
+        </div>
+        <div className="flex flex-col">
+          <label className="text-white m-2 flex-shrink-0 w-[6rem]">
+            Selecciona una imagen
+          </label>
+          <input
+            className="p-2"
+            type="file"
+            multiple
+            onChange={handleImageChange}
+          />
         </div>
         <button
           className="text-white bg-[#017999] rounded p-2 hover:bg-[#1f4955]"

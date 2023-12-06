@@ -16,44 +16,45 @@ const ProductCard = ({ product }) => {
   );
 
   const handleLikeClick = () => {
-    
     setFavourites((prevFavourites) => {
       const updatedFavourites = isProductLiked
-        ? prevFavourites.filter((favorite) => favorite.product !== product.product_id)
+        ? prevFavourites.filter(
+            (favorite) => favorite.product !== product.product_id
+          )
         : [...prevFavourites, { product: product.product_id }];
-  
+
       console.log("updatedFavourites:", updatedFavourites);
-  
+
       localStorage.setItem("favourites", JSON.stringify(updatedFavourites));
-  
+
       confetti({
         zindex: 999,
         particleCount: 100,
         spread: 70,
         origin: { y: 0.6 },
       });
-  
+
       return updatedFavourites;
     });
   };
-   
 
   return (
     <div className="w-full mx-auto bg-white shadow-2xl rounded-lg overflow-hidden relative border-2 cursor-pointer transition transform hover:scale-110">
-      <img
-        className="w-full h-48 object-cover"
-        src={product.urlImagen}
-        alt={product.product_name}
-      />
+      <Link to={`/detalle/${product.product_id}`}>
+        <img
+          className="w-full h-48 object-cover"
+          src={product.urlImagen}
+          alt={product.product_name}
+        />
+      </Link>
       <div className="p-4">
-        <h2 className="text-xl font-semibold text-[#e66a54]">
-          <Link to={`/detalle/${product.product_id}`}>
+        <Link to={`/detalle/${product.product_id}`}>
+          <h2 className="text-xl font-semibold text-[#e66a54]">
             {product.product_name}
-          </Link>
-        </h2>
-        <p className="text-gray-600">{product.description}</p>
-        <p className="mt-2 text-[#202a44]">Precio: ${product.price}</p>
-
+          </h2>
+          <p className="text-gray-600">{product.description}</p>
+          <p className="mt-2 text-[#202a44]">Precio: ${product.price}</p>
+        </Link>
         {isLogged && (
           <button onClick={handleLikeClick}>
             <FontAwesomeIcon
@@ -61,8 +62,7 @@ const ProductCard = ({ product }) => {
               className="absolute bottom-4 right-4 text-[#e66a54] hover:text-[#f2ebc3]"
             />
           </button>
-        )} 
-
+        )}
       </div>
     </div>
   );
