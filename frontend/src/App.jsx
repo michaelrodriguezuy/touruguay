@@ -13,6 +13,7 @@ import CrearCuenta from "./Components/pages/registro/SignUp";
 import ProtectedAdmin from "./Routes/ProtectedAdmin";
 import ProtectedUsers from "./Routes/ProtectedUsers";
 
+
 library.add(fas);
 
 function App() {

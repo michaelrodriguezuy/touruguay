@@ -8,7 +8,7 @@ const Reserva = () => {
 
   useEffect(() => {
 
-    if (user && user?.id){
+    if (user && user?.id) {
       fetchReservas(user.id);
     }
 

@@ -105,6 +105,27 @@ const AddCategory = ({ isOpen, onClose }) => {
             onChange={handleImageChange}
           />
         </div>
+        <div className="flex flex-col">
+          <label className="text-white m-2 flex-shrink-0 w-[6rem]">
+            Descripción:
+          </label>
+          <textarea
+            className="rounded p-1 flex-grow"
+            value={description}
+            onChange={handleDescriptionChange}
+          />
+        </div>
+        <div className="flex flex-col">
+              <label className="text-white m-2 flex-shrink-0 w-[6rem]">
+                Selecciona una imagen
+              </label>
+              <input
+                className="p-2"
+                type="file"
+                multiple
+                onChange={handleImageChange}
+              />
+            </div>
         <button
           className="text-white bg-[#017999] rounded p-2 hover:bg-[#1f4955]"
           onClick={handleSubmit}
