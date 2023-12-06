@@ -1,5 +1,6 @@
 package com.dh.toururuguay.persistence.dao.impl;
 
+import com.dh.toururuguay.model.Categoria;
 import com.dh.toururuguay.model.Imagen;
 import com.dh.toururuguay.model.Producto;
 import jakarta.persistence.EntityManager;
@@ -41,6 +42,8 @@ public class ImagenDao {
                     imagen.setImageUrl(urlImagen);
                     imagen.setProducto(producto); // Asociar la imagen al producto
                     entityManager.persist(imagen);
+
+                    // que pasa con el campo category_id de la tabla imagen?
                 }
                 urlsImagenes.clear();
             }
@@ -50,7 +53,27 @@ public class ImagenDao {
         }
     }
 
-    // Este método sube la imagen a S3 y devuelve la URL
+    public void guardarImagenesDelaCategoria(Categoria categoria) {
+        try {
+            if (urlsImagenes.size() > 0) {
+                for (String urlImagen : urlsImagenes) {
+                    Imagen imagen = new Imagen();
+                    imagen.setImageUrl(urlImagen);
+                    imagen.setCategoria(categoria); // Asociar la imagen a la categoria
+                    entityManager.persist(imagen);
+
+                    // que pasa con el campo producto_id de la tabla imagen?
+                }
+                urlsImagenes.clear();
+            }
+            log.info("Imágenes guardadas con éxito en la base de datos");
+        } catch (Exception e) {
+            log.error("Error al guardar las imágenes de la categoria", e);
+        }
+    }
+
+    // Este método sube la imagen a S3, devuelve la URL y la agrega a la lista de
+    // URLs temporales de imagenes
     public boolean subirImagenS3(MultipartFile imagen) {
         try {
             S3Client s3Client = S3Client.builder().build();
@@ -107,6 +130,26 @@ public class ImagenDao {
             log.info("Imagenes eliminadas con éxito de la base de datos ");
         } catch (Exception e) {
             log.error("Error al eliminar las imágenes del producto", e);
+        }
+    }
+
+    public void eliminarImagenesDelaCategoria(Categoria categoria) {
+        try {
+            List<Imagen> imagenes = entityManager.createQuery(
+                    "SELECT i FROM Imagen i WHERE i.categoria.category_id = :categoriaId", Imagen.class)
+                    .setParameter("categoriaId", categoria.getCategory_id())
+                    .getResultList();
+
+            for (Imagen imagen : imagenes) {
+                eliminarImagenS3(imagen.getImageUrl());
+            }
+
+            entityManager.createQuery("DELETE FROM Imagen i WHERE i.categoria.category_id = :categoriaId")
+                    .setParameter("categoriaId", categoria.getCategory_id())
+                    .executeUpdate();
+            log.info("Imagenes eliminadas con éxito de la base de datos ");
+        } catch (Exception e) {
+            log.error("Error al eliminar las imágenes de la categoria", e);
         }
     }
 
