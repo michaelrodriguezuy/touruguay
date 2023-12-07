@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { DataContext } from "../../context/dataContext";
+import CalendarReservas from "../../layout/calendar/CalendarReservas";
 
 const Detalle = () => {
   const { productId } = useParams();
@@ -14,7 +15,7 @@ const Detalle = () => {
     fetchProductById(productId);
   }, [productId]);
 
-  if (!product) {    
+  if (!product) {
     return <p>Cargando...</p>;
   }
 
@@ -38,9 +39,7 @@ const Detalle = () => {
           <div className="">
             <img className="p-8 max-w-2xl" src={product.urlImagen[0]} />
           </div>
-          <h2 className="sm:pl-8 pb-4 text-xl">
-          {product.city}
-          </h2>
+          <h2 className="sm:pl-8 pb-4 text-xl">{product.city}</h2>
           <div className="max-w-prose">
             <p id="description" className="pb-4 px-36 sm:px-8">
               {" "}
@@ -54,28 +53,27 @@ const Detalle = () => {
         </section>
         <section className="pt-16">
           <div className="grid gap-2 grid-cols-2 grid-rows-2 mx-12">
-            
             {product.urlImagen.slice(1, 5).map((url, index) => (
-              
               <img
-              key={index}
-              className="w-72 h-full shadow-md"
-              src={url}
-              alt={`Imagen ${index + 2}`}
+                key={index}
+                className="w-72 h-full shadow-md"
+                src={url}
+                alt={`Imagen ${index + 2}`}
               />
             ))}
-            
           </div>
           <p className="flex justify-end hover:text-gray-600 cursor-pointer pt-2 mr-12">
             {" "}
             <Link to={`/galeria/${productId}`}>Ver más...</Link>{" "}
           </p>
-          <MyCalendar></MyCalendar>
+          <CalendarReservas></CalendarReservas>
           <div className="flex justify-end pb-4">
-            <button className="rounded-xl bg-[#017999] text-white h-10 w-36 pt-2 mr-12">
-              {" "}
-              Lo quiero!{" "}
-            </button>
+            <Link to={`/booking/${product.product_id}`}>
+              <button className="rounded-xl bg-[#017999] text-white h-10 w-36 pt-2 mr-12">
+                {" "}
+                Lo quiero!{" "}
+              </button>
+            </Link>
           </div>
         </section>
       </section>
