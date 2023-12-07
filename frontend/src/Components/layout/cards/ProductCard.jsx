@@ -22,8 +22,7 @@ const ProductCard = ({ product }) => {
             (favorite) => favorite.product !== product.product_id
           )
         : [...prevFavourites, { product: product.product_id }];
-
-      console.log("updatedFavourites:", updatedFavourites);
+     
 
       localStorage.setItem("favourites", JSON.stringify(updatedFavourites));
 

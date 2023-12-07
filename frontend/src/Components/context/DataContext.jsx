@@ -116,6 +116,7 @@ const DataContextComponent = ({ children }) => {
     try {
       const formattedFav = mapToFavouriteStructure(storedFav);
 
+      console.log("formattedFav: ", formattedFav);
       const response = await axios.post(
         "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/favorito",
         formattedFav,
@@ -128,13 +129,24 @@ const DataContextComponent = ({ children }) => {
   };
 
   const mapToFavouriteStructure = (favourites) => {
+    console.log("favourites: ", favourites.length)
     if (favourites.length > 0) {
       return favourites.map((fav) => ({
         user: { user_id: user.id },
         product: { product_id: fav.product },
       }));
     }
+
+    else if(favourites.length === 0){
+
+      return [{
+        user: { user_id: user.id }                      
+      }];
+
+    }  
+
   };
+
 
   const fetchProductsRandom = async () => {
     try {
