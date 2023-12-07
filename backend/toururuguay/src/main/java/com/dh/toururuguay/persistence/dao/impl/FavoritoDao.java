@@ -37,8 +37,17 @@ public class FavoritoDao implements IDao<Favorito> {
     @Transactional
     public List<Favorito> guardarFavoritos(List<Favorito> favoritos) {
         // antes de guardar los favoritos, elimino los que ya estaban guardados
-        eliminar(favoritos.get(0).getUser().getUser_id());
         try {
+
+            // lo elimina siempre, pero tengo que enviar desde el front al menos el ID del
+            // usuario
+            eliminar(favoritos.get(0).getUser().getUser_id());
+
+            if (favoritos.get(0).getProduct() == null) {
+                log.info("El usuario se quedó sin favoritos");
+                return Collections.emptyList();
+            }            
+
             favoritos.forEach(favorito -> entityManager.persist(favorito));
             log.info("Favoritos guardados con éxito");
             return favoritos;
@@ -94,25 +103,25 @@ public class FavoritoDao implements IDao<Favorito> {
                     Object[].class)
                     .setParameter("userId", id)
                     .getResultList();
-    
+
             List<FavoritoDTO> favoritoDTO = new ArrayList<>();
-    
+
             results.forEach(result -> {
-    
+
                 Favorito favorito = (Favorito) result[0];
                 Usuario usuario = (Usuario) result[1];
                 Producto producto = (Producto) result[2];
-    
+
                 FavoritoDTO newDTO = new FavoritoDTO();
-    
+
                 // newDTO.setFavouriteId(favorito.getFavourite_id());
                 // newDTO.setUser(usuario.getUser_id());
                 newDTO.setProduct(producto.getProduct_id());
-    
+
                 favoritoDTO.add(newDTO);
             });
             return favoritoDTO;
-    
+
         } catch (NoResultException e) {
             return Collections.emptyList();
         } catch (Exception e) {
@@ -121,7 +130,6 @@ public class FavoritoDao implements IDao<Favorito> {
             return Collections.emptyList();
         }
     }
-    
 
     @Override
     public Favorito actualizar(Favorito favorito) {
