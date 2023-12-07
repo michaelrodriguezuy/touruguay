@@ -5,9 +5,18 @@ import ProductForm from "./ProductForm";
 
 import { DataContext } from "../../context/DataContext";
 
+const MobileMessage = () => {
+  return (
+    <div className="flex justify-between bg-slate-200'">
+      <p>Esta página no esta disponible en dispositivos móviles</p>
+    </div>
+  );
+};
+
 export const AdminPanel = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [isChange, setIsChange] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const {
     users,
@@ -36,10 +45,21 @@ export const AdminPanel = () => {
     setIsChange(false);
     fetchProducts();
     fetchUsers();
-    fetchRoles();    
+    fetchRoles();
     fetchCategories();
     fetchCities();
   }, [isChange]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.matchMedia('(max-width: 768px)').matches);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const openModal = () => {
     setModalOpen(true);
@@ -51,33 +71,36 @@ export const AdminPanel = () => {
 
   return (
     <section>
-      <div className='flex justify-between bg-slate-200'>
-        <div className="flex flex-row p-4 gap-4">
-          <button
-            onClick={() => setProducts((current) => !current)}
-            className='bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full'
-          >
-            Listado de Productos
-          </button>
-          <button
-            onClick={() => setUsers((current) => !current)}
-            className='bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full'
-          >
-            Listado de Usuarios
-          </button>
+      {isMobile && <MobileMessage />}
+      {!isMobile && (
+        <div className='flex justify-between bg-slate-200'>
+          <div className="flex flex-row p-4 gap-4">
+            <button
+              onClick={() => setProducts((current) => !current)}
+              className='bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full'
+            >
+              Listado de Productos
+            </button>
+            <button
+              onClick={() => setUsers((current) => !current)}
+              className='bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full'
+            >
+              Listado de Usuarios
+            </button>
+          </div>
+          <div className="flex flex-row p-4 gap-4 justify-end">
+            <button
+              onClick={openModal}
+              className='bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full'
+            >
+              Agregar Producto
+            </button>
+            <button className='bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full'>
+              Agregar categoría
+            </button>
+          </div>
         </div>
-        <div className="flex flex-row p-4 gap-4 justify-end">
-          <button
-            onClick={openModal}
-            className='bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full'
-          >
-            Agregar Producto
-          </button>
-          <button className='bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full'>
-            Agregar categoría
-          </button>
-        </div>
-      </div>
+      )}
       <ProductForm
         isOpen={modalOpen}
         onClose={closeModal}
@@ -101,7 +124,7 @@ export const AdminPanel = () => {
         <UserTable
           users={users}
           roles={roles}
-          fetchEditUser={fetchEditUser}          
+          fetchEditUser={fetchEditUser}
           fetchDeleteUser={fetchDeleteUser}
           setIsChange={setIsChange}
         />

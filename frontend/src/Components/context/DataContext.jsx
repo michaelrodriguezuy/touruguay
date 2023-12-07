@@ -40,8 +40,8 @@ const DataContextComponent = ({ children }) => {
       console.error("Error obteniendo usuarios:", error);
     }
   };
-  
-  
+
+
 
   const fetchDeleteUser = async (userId) => {
     try {
@@ -55,7 +55,7 @@ const DataContextComponent = ({ children }) => {
       console.error("Error eliminando el usuario:", error);
     }
   };
-  
+
   const fetchRoles = async () => {
     try {
       const getRoles = await axios.get(
@@ -87,8 +87,8 @@ const DataContextComponent = ({ children }) => {
         "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto/todosSinDTO",
         { headers }
       );
-      setProducts(response.data);    
-            
+      setProducts(response.data);
+
     } catch (error) {
       console.error("Error obteniendo productos:", error);
     }
@@ -121,7 +121,7 @@ const DataContextComponent = ({ children }) => {
   const fetchAddProduct = async (product, imagen) => {
     const formData = new FormData();
 
-    console.log("producto pa agregar:",product);
+    console.log("producto pa agregar:", product);
 
     imagen.forEach((image) => {
       formData.append("imagen", image.data, image.filename);
@@ -139,19 +139,19 @@ const DataContextComponent = ({ children }) => {
         }
       );
 
-      console.log("respuesta back img: ",responseImg);
+      console.log("respuesta back img: ", responseImg);
 
       const response = await axios.post(
         "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto",
         product,
         { headers }
       );
-      
-      console.log("respuesta back prod: ",response);
+
+      console.log("respuesta back prod: ", response);
 
       if (response.status === 409) {
-        console.log("El producto ya existe");      
-      } else {      
+        console.log("El producto ya existe");
+      } else {
         fetchProducts();
       }
       return { success: true, data: response.data };
@@ -164,7 +164,7 @@ const DataContextComponent = ({ children }) => {
       }
     }
   };
-  
+
   const fetchEditProduct = async (product, imagen) => {
 
     const formData = new FormData();
@@ -190,7 +190,7 @@ const DataContextComponent = ({ children }) => {
         product,
         { headers }
       );
-    console.log(response);
+      console.log(response);
 
       fetchProducts();
       return { success: true, data: response.data };
@@ -202,23 +202,23 @@ const DataContextComponent = ({ children }) => {
         } else {
           return { success: false, error: { status: error.response.status, message: "Error desconocido" } };
         }
-      } else {        
+      } else {
         return { success: false, error: { status: 500, message: "Error de red" } };
       }
     }
-    
+
   };
 
 
 
   const fetchDeleteProduct = async (productId) => {
     try {
-      
+
       const deleteProduct = await axios.delete(
-        `http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto/${productId}?eliminarImagenes=true`,         
+        `http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto/${productId}?eliminarImagenes=true`,
         { headers }
       );
-      
+
       fetchProducts();
     } catch (error) {
       console.error("Error eliminando el producto:", error);
@@ -232,7 +232,7 @@ const DataContextComponent = ({ children }) => {
         { headers }
       );
       setCategories(response.data);
-      
+
       // return response.data;
     } catch (error) {
       console.error("Error obteniendo categorias:", error);
@@ -245,8 +245,8 @@ const DataContextComponent = ({ children }) => {
         "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/ciudad/todas",
         { headers }
       );
-      setCities(response.data); 
-      
+      setCities(response.data);
+
       // return response.data;
     } catch (error) {
       console.error("Error obteniendo ciudades:", error);
@@ -256,7 +256,7 @@ const DataContextComponent = ({ children }) => {
   useEffect(() => {
     //  fetchUsers();
     fetchProductsRandom();
-    //    fetchProducts();
+    fetchProducts();
   }, [token]); //}, [token]);
 
   const registerUser = async (user) => {
@@ -309,8 +309,8 @@ const DataContextComponent = ({ children }) => {
     fetchUsers,
     fetchRoles,
     fetchDeleteUser,
-    
-      
+
+
     fetchCategories,
     fetchCities,
   };
