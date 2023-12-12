@@ -23,6 +23,7 @@ const DataContextComponent = ({ children }) => {
   const [cities, setCities] = useState([]);
 
   const [bookings, setBookings] = useState([]);
+  const [fechasReservas, setFechasReservas] = useState([]);
 
   let token;
   if (user && user.token) {
@@ -129,24 +130,20 @@ const DataContextComponent = ({ children }) => {
   };
 
   const mapToFavouriteStructure = (favourites) => {
-    console.log("favourites: ", favourites.length)
+    console.log("favourites: ", favourites.length);
     if (favourites.length > 0) {
       return favourites.map((fav) => ({
         user: { user_id: user.id },
         product: { product_id: fav.product },
       }));
+    } else if (favourites.length === 0) {
+      return [
+        {
+          user: { user_id: user.id },
+        },
+      ];
     }
-
-    else if(favourites.length === 0){
-
-      return [{
-        user: { user_id: user.id }                      
-      }];
-
-    }  
-
   };
-
 
   const fetchProductsRandom = async () => {
     try {
@@ -515,6 +512,38 @@ const DataContextComponent = ({ children }) => {
     }
   };
 
+  //fetchBookingDatesById
+  const fetchBookingDatesById = async (productId) => {
+    try {
+      const response = await axios.get(
+        `http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/reserva/fechas/${productId}`,
+        { headers }
+      );
+      setFechasReservas(response.data);
+    } catch (error) {
+      console.error("Error obteniendo las fechas de reserva:", error);
+    }
+  };
+
+  const fetchBookingAdd = async (booking) => {  
+
+    console.log("reserva para axios: ",booking)
+
+    try {
+      const response = await axios.post(
+        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/reserva",
+        booking,
+        { headers }
+      );
+      console.log(response);
+      return { success: true, data: response.data };
+    }
+    catch (error) {
+      console.error("Error agregando reserva:", error);
+    }
+  };
+
+
   //MANEJO DE FAVORITOS
   useEffect(() => {
     const storedFavourites =
@@ -582,6 +611,10 @@ const DataContextComponent = ({ children }) => {
 
     fetchCategories,
     fetchCities,
+
+    fetchBookingDatesById,
+    fetchBookingAdd,
+    fechasReservas,
   };
 
   return <DataContext.Provider value={data}>{children}</DataContext.Provider>;

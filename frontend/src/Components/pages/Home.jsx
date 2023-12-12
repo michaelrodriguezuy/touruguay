@@ -2,6 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../../App.css";
 import ProductCard from "../layout/cards/ProductCard";
+import SearchProduct from "../layout/search/SearchProduct";
 
 import { useContext, useState } from "react";
 import { DataContext } from "../context/DataContext.jsx";
@@ -60,18 +61,7 @@ const Home = ({ handleLike }) => {
   return (
     <section className="w-full flex flex-col bg-slate-200">
       <div className="grid grid-cols-1 bg-[#017999] place-content-evenly gap-10 p-10 md:px-85 md:py-10 md:grid-cols-3">
-        <div className="flex bg-gray-100 rounded-md overflow-hidden">
-          <h2 className="text-center">Realiza una búsqueda</h2>
-          <input
-            type="search"
-            placeholder="Salto en paracaídas, tour por..."
-            className="md:w-full w-full px-6 py-2 rounded-lg focus:outline-none"
-          />
-          <FontAwesomeIcon
-            className="searchIcon text-gray-600 ml-1"
-            icon="fas fa-search"
-          />
-        </div>
+        <SearchProduct />
         <div className="flex bg-gray-100 rounded-md overflow-hidden">
           <input
             type="search"

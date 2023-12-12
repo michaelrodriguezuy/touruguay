@@ -43,7 +43,6 @@ const UserForm = ({
 
   const handleSelectChange = (e, name) => {
     const { value } = e.target;
-
     setNewUser((prevUser) => {
       const updatedUser = {
         ...prevUser,

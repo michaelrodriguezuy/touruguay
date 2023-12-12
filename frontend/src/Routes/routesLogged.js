@@ -24,7 +24,7 @@ export const routesLogged = [
     },
 
     {
-        id: "booking/id",
+        id: "booking",
         path: "/booking/:productId",
         Element: Reserva,
     },

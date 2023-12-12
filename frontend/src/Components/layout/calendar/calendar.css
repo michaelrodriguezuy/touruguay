@@ -1,0 +1,6 @@
+.bloqueo {
+  background-color: lightgray;
+  color: darkgray;
+  pointer-events: none;
+  cursor: not-allowed;
+}

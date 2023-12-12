@@ -102,7 +102,7 @@ function Navbar() {
                           </Link>
 
                           <Link
-                            to="/booking"
+                            to="/bookings"
                             onClick={closeAvatarMenu}
                             className="block py-2 px-4 hover:bg-gray-200 rounded-lg"
                           >

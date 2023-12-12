@@ -42,7 +42,6 @@ const LoginForm = () => {
     e.preventDefault();
     try {
       if (validateForm()) {
-        console.log("Formulario válido. Iniciando sesion...");
         const userLogged = await loginUser({
           username: email,
           password: password,
@@ -56,13 +55,18 @@ const LoginForm = () => {
               text: userLogged.error,
             });
           } else {
-            console.log("Usuario logueado con éxito.");
-
             handleLogin(userLogged);
             if (userLogged && userLogged.rol === "Admin") {
               navigate("/AdminPanel");
             } else {
+
+              const reserva = JSON.parse(localStorage.getItem("reserva"));
+
+              if (reserva) {
+                navigate(`/booking/${reserva.productId}`);
+              }else {
               navigate("/");
+                }
             }
             //cargo sus favoritos
             cargaFavorites();

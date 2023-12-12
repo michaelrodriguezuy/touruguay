@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
-import MyCalendar from "../../layout/calendar/MyCalendar";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { DataContext } from "../../context/dataContext";
+
 import CalendarReservas from "../../layout/calendar/CalendarReservas";
+import { DataContext } from "../../context/DataContext";
 
 const Detalle = () => {
   const { productId } = useParams();
@@ -66,15 +67,9 @@ const Detalle = () => {
             {" "}
             <Link to={`/galeria/${productId}`}>Ver más...</Link>{" "}
           </p>
+        
           <CalendarReservas></CalendarReservas>
-          <div className="flex justify-end pb-4">
-            <Link to={`/booking/${product.product_id}`}>
-              <button className="rounded-xl bg-[#017999] text-white h-10 w-36 pt-2 mr-12">
-                {" "}
-                Lo quiero!{" "}
-              </button>
-            </Link>
-          </div>
+         
         </section>
       </section>
     </section>

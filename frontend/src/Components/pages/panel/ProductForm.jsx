@@ -85,9 +85,6 @@ const ProductForm = ({
     }
     const IMG = images.map((image) => ({ filename: image.name, data: image }));
 
-
-
-
     let resp = "";
 
     if (productSelected) {
