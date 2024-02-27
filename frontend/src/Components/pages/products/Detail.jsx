@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import CalendarReservas from "../../layout/calendar/CalendarReservas";
-import { DataContext } from "../../../context/DataContext";
+import { DataContext } from "../../context/DataContext";
 
 const Detalle = () => {
   const { productId } = useParams();
