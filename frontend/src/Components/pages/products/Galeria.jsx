@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { DataContext } from "../../../context/dataContext";
+import { DataContext } from "../../context/DataContext";
 
 const Galeria = () => {
   const { productId } = useParams();
