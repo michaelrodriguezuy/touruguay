@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { DataContext } from "../../../context/DataContext";
+import { DataContext } from "../../context/DataContext";
 
 const Detalle = () => {
   const { productId } = useParams();
