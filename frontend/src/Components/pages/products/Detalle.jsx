@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
-import MyCalendar from "src/Components/layout/MyCalendar";
+import MyCalendar from "/src/Components/layout/MyCalendar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { DataContext } from "src/Components/context/dataContext";
+import { DataContext } from "/src/Components/context/dataContext";
 
 const Detalle = () => {
   const { productId } = useParams();
