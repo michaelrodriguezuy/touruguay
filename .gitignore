@@ -65,3 +65,4 @@ dist-ssr
 
 ###INFRA###
 /infra/key_grupo2C12.pem
+backend/toururuguay/.env
