@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class Ciudad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer city_id;
+    private Integer id;
 
     private String city_name;
 
@@ -16,11 +16,11 @@ public class Ciudad {
     private Pais country;
 
     public Integer getCity_id() {
-        return city_id;
+        return id;
     }
 
     public void setCity_id(Integer city_id) {
-        this.city_id = city_id;
+        this.id = city_id;
     }
 
     public String getCity_name() {
@@ -42,7 +42,7 @@ public class Ciudad {
     public Ciudad(){}
 
     public Ciudad(Integer city_id, String city_name, Pais country) {
-        this.city_id = city_id;
+        this.id = city_id;
         this.city_name = city_name;
         this.country = country;
     }
@@ -50,7 +50,7 @@ public class Ciudad {
     @Override
     public String toString() {
         return "Ciudad{" +
-                "city_id=" + city_id +
+                "city_id=" + id +
                 ", city_name='" + city_name + '\'' +
                 ", country='" + country + '\'' +
                 '}';
