@@ -100,7 +100,7 @@ public Producto(){
     @Override
     public String toString() {
         return "Producto{" +
-                "product_id=" + product_id +
+                "product_id=" + id +
                 ", product_name='" + product_name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
@@ -116,7 +116,7 @@ public Producto(){
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Producto producto = (Producto) o;
-        return Objects.equals(product_id, producto.getProduct_id()) &&
+        return Objects.equals(id, producto.getProduct_id()) &&
                 Objects.equals(product_name, producto.getProduct_name()) &&
                 Objects.equals(description, producto.getDescription());
     }
