@@ -11,7 +11,7 @@ import jakarta.persistence.*;
 public class Reserva {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer booking_id;
+    private Integer id;
     private String title;
     private String description;
 
@@ -48,11 +48,11 @@ public class Reserva {
     // }
 
     public Integer getBooking_id() {
-        return booking_id;
+        return id;
     }
 
     public void setBooking_id(Integer booking_id) {
-        this.booking_id = booking_id;
+        this.id = booking_id;
     }
 
     public String getTitle() {
@@ -118,7 +118,7 @@ public class Reserva {
 
     public Reserva(Integer booking_id, String title, String description, Date date, Usuario user, Producto product, 
             Date desde, Date hasta) {
-        this.booking_id = booking_id;
+        this.id = booking_id;
         this.title = title;
         this.description = description;
         this.date = date;
