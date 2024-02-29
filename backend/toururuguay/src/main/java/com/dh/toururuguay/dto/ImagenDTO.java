@@ -1,12 +1,13 @@
 package com.dh.toururuguay.dto;
 
+import com.dh.toururuguay.model.Categoria;
 import com.dh.toururuguay.model.Producto;
 
 public class ImagenDTO {
     private Integer imageId;
     private String url;
     private Producto producto;
-
+    private Categoria categoria;
 
     public Integer getImageId() {
         return imageId;
@@ -31,8 +32,17 @@ public class ImagenDTO {
     public void setProducto(Producto producto) {
         this.producto = producto;
     }
-public ImagenDTO (){
 
-}
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public ImagenDTO() {
+
+    }
 
 }

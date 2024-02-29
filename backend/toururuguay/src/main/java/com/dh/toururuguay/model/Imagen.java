@@ -20,6 +20,11 @@ public class Imagen {
     @JoinColumn(name = "product_id")
     private Producto producto;
 
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Categoria categoria;
+
     @Transient
     private Part imagen;
 
@@ -47,12 +52,22 @@ public class Imagen {
         this.producto = producto;
     }
 
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
     public InputStream getInputStream() throws IOException {
         return imagen.getInputStream();
     }
+
     public long getSize() {
         return imagen.getSize();
     }
+
     public String getOriginalFilename() {
         return imagen.getSubmittedFileName();
     }
@@ -60,9 +75,10 @@ public class Imagen {
     public Imagen() {
     }
 
-    public Imagen(Integer id, String imageUrl, Producto producto) {
+    public Imagen(Integer id, String imageUrl, Producto producto, Categoria categoria) {
         this.image_id = id;
         this.url = imageUrl;
         this.producto = producto;
+        this.categoria = categoria;
     }
 }

@@ -1,6 +1,7 @@
 package com.dh.toururuguay.service;
 
 import com.dh.toururuguay.dto.ImagenDTO;
+import com.dh.toururuguay.model.Categoria;
 import com.dh.toururuguay.model.Imagen;
 import com.dh.toururuguay.model.Producto;
 import com.dh.toururuguay.persistence.dao.impl.ImagenDao;
@@ -24,14 +25,13 @@ public class ImagenService {
         this.imagenDao = imagenDao;
     }
 
-    public boolean subirImagenS3(List <MultipartFile> imagenes) {
+    public boolean subirImagenS3(List<MultipartFile> imagenes) {
         try {
             for (MultipartFile imagen : imagenes) {
-                boolean subidaExitosa= imagenDao.subirImagenS3(imagen);
+                boolean subidaExitosa = imagenDao.subirImagenS3(imagen);
             }
             return true;
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             log.error("Error al procesar y guardar las imagenes", e);
             throw new RuntimeException("Error al procesar y guardar las imagenes", e);
         }
@@ -39,6 +39,10 @@ public class ImagenService {
 
     public void guardarImagenesDelProducto(Producto producto) {
         imagenDao.guardarImagenesDelProducto(producto);
+    }
+
+    public void guardarImagenesDelaCategoria(Categoria categoria) {
+        imagenDao.guardarImagenesDelaCategoria(categoria);
     }
 
     public List<ImagenDTO> buscarTodos() {
@@ -53,12 +57,17 @@ public class ImagenService {
         dto.setImageId(imagen.getId());
         dto.setUrl(imagen.getImageUrl());
         dto.setProducto(imagen.getProducto());
-        // Puedes agregar más campos según sea necesario
+        dto.setCategoria(imagen.getCategoria());
+
         return dto;
     }
 
-    public void eliminarImagenesDelProducto(Producto producto){
+    public void eliminarImagenesDelProducto(Producto producto) {
         imagenDao.eliminarImagenesDelProducto(producto);
+    }
+
+    public void eliminarImagenesDelaCategoria(Categoria categoria) {
+        imagenDao.eliminarImagenesDelaCategoria(categoria);
     }
 
 }

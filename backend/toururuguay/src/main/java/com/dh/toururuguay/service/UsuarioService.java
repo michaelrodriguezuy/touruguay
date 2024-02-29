@@ -23,4 +23,12 @@ public class UsuarioService {
 
     public Optional<Usuario> buscar(Integer id){return this.usuarioDao.buscar(id);}
 
+    public Usuario actualizar(Usuario usuario) {
+        return usuarioDao.actualizar(usuario);
+    }
+
+    public void eliminar(Integer id) {
+        usuarioDao.eliminar(id);
+    }
+
 }
