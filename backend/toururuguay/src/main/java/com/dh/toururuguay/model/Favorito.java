@@ -8,7 +8,7 @@ public class Favorito {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer favourite_id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -23,7 +23,7 @@ public class Favorito {
     }
 
     public void setFavourite_id(Integer favourite_id) {
-        this.favourite_id = favourite_id;
+        this.id = favourite_id;
     }
 
     public Usuario getUser() {
@@ -47,7 +47,7 @@ public class Favorito {
     }
 
     public Favorito(Integer favourite_id, Usuario user, Producto product) {
-        this.favourite_id = favourite_id;
+        this.id = favourite_id;
         this.user = user;
         this.product = product;
     }
