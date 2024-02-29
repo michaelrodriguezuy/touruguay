@@ -10,7 +10,7 @@ public class Producto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer product_id;
+    private Integer id;
 
     private String product_name;
     private String description;
@@ -29,7 +29,7 @@ public Producto(){
 }
 
     public Producto(Integer product_id, String product_name, String description, Double price, Categoria category, Ciudad city, String address) {
-        this.product_id = product_id;
+        this.id = product_id;
         this.product_name = product_name;
         this.description = description;
         this.price = price;
@@ -47,11 +47,11 @@ public Producto(){
     }
 
     public Integer getProduct_id() {
-        return product_id;
+        return id;
     }
 
     public void setProduct_id(Integer product_id) {
-        this.product_id = product_id;
+        this.id = product_id;
     }
 
     public String getProduct_name() {
@@ -122,7 +122,7 @@ public Producto(){
     }
     @Override
     public int hashCode() {
-        return Objects.hash(this.product_id, this.product_name, this.description);
+        return Objects.hash(this.id, this.product_name, this.description);
     }
 
 }
