@@ -12,7 +12,7 @@ import java.io.InputStream;
 public class Imagen {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer image_id;
+    private Integer id;
     private String url;
 
     @JsonIgnore
@@ -29,11 +29,11 @@ public class Imagen {
     private Part imagen;
 
     public Integer getId() {
-        return image_id;
+        return id;
     }
 
     public void setId(Integer id) {
-        this.image_id = id;
+        this.id = id;
     }
 
     public String getImageUrl() {
@@ -76,7 +76,7 @@ public class Imagen {
     }
 
     public Imagen(Integer id, String imageUrl, Producto producto, Categoria categoria) {
-        this.image_id = id;
+        this.id = id;
         this.url = imageUrl;
         this.producto = producto;
         this.categoria = categoria;
