@@ -7,17 +7,17 @@ import jakarta.persistence.*;
 public class Pais {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer country_id;
+    private Integer id;
 
     private String country_name;
     private String iso_code;
 
     public Integer getCountry_id() {
-        return country_id;
+        return id;
     }
 
     public void setCountry_id(Integer country_id) {
-        this.country_id = country_id;
+        this.id = country_id;
     }
 
     public String getCountry_name() {
@@ -39,7 +39,7 @@ public class Pais {
     public Pais(){}
 
     public Pais(Integer country_id, String country_name, String iso_code) {
-        this.country_id = country_id;
+        this.id = country_id;
         this.country_name = country_name;
         this.iso_code = iso_code;
     }
@@ -47,7 +47,7 @@ public class Pais {
     @Override
     public String toString() {
         return "Pais{" +
-                "country_id=" + country_id +
+                "country_id=" + id +
                 ", country_name='" + country_name + '\'' +
                 ", iso_code='" + iso_code + '\'' +
                 '}';
