@@ -19,7 +19,7 @@ public class Favorito {
     private Producto product;
 
     public Integer getFavourite_id() {
-        return favourite_id;
+        return id;
     }
 
     public void setFavourite_id(Integer favourite_id) {
