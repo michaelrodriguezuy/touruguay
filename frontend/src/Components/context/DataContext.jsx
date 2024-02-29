@@ -531,7 +531,7 @@ const DataContextComponent = ({ children }) => {
 
     try {
       const response = await axios.post(
-        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/reserva",
+        "touruguay-production.up.railway.app/reserva",
         booking,
         { headers }
       );
