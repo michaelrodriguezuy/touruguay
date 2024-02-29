@@ -1,0 +1,107 @@
+.slick-slider-custom {
+  overflow: hidden;   
+}
+
+.slick-slider-custom .slick-list {
+  display: flex;
+  align-items: flex-start;
+  overflow: hidden;
+}
+
+.slick-slider-custom .slick-track {
+  display: flex;
+  height: 280px;
+}
+
+.slick-slider-custom .slick-slide {
+  flex: 0 0 auto;
+  margin-right: 8rem;
+}
+
+@media (max-width: 768px) {
+  .slick-slider-custom .slick-slide {
+    margin-right: 0.5rem;
+  }
+}
+
+.slick-slider-custom .slick-slide img {
+  width: 100%;
+}
+
+.slick-prev,
+.slick-next {
+  font-size: 24px;
+  line-height: 1;
+  position: absolute;
+  top: 50%;
+  display: block;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  transform: translate(0, -50%);
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: transparent;
+  z-index: 1;
+}
+
+.slick-prev {
+  left: 10px;
+}
+
+.slick-next {
+  right: 10px;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  font-family: "slick";
+  font-size: 24px;
+  line-height: 1;
+  opacity: 0.75;
+  color: white;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.slick-prev:before {
+  content: "←";
+}
+
+.slick-next:before {
+  content: "→";
+}
+
+.slick-dots {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 30px 0;
+  padding: 0;
+}
+
+.slick-dots li {
+  margin: 0 4px;
+}
+
+.slick-dots li button {
+  font-size: 12px;
+  line-height: 1;
+  display: block;
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+  opacity: 0.75;
+  transition: background-color 0.3s ease;
+  border-radius: 50%;
+}
+
+.slick-dots li button:focus {
+  outline: none;
+}

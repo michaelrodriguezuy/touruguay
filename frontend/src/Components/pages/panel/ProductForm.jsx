@@ -71,7 +71,11 @@ const ProductForm = ({
   };
 
   const handleSubmit = async () => {
-    if (images.length === 0) {
+    //si es un producto nuevo obligo a pedir imagen, si es una modificacion no
+
+
+
+    if (!productSelected && images.length === 0) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -79,7 +83,6 @@ const ProductForm = ({
       });
       return;
     }
-
     const IMG = images.map((image) => ({ filename: image.name, data: image }));
 
     let resp = "";
@@ -134,9 +137,9 @@ const ProductForm = ({
   };
 
   const handleClose = () => {
-    onClose();
     setNewProduct(initialProductState);
     setImages([]);
+    onClose();
   };
 
   return (
@@ -146,7 +149,7 @@ const ProductForm = ({
     >
       <div className="flex flex-col p-10 m-10 rounded-lg gap-3 bg-[#202a44] w-[25rem] border-2 border-white">
         <div className="flex flex-col">
-          <label className="text-white m-2 flex-shrink-0 w-[6rem]">
+          <label className="text-white m-1 flex-shrink-0 w-[6rem]">
             Nombre:
           </label>
           <input
@@ -158,7 +161,7 @@ const ProductForm = ({
           />
         </div>
         <div className="flex flex-col">
-          <label className="text-white m-2 flex-shrink-0 w-[6rem]">
+          <label className="text-white m-1 flex-shrink-0 w-[6rem]">
             Descripción:
           </label>
           <textarea
@@ -169,7 +172,7 @@ const ProductForm = ({
           />
         </div>
         <div className="flex flex-col">
-          <label className="text-white m-2 flex-shrink-0 w-[6rem]">
+          <label className="text-white m-1 flex-shrink-0 w-[6rem]">
             Precio:
           </label>
           <input
@@ -183,7 +186,7 @@ const ProductForm = ({
         </div>
 
         <div className="flex flex-col">
-          <label className="text-white m-2 flex-shrink-0 w-[6rem]">
+          <label className="text-white m-1 flex-shrink-0 w-[6rem]">
             Imágenes:
           </label>
           <input
@@ -195,8 +198,8 @@ const ProductForm = ({
         </div>
 
         <div className="flex flex-col">
-          <label className="text-white m-2 flex-shrink-0 w-[6rem]">
-            Categoría:
+          <label className="text-white m-1 flex-shrink-0 w-[6rem]">
+            Categorías:
           </label>
           <select
             className="rounded p-2 flex-grow"
@@ -217,8 +220,8 @@ const ProductForm = ({
         </div>
 
         <div className="flex flex-col">
-          <label className="text-white m-2 flex-shrink-0 w-[6rem]">
-            Ciudad:
+          <label className="text-white m-1 flex-shrink-0 w-[6rem]">
+            Ciudades:
           </label>
           <select
             className="rounded p-2 flex-grow"
@@ -239,13 +242,13 @@ const ProductForm = ({
         </div>
 
         <button
-          className="text-white bg-[#017999] rounded p-2 hover:bg-[#1f4955]"
+          className="text-white bg-[#017999] rounded p-1 hover:bg-[#1f4955]"
           onClick={handleSubmit}
         >
           {productSelected ? "Modificar" : "Agregar"}
         </button>
         <button
-          className="text-white bg-gray-500 rounded p-2 hover:bg-gray-700"
+          className="text-white bg-gray-500 rounded p-1 hover:bg-gray-700"
           onClick={handleClose}
         >
           Cerrar

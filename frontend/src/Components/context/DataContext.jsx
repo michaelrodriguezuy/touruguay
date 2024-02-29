@@ -5,23 +5,31 @@ import { AuthContext } from "./AuthContext";
 export const DataContext = createContext();
 
 const DataContextComponent = ({ children }) => {
+  const { user, tokenDevelop } = useContext(AuthContext);
   const [users, setUsers] = useState([]);
   const [roles, setRoles] = useState([]);
+
+  const [favourites, setFavourites] = useState([]);
+
   const [productsRandom, setProductsRandom] = useState([]);
-  const [products, setProducts] = useState([]);
+
+  const [products, setProducts] = useState([]); //home y favoritos (con img)
+  const [productsPanel, setProductsPanel] = useState([]); // panel (completo sin img)
+
   const [product, setProduct] = useState();
   const [imgProduct, setImgProduct] = useState();
 
   const [categories, setCategories] = useState([]);
   const [cities, setCities] = useState([]);
 
-  const { user, tokenDevelop } = useContext(AuthContext);
+  const [bookings, setBookings] = useState([]);
+  const [fechasReservas, setFechasReservas] = useState([]);
 
   let token;
   if (user && user.token) {
     token = user.token;
   } else {
-    token = tokenDevelop;
+    token = tokenDevelop;ƒƒƒ
   }
 
   const headers = {
@@ -32,7 +40,7 @@ const DataContextComponent = ({ children }) => {
   const fetchUsers = async () => {
     try {
       const getUsers = await axios.get(
-        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/usuario/todos",
+        "touruguay-production.up.railway.app/usuario/todos",
         { headers }
       );
       setUsers(getUsers.data);
@@ -41,12 +49,25 @@ const DataContextComponent = ({ children }) => {
     }
   };
 
-
+  const fetchEditUser = async (user) => {
+    try {
+      const response = await axios.put(
+        "touruguay-production.up.railway.app/usuario",
+        user,
+        { headers }
+      );
+      console.log(response);
+      fetchUsers();
+      return { success: true, data: response.data };
+    } catch (error) {
+      console.error("Error editando el usuario:", error);
+    }
+  };
 
   const fetchDeleteUser = async (userId) => {
     try {
       const deleteUser = await axios.delete(
-        `http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/usuario/${userId}`,
+        `touruguay-production.up.railway.app/usuario/${userId}`,
         { headers }
       );
       console.log(deleteUser);
@@ -59,7 +80,7 @@ const DataContextComponent = ({ children }) => {
   const fetchRoles = async () => {
     try {
       const getRoles = await axios.get(
-        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/rol/todosSinDTO",
+        "touruguay-production.up.railway.app/rol/todosSinDTO",
         { headers }
       );
       setRoles(getRoles.data);
@@ -68,27 +89,93 @@ const DataContextComponent = ({ children }) => {
     }
   };
 
+  //inicio sesion
+  const fetchFavourites = async () => {
+    try {
+      const user1 = JSON.parse(localStorage.getItem("user"));
+
+      const response = await axios.get(
+        `touruguay-production.up.railway.app/favorito/${user1.id}`,
+        { headers }
+      );
+
+      const newFavourites = response.data;
+
+      setFavourites(newFavourites);
+      localStorage.setItem("favourites", JSON.stringify(newFavourites));
+    } catch (error) {
+      console.error("Error obteniendo favoritos:", error);
+    }
+  };
+
+  //le paso una lista de favoritos, lista temporal
+  //cierro sesion
+  const fetchAddFavourite = async () => {
+    //lo tengo en localStorage
+    const storedFav = JSON.parse(localStorage.getItem("favourites"));
+
+    try {
+      const formattedFav = mapToFavouriteStructure(storedFav);
+
+      console.log("formattedFav: ", formattedFav);
+      const response = await axios.post(
+        "touruguay-production.up.railway.app/favorito",
+        formattedFav,
+        { headers }
+      );
+      //setFavourites([]);
+    } catch (error) {
+      console.error("Error agregando favorito:", error);
+    }
+  };
+
+  const mapToFavouriteStructure = (favourites) => {
+    console.log("favourites: ", favourites.length);
+    if (favourites.length > 0) {
+      return favourites.map((fav) => ({
+        user: { user_id: user.id },
+        product: { product_id: fav.product },
+      }));
+    } else if (favourites.length === 0) {
+      return [
+        {
+          user: { user_id: user.id },
+        },
+      ];
+    }
+  };
+
   const fetchProductsRandom = async () => {
     try {
       const productsRandom = await axios.get(
-        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto/aleatorios?cantidad=10",
+        "touruguay-production.up.railway.app/producto/aleatorios?cantidad=10",
         { headers }
       );
       setProductsRandom(productsRandom.data);
     } catch (error) {
       console.error("Error obteniendo productos random:", error);
-
     }
   };
 
   const fetchProducts = async () => {
     try {
       const response = await axios.get(
-        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto/todosSinDTO",
+        "touruguay-production.up.railway.app/producto/todos",
         { headers }
       );
       setProducts(response.data);
+    } catch (error) {
+      console.error("Error obteniendo productos:", error);
+    }
+  };
 
+  const fetchProductsPanel = async () => {
+    try {
+      const response = await axios.get(
+        "touruguay-production.up.railway.app/producto/todosSinDTO",
+        { headers }
+      );
+      setProductsPanel(response.data);
     } catch (error) {
       console.error("Error obteniendo productos:", error);
     }
@@ -97,7 +184,7 @@ const DataContextComponent = ({ children }) => {
   const fetchProductById = async (productId) => {
     try {
       const response = await axios.get(
-        `http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto/${productId}`,
+        `touruguay-production.up.railway.app/producto/${productId}`,
         { headers }
       );
       setProduct(response.data);
@@ -109,7 +196,7 @@ const DataContextComponent = ({ children }) => {
   const fetchImgProductById = async (productId) => {
     try {
       const response = await axios.get(
-        `http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto/img/${productId}`,
+        `touruguay-production.up.railway.app/producto/img/${productId}`,
         { headers }
       );
       setImgProduct(response.data);
@@ -121,15 +208,13 @@ const DataContextComponent = ({ children }) => {
   const fetchAddProduct = async (product, imagen) => {
     const formData = new FormData();
 
-    console.log("producto pa agregar:", product);
-
     imagen.forEach((image) => {
       formData.append("imagen", image.data, image.filename);
     });
 
     try {
       const responseImg = await axios.post(
-        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/imagen",
+        "touruguay-production.up.railway.app/imagen",
         formData,
         {
           headers: {
@@ -142,7 +227,7 @@ const DataContextComponent = ({ children }) => {
       console.log("respuesta back img: ", responseImg);
 
       const response = await axios.post(
-        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto",
+        "touruguay-production.up.railway.app/producto",
         product,
         { headers }
       );
@@ -155,38 +240,45 @@ const DataContextComponent = ({ children }) => {
         fetchProducts();
       }
       return { success: true, data: response.data };
-
     } catch (error) {
       if (error.response && error.response.status === 409) {
-        return { success: false, error: { status: 409, message: "El producto ya existe" } };
+        return {
+          success: false,
+          error: { status: 409, message: "El producto ya existe" },
+        };
       } else {
-        return { success: false, error: { status: error.response.status, message: "Error desconocido" } };
+        return {
+          success: false,
+          error: {
+            status: error.response.status,
+            message: "Error desconocido",
+          },
+        };
       }
     }
   };
 
   const fetchEditProduct = async (product, imagen) => {
+    // const formData = new FormData();
 
-    const formData = new FormData();
-
-    imagen.forEach((image) => {
-      formData.append("imagen", image.data, image.filename);
-    });
+    // imagen.forEach((image) => {
+    //   formData.append("imagen", image.data, image.filename);
+    // });
 
     try {
-      const responseImg = await axios.post(
-        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/imagen",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      // const responseImg = await axios.post(
+      //   "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/imagen",
+      //   formData,
+      //   {
+      //     headers: {
+      //       "Content-Type": "multipart/form-data",
+      //       Authorization: `Bearer ${token}`,
+      //     },
+      //   }
+      // );
 
       const response = await axios.put(
-        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto",
+        "touruguay-production.up.railway.app/producto",
         product,
         { headers }
       );
@@ -194,28 +286,35 @@ const DataContextComponent = ({ children }) => {
 
       fetchProducts();
       return { success: true, data: response.data };
-
     } catch (error) {
       if (error.response) {
         if (error.response.status === 409) {
-          return { success: false, error: { status: 409, message: "El producto ya existe" } };
+          return {
+            success: false,
+            error: { status: 409, message: "El producto ya existe" },
+          };
         } else {
-          return { success: false, error: { status: error.response.status, message: "Error desconocido" } };
+          return {
+            success: false,
+            error: {
+              status: error.response.status,
+              message: "Error desconocido",
+            },
+          };
         }
       } else {
-        return { success: false, error: { status: 500, message: "Error de red" } };
+        return {
+          success: false,
+          error: { status: 500, message: "Error de red" },
+        };
       }
     }
-
   };
-
-
 
   const fetchDeleteProduct = async (productId) => {
     try {
-
       const deleteProduct = await axios.delete(
-        `http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/producto/${productId}?eliminarImagenes=true`,
+        `touruguay-production.up.railway.app/producto/${productId}?eliminarImagenes=true`,
         { headers }
       );
 
@@ -228,7 +327,7 @@ const DataContextComponent = ({ children }) => {
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/categoria/todas",
+        "touruguay-production.up.railway.app/categoria/todas",
         { headers }
       );
       setCategories(response.data);
@@ -242,7 +341,7 @@ const DataContextComponent = ({ children }) => {
   const fetchCities = async () => {
     try {
       const response = await axios.get(
-        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/ciudad/todas",
+        "touruguay-production.up.railway.app/ciudad/todas",
         { headers }
       );
       setCities(response.data);
@@ -253,16 +352,30 @@ const DataContextComponent = ({ children }) => {
     }
   };
 
+  const fetchReservas = async (userId) => {
+    try {
+      const response = await axios.get(
+        `touruguay-production.up.railway.app/reserva/usuario/${userId}`,
+        { headers }
+      );
+
+      setBookings(response.data);
+    } catch (error) {
+      console.error("Error obteniendo reservas:", error);
+    }
+  };
+
   useEffect(() => {
     //  fetchUsers();
     fetchProductsRandom();
     fetchProducts();
+    fetchCategories();
   }, [token]); //}, [token]);
 
   const registerUser = async (user) => {
     try {
       const response = await axios.post(
-        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/auth/register",
+        "touruguay-production.up.railway.app/auth/register",
         user
       );
       return response.data;
@@ -271,10 +384,21 @@ const DataContextComponent = ({ children }) => {
     }
   };
 
+  const fetchSendEmail = async () => {
+    try {
+      const response = await axios.get(
+        "touruguay-production.up.railway.app/auth/email"
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error enviando el email:", error);
+    }
+  };
+
   const loginUser = async (user) => {
     try {
       const response = await axios.post(
-        "http://ec2-3-93-192-148.compute-1.amazonaws.com:8080/auth/login",
+        "touruguay-production.up.railway.app/auth/login",
         user
       );
 
@@ -287,32 +411,210 @@ const DataContextComponent = ({ children }) => {
     }
   };
 
+  const fetchAddCategory = async (category, imagen) => {
+    const formData = new FormData();
+
+    imagen.forEach((image) => {
+      formData.append("imagen", image.data, image.filename);
+    });
+
+    try {
+      const responseImg = await axios.post(
+        "touruguay-production.up.railway.app/imagen",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const response = await axios.post(
+        "touruguay-production.up.railway.app/categoria",
+        category,
+        { headers }
+      );
+
+      if (response.status === 409) {
+        console.log("La categoria ya existe");
+      } else {
+        fetchCategories();
+      }
+      return { success: true, data: response.data };
+    } catch (error) {
+      if (error.response && error.response.status === 409) {
+        return {
+          success: false,
+          error: { status: 409, message: "La categoria ya existe" },
+        };
+      } else {
+        return {
+          success: false,
+          error: {
+            status: error.response.status,
+            message: "Error desconocido",
+          },
+        };
+      }
+    }
+  };
+
+  const fetchEditCategory = async (category, imagen) => {
+    const formData = new FormData();
+
+    imagen.forEach((image) => {
+      formData.append("imagen", image.data, image.filename);
+    });
+
+    try {
+      const responseImg = await axios.post(
+        "touruguay-production.up.railway.app/imagen",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const response = await axios.put(
+        `touruguay-production.up.railway.app/categoria/${category.category_id}`,
+        category,
+        { headers }
+      );
+
+      fetchCategories();
+      return { success: true, data: response.data };
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 409) {
+          return {
+            success: false,
+            error: { status: 409, message: "La categoria ya existe" },
+          };
+        } else {
+          return {
+            success: false,
+            error: {
+              status: error.response.status,
+              message: "Error desconocido",
+            },
+          };
+        }
+      } else {
+        return {
+          success: false,
+          error: { status: 500, message: "Error de red" },
+        };
+      }
+    }
+  };
+
+  //fetchBookingDatesById
+  const fetchBookingDatesById = async (productId) => {
+    try {
+      const response = await axios.get(
+        `touruguay-production.up.railway.app/reserva/fechas/${productId}`,
+        { headers }
+      );
+      setFechasReservas(response.data);
+    } catch (error) {
+      console.error("Error obteniendo las fechas de reserva:", error);
+    }
+  };
+
+  const fetchBookingAdd = async (booking) => {  
+
+    console.log("reserva para axios: ",booking)
+
+    try {
+      const response = await axios.post(
+        "touruguay-production.up.railway.app/reserva",
+        booking,
+        { headers }
+      );
+      console.log(response);
+      return { success: true, data: response.data };
+    }
+    catch (error) {
+      console.error("Error agregando reserva:", error);
+    }
+  };
+
+
+  //MANEJO DE FAVORITOS
+  useEffect(() => {
+    const storedFavourites =
+      JSON.parse(localStorage.getItem("favourites")) || [];
+    setFavourites(storedFavourites);
+  }, []);
+  const handleLike = (selectedProduct) => {
+    const isLiked = favourites.some(
+      (favorite) => favorite.product === selectedProduct.product_id
+    );
+
+    let updatedFavourites;
+
+    if (isLiked) {
+      updatedFavourites = favourites.filter(
+        (favorite) => favorite.product !== selectedProduct.product_id
+      );
+    } else {
+      updatedFavourites = [
+        ...favourites,
+        { product: selectedProduct.product_id },
+      ];
+    }
+
+    setFavourites(updatedFavourites);
+    localStorage.setItem("favourites", JSON.stringify(updatedFavourites));
+  };
+
   let data = {
     users,
     productsRandom,
     products,
+    productsPanel,
     product,
     imgProduct,
     categories,
     cities,
     roles,
+    bookings,
 
     fetchProductById,
     fetchImgProductById,
-    fetchProducts,
     fetchAddProduct,
+    fetchAddCategory,
+    fetchEditCategory,
     fetchEditProduct,
     fetchDeleteProduct,
+    fetchProducts,
+    fetchProductsPanel,
 
     registerUser,
     loginUser,
     fetchUsers,
     fetchRoles,
     fetchDeleteUser,
+    fetchEditUser,
+    fetchReservas,
+    fetchSendEmail,
+    fetchFavourites,
+    fetchAddFavourite, //pasar lista temporal de favoritos
 
+    favourites,
+    setFavourites,
+    handleLike, //lo consumo desde Favoritos.jsx y Home.jsx
 
     fetchCategories,
     fetchCities,
+
+    fetchBookingDatesById,
+    fetchBookingAdd,
+    fechasReservas,
   };
 
   return <DataContext.Provider value={data}>{children}</DataContext.Provider>;

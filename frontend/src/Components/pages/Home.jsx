@@ -2,12 +2,21 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../../App.css";
 import ProductCard from "../layout/cards/ProductCard";
-import { useContext, useState, useEffect } from "react";
-import { DataContext } from "../context/DataContext";
-import ProductSearch from "../pages/productSearch/ProductSearch";
+import SearchProduct from "../layout/search/SearchProduct";
 
-const Home = () => {
-  const { productsRandom } = useContext(DataContext);
+import { useContext, useState } from "react";
+import { DataContext } from "../context/DataContext.jsx";
+
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+import "../layout/cards/CategoryCard.css";
+import CategoryCard from "../layout/cards/CategoryCard.jsx";
+
+const Home = ({ handleLike }) => {
+  const { productsRandom, categories } = useContext(DataContext);
+
   const itemsPerPage = 9;
   const pageCount = Math.ceil(productsRandom.length / itemsPerPage);
   const [currentPage, setCurrentPage] = useState(0);
@@ -17,14 +26,42 @@ const Home = () => {
     (currentPage + 1) * itemsPerPage
   );
 
-  const handlePageClick = ({ page }) => {
+  const handlePageClick = (page) => {
     setCurrentPage(page);
+  };
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
   };
 
   return (
     <section className="w-full flex flex-col bg-slate-200">
       <div className="grid grid-cols-1 bg-[#017999] place-content-evenly gap-10 p-10 md:px-85 md:py-10 md:grid-cols-3">
-        <ProductSearch />
+        <SearchProduct />
         <div className="flex bg-gray-100 rounded-md overflow-hidden">
           <input
             type="search"
@@ -37,36 +74,24 @@ const Home = () => {
           />
         </div>
         <button className=" mx-auto bg-[#202A44] hover:bg-[#131a2b] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-          Realizar busqueda</button>
+          Realizar busqueda
+        </button>
       </div>
-      <section className="p-4">
-        <h2 className="text-center text-2xl p-10 font-bold">Busca por categoria</h2>
-        <div className="flex flex-row gap-4 justify-center m-auto">
 
-          <div className="w-72 md:w-96 mx-auto bg-white shadow-lg rounded-lg overflow-hidden relative cursor-pointer transition transform hover:scale-110">
-            <img src="https://images.unsplash.com/photo-1496429862132-5ab36b6ae330?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="w-full h-48 md:h-64 object-cover" alt="Imagen"></img>
-            <h3 className="absolute bottom-1 right-1 text-2xl text-white font-bold opacity-50">
-              Extremo
-            </h3>
-          </div>
-          <div className="w-72 md:w-96 mx-auto bg-white shadow-lg rounded-lg overflow-hidden relative cursor-pointer transition transform hover:scale-110">
-            <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="w-full h-48 md:h-64 object-cover" alt="Imagen"></img>
-            <h3 className="absolute bottom-1 right-1 text-2xl text-white font-bold opacity-50">
-              Gastronomía
-            </h3>
-          </div>
-          <div className="w-72 md:w-96 mx-auto bg-white shadow-lg rounded-lg overflow-hidden relative cursor-pointer transition transform hover:scale-110">
-            <img src="https://images.unsplash.com/photo-1501555088652-021faa106b9b?q=80&w=2946&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="w-full h-48 md:h-64 object-cover" alt="Imagen"></img>
-            <h3 className="absolute bottom-1 right-1 text-2xl text-white font-bold opacity-50">
-              Aventura
-            </h3>
-          </div>
-          <div className="w-72 md:w-96 mx-auto bg-white shadow-lg rounded-lg overflow-hidden relative cursor-pointer transition transform hover:scale-110">
-            <img src="https://images.unsplash.com/photo-1533371452382-d45a9da51ad9?q=80&w=2946&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="w-full h-48 md:h-64 object-cover" alt="Imagen"></img>
-            <h3 className="absolute bottom-1 right-1 text-2xl text-white font-bold opacity-50">
-              Místico
-            </h3>
-          </div>
+      <section className="p-4">
+        <h3 className="text-center text-4xl p-10 font-bold">
+          Busca por categoría
+        </h3>
+
+        <div className="mx-auto max-w-6xl ">
+          <Slider {...settings} className="slick-slider-custom">
+            {categories &&
+              categories.map((category) => (
+                <div key={category.category_id}>
+                  <CategoryCard category={category} />
+                </div>
+              ))}
+          </Slider>
         </div>
       </section>
 
@@ -77,37 +102,14 @@ const Home = () => {
         <div className="grid grid-cols-1 gap-4 width-full md:grid-cols-2 md:max-w-4xl m-auto">
           {productsRandom &&
             productsRandom.map((product) => (
-              <ProductCard key={product.product_id} product={product} />
+              <ProductCard
+                key={product.product_id}
+                product={product}
+                handleLike={handleLike}
+              />
             ))}
         </div>
       </section>
-
-      <section className="flex justify-center">
-        <div>
-          <h3 className="text-4xl font-bold text-center">Mas categorias</h3>
-          <div className="flex flex-row py-4 space-x-4 gap-10">
-            <button className=" mx-auto bg-slate-400 hover:bg-[#b4b6bc] text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline cursor-pointer transition transform hover:scale-110">
-              Automovilismo</button>
-            <button className=" mx-auto bg-slate-400 hover:bg-[#b4b6bc] text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline cursor-pointer transition transform hover:scale-110">
-              Paseos</button>
-            <button className=" mx-auto bg-slate-400 hover:bg-[#b4b6bc] text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline cursor-pointer transition transform hover:scale-110">
-              Cursos y Talleres</button>
-            <button className=" mx-auto bg-slate-400 hover:bg-[#b4b6bc] text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline cursor-pointer transition transform hover:scale-110">
-              Imperdibles</button>
-            <button className=" mx-auto bg-slate-400 hover:bg-[#b4b6bc] text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline cursor-pointer transition transform hover:scale-110">
-              Arquitectura</button>
-            <button className=" mx-auto bg-slate-400 hover:bg-[#b4b6bc] text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline cursor-pointer transition transform hover:scale-110">
-              Deporte</button>
-            <button className=" mx-auto bg-slate-400 hover:bg-[#b4b6bc] text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline cursor-pointer transition transform hover:scale-110">
-              Museos</button>
-          </div>
-        </div>
-      </section>
-
-
-
-
-
 
       <nav aria-label="Page navigation example">
         <ul className="inline-flex -space-x-px text-sm">
@@ -124,10 +126,11 @@ const Home = () => {
             <li key={index}>
               <button
                 onClick={() => handlePageClick(index)}
-                className={`flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border ${index === currentPage
-                  ? "text-blue-600 bg-blue-50"
-                  : "hover:bg-gray-100 hover:text-gray-700"
-                  } dark:border-gray-700 dark:bg-gray-700 dark:text-white`}
+                className={`flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border ${
+                  index === currentPage
+                    ? "text-blue-600 bg-blue-50"
+                    : "hover:bg-gray-100 hover:text-gray-700"
+                } dark:border-gray-700 dark:bg-gray-700 dark:text-white`}
               >
                 {index + 1}
               </button>
@@ -144,8 +147,6 @@ const Home = () => {
           </li>
         </ul>
       </nav>
-
-
     </section>
   );
 };

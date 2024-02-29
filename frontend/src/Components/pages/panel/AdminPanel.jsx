@@ -2,20 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { ProductTable } from "./ProductTable";
 import { UserTable } from "./UserTable";
 import ProductForm from "./ProductForm";
-
+import CategoryForm from "./CategoryForm";
 import { DataContext } from "../../context/DataContext";
-
-const MobileMessage = () => {
-  return (
-    <div className="flex justify-between bg-slate-200'">
-      <p>Esta página no esta disponible en dispositivos móviles</p>
-    </div>
-  );
-};
+import Swal from "sweetalert2";
 
 export const AdminPanel = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [isChange, setIsChange] = useState(false);
+  const [modalOpenCategory, setModalOpenCategory] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   const {
@@ -26,8 +20,8 @@ export const AdminPanel = () => {
     fetchDeleteUser,
     fetchRoles,
 
-    products,
-    fetchProducts,
+    productsPanel,
+    fetchProductsPanel,
     fetchAddProduct,
     fetchEditProduct,
     fetchDeleteProduct,
@@ -35,6 +29,8 @@ export const AdminPanel = () => {
     fetchCities,
 
     categories,
+    fetchAddCatergory,
+    fetchEditCategory,
     cities,
   } = useContext(DataContext);
 
@@ -43,7 +39,7 @@ export const AdminPanel = () => {
 
   useEffect(() => {
     setIsChange(false);
-    fetchProducts();
+    fetchProductsPanel();
     fetchUsers();
     fetchRoles();
     fetchCategories();
@@ -52,14 +48,22 @@ export const AdminPanel = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.matchMedia('(max-width: 768px)').matches);
+      setIsMobile(window.matchMedia("(max-width: 768px)").matches);
     };
     handleResize();
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const MobileMessage = () => {
+    Swal.fire({
+      title: "Esta página no esta disponible en dispositivos móviles",
+      icon: "warning",
+      confirmButtonText: "Ok",
+    });
+  };
 
   const openModal = () => {
     setModalOpen(true);
@@ -69,21 +73,28 @@ export const AdminPanel = () => {
     setModalOpen(false);
   };
 
+  const openModalCategory = () => {
+    setModalOpenCategory(true);
+  };
+  const closeModalCategory = () => {
+    setModalOpenCategory(false);
+  };
+
   return (
     <section>
       {isMobile && <MobileMessage />}
       {!isMobile && (
-        <div className='flex justify-between bg-slate-200'>
+        <div className="flex justify-between bg-slate-200">
           <div className="flex flex-row p-4 gap-4">
             <button
               onClick={() => setProducts((current) => !current)}
-              className='bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full'
+              className="bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full"
             >
               Listado de Productos
             </button>
             <button
               onClick={() => setUsers((current) => !current)}
-              className='bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full'
+              className="bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full"
             >
               Listado de Usuarios
             </button>
@@ -91,11 +102,14 @@ export const AdminPanel = () => {
           <div className="flex flex-row p-4 gap-4 justify-end">
             <button
               onClick={openModal}
-              className='bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full'
+              className="bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full"
             >
               Agregar Producto
             </button>
-            <button className='bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full'>
+            <button
+              onClick={openModalCategory}
+              className="bg-[#202a44] hover:bg-[#017999] text-white font-bold py-2 px-4 rounded-full"
+            >
               Agregar categoría
             </button>
           </div>
@@ -109,10 +123,18 @@ export const AdminPanel = () => {
         fetchAddProduct={fetchAddProduct}
         setIsChange={setIsChange}
       />
+      <CategoryForm
+        isOpen={modalOpenCategory}
+        onClose={closeModalCategory}
+        categories={categories}
+        fetchAddCatergory={fetchAddCatergory}
+        fetchEditCategory={fetchEditCategory}
+        setIsChange={setIsChange}
+      />
 
       {productShow && (
         <ProductTable
-          products={products}
+          products={productsPanel}
           categories={categories}
           cities={cities}
           fetchDeleteProduct={fetchDeleteProduct}

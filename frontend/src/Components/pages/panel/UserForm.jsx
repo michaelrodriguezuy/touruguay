@@ -43,7 +43,6 @@ const UserForm = ({
 
   const handleSelectChange = (e, name) => {
     const { value } = e.target;
-
     setNewUser((prevUser) => {
       const updatedUser = {
         ...prevUser,
@@ -60,6 +59,7 @@ const UserForm = ({
     if (userSelected) {
       resp = await fetchEditUser({
         user_id: userSelected.user_id,
+        password: userSelected.password,
         ...newUser,
       });
     }

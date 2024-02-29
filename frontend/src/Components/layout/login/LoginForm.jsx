@@ -11,7 +11,7 @@ const LoginForm = () => {
   const [errors, setErrors] = useState({});
 
   //logueo contra la base
-  const { loginUser } = useContext(DataContext);
+  const { loginUser, fetchFavourites } = useContext(DataContext);
 
   //logueo para el contexto
   const { handleLogin } = useContext(AuthContext);
@@ -34,11 +34,14 @@ const LoginForm = () => {
     return Object.keys(validationErrors).length === 0;
   };
 
+  const cargaFavorites = async () => {
+    await fetchFavourites();
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (validateForm()) {
-        console.log("Formulario válido. Iniciando sesion...");
         const userLogged = await loginUser({
           username: email,
           password: password,
@@ -52,14 +55,21 @@ const LoginForm = () => {
               text: userLogged.error,
             });
           } else {
-            console.log("Usuario logueado con éxito.");
-
             handleLogin(userLogged);
             if (userLogged && userLogged.rol === "Admin") {
               navigate("/AdminPanel");
             } else {
+
+              const reserva = JSON.parse(localStorage.getItem("reserva"));
+
+              if (reserva) {
+                navigate(`/booking/${reserva.productId}`);
+              }else {
               navigate("/");
+                }
             }
+            //cargo sus favoritos
+            cargaFavorites();
           }
         }
       } else {

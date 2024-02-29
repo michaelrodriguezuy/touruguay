@@ -30,6 +30,7 @@ const AuthContextComponent = ({ children }) => {
     setIsLogged(false);
     localStorage.removeItem("user");
     localStorage.removeItem("isLogged");
+    localStorage.removeItem("favourites");
     localStorage.clear(); //esto es para borrar todo el local storage, borra el token
   };
 
