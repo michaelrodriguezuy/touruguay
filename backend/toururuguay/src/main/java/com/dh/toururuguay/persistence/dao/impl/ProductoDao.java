@@ -64,7 +64,7 @@ public class ProductoDao implements IDao<Producto> {
     public Optional<Producto> buscar(Integer id) {
         try {
             Producto producto = entityManager.createQuery(
-                    "SELECT p FROM Producto p WHERE p.product_id = :prodId\n", Producto.class)
+                    "SELECT p FROM Producto p WHERE p.id = :prodId\n", Producto.class)
                     .setParameter("prodId", id)
                     .getSingleResult();
 
@@ -125,7 +125,7 @@ public class ProductoDao implements IDao<Producto> {
                     "SELECT i, p " +
                             "FROM Imagen i " +
                             "LEFT JOIN FETCH i.producto p " +
-                            "WHERE p.product_id = :productId",
+                            "WHERE p.id = :productId",
                     Object[].class)
                     .setParameter("productId", id)
                     .getResultList();
@@ -224,7 +224,7 @@ public class ProductoDao implements IDao<Producto> {
                     "SELECT i, p " +
                             "FROM Imagen i " +
                             "LEFT JOIN FETCH i.producto p " +
-                            "WHERE p.product_id = :productId",
+                            "WHERE p.id = :productId",
                     Object[].class)
                     .setParameter("productId", id)
                     .getResultList();

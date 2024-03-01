@@ -149,7 +149,7 @@ public class ReservaDao implements IDao<Reserva> {
                             "FROM Reserva r " +
                             "LEFT JOIN FETCH r.user u " +
                             "LEFT JOIN FETCH r.product p " +
-                            "WHERE p.product_id = :productId",
+                            "WHERE p.id = :productId",
                     Object[].class)
                     .setParameter("productId", id)
                     .getResultList();
@@ -194,8 +194,8 @@ public class ReservaDao implements IDao<Reserva> {
             List<Producto> productos = entityManager.createQuery(
                     "SELECT DISTINCT p " +
                             "FROM Producto p " +
-                            "WHERE p.product_id NOT IN (" +
-                            "   SELECT r.product.product_id " +
+                            "WHERE p.id NOT IN (" +
+                            "   SELECT r.product.id " +
                             "   FROM Reserva r " +
                             "   WHERE (r.desde BETWEEN :desde AND :hasta) OR (r.hasta BETWEEN :desde AND :hasta)" +
                             "   OR (r.desde < :desde AND r.hasta > :hasta)" +

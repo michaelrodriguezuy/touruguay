@@ -116,7 +116,7 @@ public class ImagenDao {
         try {
 
             List<Imagen> imagenes = entityManager.createQuery(
-                    "SELECT i FROM Imagen i WHERE i.producto.product_id = :productoId", Imagen.class)
+                    "SELECT i FROM Imagen i WHERE i.producto.id = :productoId", Imagen.class)
                     .setParameter("productoId", producto.getProduct_id())
                     .getResultList();
 
@@ -124,7 +124,7 @@ public class ImagenDao {
                 eliminarImagenS3(imagen.getImageUrl());
             }
 
-            entityManager.createQuery("DELETE FROM Imagen i WHERE i.producto.product_id = :productoId")
+            entityManager.createQuery("DELETE FROM Imagen i WHERE i.producto.id = :productoId")
                     .setParameter("productoId", producto.getProduct_id())
                     .executeUpdate();
             log.info("Imagenes eliminadas con éxito de la base de datos ");
