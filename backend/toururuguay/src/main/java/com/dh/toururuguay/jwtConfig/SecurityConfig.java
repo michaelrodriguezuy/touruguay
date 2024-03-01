@@ -38,7 +38,11 @@ public class SecurityConfig {
         configuration.addAllowedMethod(HttpMethod.DELETE);
         configuration.addAllowedHeader("Authorization");
         configuration.addAllowedHeader("Content-Type");
-        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedOriginPatterns(Arrays.asList(
+            "https://touruguay-front-production.up.railway.app",
+            "http://localhost:3000" // Para el uso local, postman, thunder client
+        ));
+
         configuration.setExposedHeaders(Arrays.asList("Authorization"));
         configuration.setAllowCredentials(true);
 
