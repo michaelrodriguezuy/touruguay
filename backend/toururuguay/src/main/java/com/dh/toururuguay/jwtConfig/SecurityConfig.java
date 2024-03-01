@@ -38,7 +38,7 @@ public class SecurityConfig {
         configuration.addAllowedMethod(HttpMethod.DELETE);
         configuration.addAllowedHeader("Authorization");
         configuration.addAllowedHeader("Content-Type");
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5174"));
         configuration.setExposedHeaders(Arrays.asList("Authorization"));
         configuration.setAllowCredentials(true);
 
