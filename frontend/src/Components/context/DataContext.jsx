@@ -40,7 +40,7 @@ const DataContextComponent = ({ children }) => {
   const fetchUsers = async () => {
     try {
       const getUsers = await axios.get(
-        "http://touruguay-production.up.railway.app/usuario/todos",
+        "https://touruguay-production.up.railway.app/usuario/todos",
         { headers }
       );
       setUsers(getUsers.data);
@@ -52,7 +52,7 @@ const DataContextComponent = ({ children }) => {
   const fetchEditUser = async (user) => {
     try {
       const response = await axios.put(
-        "http://touruguay-production.up.railway.app/usuario",
+        "https://touruguay-production.up.railway.app/usuario",
         user,
         { headers }
       );
@@ -67,7 +67,7 @@ const DataContextComponent = ({ children }) => {
   const fetchDeleteUser = async (userId) => {
     try {
       const deleteUser = await axios.delete(
-        `http://touruguay-production.up.railway.app/usuario/${userId}`,
+        `https://touruguay-production.up.railway.app/usuario/${userId}`,
         { headers }
       );
       console.log(deleteUser);
@@ -80,7 +80,7 @@ const DataContextComponent = ({ children }) => {
   const fetchRoles = async () => {
     try {
       const getRoles = await axios.get(
-        "http://touruguay-production.up.railway.app/rol/todosSinDTO",
+        "https://touruguay-production.up.railway.app/rol/todosSinDTO",
         { headers }
       );
       setRoles(getRoles.data);
@@ -95,7 +95,7 @@ const DataContextComponent = ({ children }) => {
       const user1 = JSON.parse(localStorage.getItem("user"));
 
       const response = await axios.get(
-        `http://touruguay-production.up.railway.app/favorito/${user1.id}`,
+        `https://touruguay-production.up.railway.app/favorito/${user1.id}`,
         { headers }
       );
 
@@ -119,7 +119,7 @@ const DataContextComponent = ({ children }) => {
 
       console.log("formattedFav: ", formattedFav);
       const response = await axios.post(
-        "http://touruguay-production.up.railway.app/favorito",
+        "https://touruguay-production.up.railway.app/favorito",
         formattedFav,
         { headers }
       );
@@ -148,7 +148,7 @@ const DataContextComponent = ({ children }) => {
   const fetchProductsRandom = async () => {
     try {
       const productsRandom = await axios.get(
-        "http://touruguay-production.up.railway.app/producto/aleatorios?cantidad=10",
+        "https://touruguay-production.up.railway.app/producto/aleatorios?cantidad=10",
         { headers }
       );
       setProductsRandom(productsRandom.data);
@@ -160,7 +160,7 @@ const DataContextComponent = ({ children }) => {
   const fetchProducts = async () => {
     try {
       const response = await axios.get(
-        "http://touruguay-production.up.railway.app/producto/todos",
+        "https://touruguay-production.up.railway.app/producto/todos",
         { headers }
       );
       setProducts(response.data);
@@ -172,7 +172,7 @@ const DataContextComponent = ({ children }) => {
   const fetchProductsPanel = async () => {
     try {
       const response = await axios.get(
-        "http://touruguay-production.up.railway.app/producto/todosSinDTO",
+        "https://touruguay-production.up.railway.app/producto/todosSinDTO",
         { headers }
       );
       setProductsPanel(response.data);
@@ -184,7 +184,7 @@ const DataContextComponent = ({ children }) => {
   const fetchProductById = async (productId) => {
     try {
       const response = await axios.get(
-        `http://touruguay-production.up.railway.app/producto/${productId}`,
+        `https://touruguay-production.up.railway.app/producto/${productId}`,
         { headers }
       );
       setProduct(response.data);
@@ -196,7 +196,7 @@ const DataContextComponent = ({ children }) => {
   const fetchImgProductById = async (productId) => {
     try {
       const response = await axios.get(
-        `http://touruguay-production.up.railway.app/producto/img/${productId}`,
+        `https://touruguay-production.up.railway.app/producto/img/${productId}`,
         { headers }
       );
       setImgProduct(response.data);
@@ -214,7 +214,7 @@ const DataContextComponent = ({ children }) => {
 
     try {
       const responseImg = await axios.post(
-        "http://touruguay-production.up.railway.app/imagen",
+        "https://touruguay-production.up.railway.app/imagen",
         formData,
         {
           headers: {
@@ -227,7 +227,7 @@ const DataContextComponent = ({ children }) => {
       console.log("respuesta back img: ", responseImg);
 
       const response = await axios.post(
-        "http://touruguay-production.up.railway.app/producto",
+        "https://touruguay-production.up.railway.app/producto",
         product,
         { headers }
       );
@@ -278,7 +278,7 @@ const DataContextComponent = ({ children }) => {
       // );
 
       const response = await axios.put(
-        "http://touruguay-production.up.railway.app/producto",
+        "https://touruguay-production.up.railway.app/producto",
         product,
         { headers }
       );
@@ -314,7 +314,7 @@ const DataContextComponent = ({ children }) => {
   const fetchDeleteProduct = async (productId) => {
     try {
       const deleteProduct = await axios.delete(
-        `http://touruguay-production.up.railway.app/producto/${productId}?eliminarImagenes=true`,
+        `https://touruguay-production.up.railway.app/producto/${productId}?eliminarImagenes=true`,
         { headers }
       );
 
@@ -327,7 +327,7 @@ const DataContextComponent = ({ children }) => {
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        "http://touruguay-production.up.railway.app/categoria/todas",
+        "https://touruguay-production.up.railway.app/categoria/todas",
         { headers }
       );
       setCategories(response.data);
@@ -341,7 +341,7 @@ const DataContextComponent = ({ children }) => {
   const fetchCities = async () => {
     try {
       const response = await axios.get(
-        "http://touruguay-production.up.railway.app/ciudad/todas",
+        "https://touruguay-production.up.railway.app/ciudad/todas",
         { headers }
       );
       setCities(response.data);
@@ -355,7 +355,7 @@ const DataContextComponent = ({ children }) => {
   const fetchReservas = async (userId) => {
     try {
       const response = await axios.get(
-        `http://touruguay-production.up.railway.app/reserva/usuario/${userId}`,
+        `https://touruguay-production.up.railway.app/reserva/usuario/${userId}`,
         { headers }
       );
 
@@ -375,7 +375,7 @@ const DataContextComponent = ({ children }) => {
   const registerUser = async (user) => {
     try {
       const response = await axios.post(
-        "http://touruguay-production.up.railway.app/auth/register",
+        "https://touruguay-production.up.railway.app/auth/register",
         user
       );
       return response.data;
@@ -387,7 +387,7 @@ const DataContextComponent = ({ children }) => {
   const fetchSendEmail = async () => {
     try {
       const response = await axios.get(
-        "http://touruguay-production.up.railway.app/auth/email"
+        "https://touruguay-production.up.railway.app/auth/email"
       );
       return response.data;
     } catch (error) {
@@ -398,7 +398,7 @@ const DataContextComponent = ({ children }) => {
   const loginUser = async (user) => {
     try {
       const response = await axios.post(
-        "http://touruguay-production.up.railway.app/auth/login",
+        "https://touruguay-production.up.railway.app/auth/login",
         user
       );
 
@@ -420,7 +420,7 @@ const DataContextComponent = ({ children }) => {
 
     try {
       const responseImg = await axios.post(
-        "http://touruguay-production.up.railway.app/imagen",
+        "https://touruguay-production.up.railway.app/imagen",
         formData,
         {
           headers: {
@@ -431,7 +431,7 @@ const DataContextComponent = ({ children }) => {
       );
 
       const response = await axios.post(
-        "http://touruguay-production.up.railway.app/categoria",
+        "https://touruguay-production.up.railway.app/categoria",
         category,
         { headers }
       );
@@ -469,7 +469,7 @@ const DataContextComponent = ({ children }) => {
 
     try {
       const responseImg = await axios.post(
-        "http://touruguay-production.up.railway.app/imagen",
+        "https://touruguay-production.up.railway.app/imagen",
         formData,
         {
           headers: {
@@ -480,7 +480,7 @@ const DataContextComponent = ({ children }) => {
       );
 
       const response = await axios.put(
-        `http://touruguay-production.up.railway.app/categoria/${category.category_id}`,
+        `https://touruguay-production.up.railway.app/categoria/${category.category_id}`,
         category,
         { headers }
       );
@@ -516,7 +516,7 @@ const DataContextComponent = ({ children }) => {
   const fetchBookingDatesById = async (productId) => {
     try {
       const response = await axios.get(
-        `http://touruguay-production.up.railway.app/reserva/fechas/${productId}`,
+        `https://touruguay-production.up.railway.app/reserva/fechas/${productId}`,
         { headers }
       );
       setFechasReservas(response.data);
@@ -531,7 +531,7 @@ const DataContextComponent = ({ children }) => {
 
     try {
       const response = await axios.post(
-        "http://touruguay-production.up.railway.app/reserva",
+        "https://touruguay-production.up.railway.app/reserva",
         booking,
         { headers }
       );
