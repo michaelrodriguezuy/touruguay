@@ -21,8 +21,10 @@ public class JwtService {
     // ANDUVO HARDCODEAR EL JWT)
     private static final Set<String> STATIC_TOKEN_USERS = new HashSet<>(
             Arrays.asList("usuario@hotmail.com", "admin@hotmail.com"));
+    
+    // long PRODUCTION_TOKEN = 1000 * 60 * 60 * 24; // 1 dia
+    long PRODUCTION_TOKEN = 3L * 30L * 24L * 60L * 60L * 1000L;
     long DEVELOPMENT_TOKEN = 3L * 30L * 24L * 60L * 60L * 1000L; // 6 meses
-    long PRODUCTION_TOKEN = 1000 * 60 * 60 * 24; // 1 dia
 
     public String getToken(UserDetails user) {
         return getToken(new HashMap<>(), user);
