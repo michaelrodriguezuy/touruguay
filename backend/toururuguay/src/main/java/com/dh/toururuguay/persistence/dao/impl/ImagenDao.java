@@ -10,12 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
-<<<<<<< HEAD
 
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
-=======
->>>>>>> origin/Backend
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -36,7 +33,6 @@ public class ImagenDao {
 
     private final Logger log = LoggerFactory.getLogger(ImagenDao.class);
 
-<<<<<<< HEAD
     static List<String> urlsImagenes = new ArrayList<>();
 
     private final String BUCKET_NAME = "bucket-img-touruguay";
@@ -55,11 +51,6 @@ public class ImagenDao {
 
 
 
-=======
-    private final String BUCKET_NAME = "1023c12-grupo2-img";
-    static List<String> urlsImagenes = new ArrayList<>();
-
->>>>>>> origin/Backend
     public void guardarImagenesDelProducto(Producto producto) {
         try {
             // Recorrer la lista de URLs y guardar cada imagen asociada al producto
@@ -103,12 +94,8 @@ public class ImagenDao {
     // URLs temporales de imagenes
     public boolean subirImagenS3(MultipartFile imagen) {
         try {
-<<<<<<< HEAD
             S3Client s3Client = createS3Client();
 
-=======
-            S3Client s3Client = S3Client.builder().build();
->>>>>>> origin/Backend
             String nombreImagen = generarNombreUnico();
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                     .bucket(BUCKET_NAME)
@@ -188,11 +175,7 @@ public class ImagenDao {
     // tambien quiero eliminar las imagenes de mi bucket S3
     private void eliminarImagenS3(String imageUrl) {
         try {
-<<<<<<< HEAD
             S3Client s3Client = createS3Client();
-=======
-            S3Client s3Client = S3Client.builder().region(Region.US_EAST_1).build();
->>>>>>> origin/Backend
             String key = obtenerNombreKeyDesdeUrl(imageUrl);
 
             DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()

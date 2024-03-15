@@ -2,19 +2,10 @@ package com.dh.toururuguay.persistence.dao.impl;
 
 import com.dh.toururuguay.dto.CategoriaDTO;
 import com.dh.toururuguay.dto.CategoriaImgDTO;
-<<<<<<< HEAD
 
 import com.dh.toururuguay.model.Categoria;
 import com.dh.toururuguay.model.Imagen;
 
-=======
-import com.dh.toururuguay.dto.ProductDetailDTO;
-import com.dh.toururuguay.dto.ProductHomeDTO;
-import com.dh.toururuguay.dto.ProductImgDTO;
-import com.dh.toururuguay.model.Categoria;
-import com.dh.toururuguay.model.Imagen;
-import com.dh.toururuguay.model.Producto;
->>>>>>> origin/Backend
 import com.dh.toururuguay.persistence.dao.IDao;
 import com.dh.toururuguay.service.ImagenService;
 

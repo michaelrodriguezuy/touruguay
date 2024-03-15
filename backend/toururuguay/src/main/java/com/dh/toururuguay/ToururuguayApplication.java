@@ -1,6 +1,5 @@
 package com.dh.toururuguay;
 
-<<<<<<< HEAD
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,22 +37,4 @@ public class ToururuguayApplication {
         // Iniciar la aplicación Spring Boot
         app.run(args);
     }
-=======
-
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-
-@SpringBootApplication
-
-public class ToururuguayApplication {
-
-	public static void main(String[] args) {
-
-
-		SpringApplication.run(ToururuguayApplication.class, args);
-	}
-
->>>>>>> origin/Backend
 }
