@@ -14,20 +14,19 @@ public class ToururuguayApplication {
 
     public static void main(String[] args) {
 
-        // Cargar las variables de entorno del archivo .env
-        Dotenv dotenv = Dotenv.configure().load(); 
+        // Cargar las variables de entorno del archivo .env para el entorno local
+        // Dotenv dotenv = Dotenv.configure().load(); 
        
 
-        // Configurar las propiedades por defecto de la aplicación
         SpringApplication app = new SpringApplication(ToururuguayApplication.class);
-        Map<String, Object> defaultProperties = new HashMap<>();
+
+        /*  Map<String, Object> defaultProperties = new HashMap<>();
         defaultProperties.put("spring.datasource.url",
                 "jdbc:mysql://" + dotenv.get("DB_HOST") + ":" + dotenv.get("DB_PORT") + "/" + dotenv.get("DB_NAME"));
         defaultProperties.put("spring.datasource.username", dotenv.get("DB_USERNAME"));
         defaultProperties.put("spring.datasource.password", dotenv.get("DB_PASSWORD"));
-        app.setDefaultProperties(defaultProperties);
+        app.setDefaultProperties(defaultProperties); */
 
-        // Iniciar la aplicación Spring Boot
         app.run(args);
     }
 }
