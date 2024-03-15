@@ -150,6 +150,7 @@
             <version>2.0.1</version>
         </dependency>
 
+<<<<<<< HEAD
 		<dependency>
 			<groupId>software.amazon.awssdk</groupId>
 			<artifactId>aws-sdk-java</artifactId>
@@ -162,6 +163,8 @@
 			<version>2.3.0</version>
 		</dependency>
 
+=======
+>>>>>>> origin/Backend
 	</dependencies>
 
 	<build>
