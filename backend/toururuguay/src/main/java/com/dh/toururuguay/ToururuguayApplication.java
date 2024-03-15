@@ -12,14 +12,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 @SpringBootApplication
 public class ToururuguayApplication {
 
-    private static final Logger logger = LoggerFactory.getLogger(ToururuguayApplication.class);
-
     public static void main(String[] args) {
-        // Imprimir las variables de entorno para depuración
-        Map<String, String> env = System.getenv();
-        for (String envName : env.keySet()) {
-            logger.info("{}={}", envName, env.get(envName));
-        }
 
         // Cargar las variables de entorno del archivo .env
         Dotenv dotenv = Dotenv.configure().load(); 
