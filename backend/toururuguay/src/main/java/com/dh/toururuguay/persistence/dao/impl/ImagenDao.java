@@ -20,6 +20,9 @@ import software.amazon.awssdk.services.s3.model.GetUrlRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 
+//para que el codigo lea las credenciales desde railway
+import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -39,7 +42,8 @@ public class ImagenDao {
 
 
     public S3Client createS3Client() {
-        AwsCredentialsProvider credentialsProvider = ProfileCredentialsProvider.create();
+        AwsCredentialsProvider credentialsProvider = EnvironmentVariableCredentialsProvider.create();
+        // AwsCredentialsProvider credentialsProvider = ProfileCredentialsProvider.create(); LOCALMENTE ANDA CON ESTO
         S3Client s3Client = S3Client.builder()
                                     .region(Region.SA_EAST_1)
                                     .credentialsProvider(credentialsProvider)
