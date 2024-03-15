@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
+import software.amazon.awssdk.core.exception.SdkClientException;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -42,8 +43,17 @@ public class ImagenDao {
 
 
     public S3Client createS3Client() {
-        AwsCredentialsProvider credentialsProvider = EnvironmentVariableCredentialsProvider.create();
+        //AwsCredentialsProvider credentialsProvider = EnvironmentVariableCredentialsProvider.create();
         // AwsCredentialsProvider credentialsProvider = ProfileCredentialsProvider.create(); LOCALMENTE ANDA CON ESTO
+
+        AwsCredentialsProvider credentialsProvider = null;
+try {
+    credentialsProvider = ProfileCredentialsProvider.create(); //localhost
+} catch (SdkClientException e) {
+    // Fall back to environment variables if unable to load credentials from profile
+    credentialsProvider = EnvironmentVariableCredentialsProvider.create(); //railway
+}
+
         S3Client s3Client = S3Client.builder()
                                     .region(Region.SA_EAST_1)
                                     .credentialsProvider(credentialsProvider)
