@@ -41,7 +41,9 @@ public class SecurityConfig {
         configuration.setAllowedOriginPatterns(Arrays.asList(
             "https://touruguay-front-production.up.railway.app",
             "http://localhost:3000", // Para el uso local, postman, thunder client
-            "http://localhost:5173" // Para el uso local, vsc
+            "http://localhost:5173", // Para el uso local, vsc
+            "http://localhost:5174",
+            "http://localhost:5175"
         ));
 
         configuration.setExposedHeaders(Arrays.asList("Authorization"));

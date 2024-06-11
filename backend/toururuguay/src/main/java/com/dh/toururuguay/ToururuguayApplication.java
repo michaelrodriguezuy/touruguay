@@ -15,7 +15,7 @@ public class ToururuguayApplication {
     public static void main(String[] args) {
 
         // Cargar las variables de entorno del archivo .env para el entorno local
-        // Dotenv dotenv = Dotenv.configure().load(); 
+         Dotenv dotenv = Dotenv.configure().load(); 
        
 
         SpringApplication app = new SpringApplication(ToururuguayApplication.class);
