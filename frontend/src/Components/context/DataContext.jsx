@@ -161,7 +161,8 @@ const DataContextComponent = ({ children }) => {
   const fetchProducts = async () => {
     try {
       const response = await axios.get(
-        "https://touruguay-production.up.railway.app/producto/todos",
+        // "https://touruguay-production.up.railway.app/producto/todos",
+        "http://localhost:8080/producto/todos",
         { headers }
       );
       setProducts(response.data);
