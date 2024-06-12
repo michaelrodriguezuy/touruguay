@@ -148,8 +148,8 @@ const DataContextComponent = ({ children }) => {
   const fetchProductsRandom = async () => {
     try {
       const productsRandom = await axios.get(
-        // "https://touruguay-production.up.railway.app/producto/aleatorios?cantidad=10",
-        "http://localhost:8080/producto/aleatorios?cantidad=10",
+        "https://touruguay-production.up.railway.app/producto/aleatorios?cantidad=10",
+        // "http://localhost:8080/producto/aleatorios?cantidad=10",
         { headers }
       );
       setProductsRandom(productsRandom.data);
@@ -161,8 +161,8 @@ const DataContextComponent = ({ children }) => {
   const fetchProducts = async () => {
     try {
       const response = await axios.get(
-        // "https://touruguay-production.up.railway.app/producto/todos",
-        "http://localhost:8080/producto/todos",
+        "https://touruguay-production.up.railway.app/producto/todos",
+        // "http://localhost:8080/producto/todos",
         { headers }
       );
       setProducts(response.data);
@@ -329,8 +329,8 @@ const DataContextComponent = ({ children }) => {
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        // "https://touruguay-production.up.railway.app/categoria/todas",
-        "http://localhost:8080/categoria/todas",
+        "https://touruguay-production.up.railway.app/categoria/todas",
+        // "http://localhost:8080/categoria/todas",
         { headers }
       );
       setCategories(response.data);
