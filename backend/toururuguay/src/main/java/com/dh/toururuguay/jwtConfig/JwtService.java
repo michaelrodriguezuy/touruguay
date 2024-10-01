@@ -23,7 +23,7 @@ public class JwtService {
             Arrays.asList("usuario@hotmail.com", "admin@hotmail.com"));
     
     // long PRODUCTION_TOKEN = 1000 * 60 * 60 * 24; // 1 dia
-    long PRODUCTION_TOKEN = 3L * 30L * 24L * 60L * 60L * 1000L;
+    long PRODUCTION_TOKEN = 12L * 30L * 24L * 60L * 60L * 1000L;
     long DEVELOPMENT_TOKEN = 3L * 30L * 24L * 60L * 60L * 1000L; // 6 meses
 
     public String getToken(UserDetails user) {
